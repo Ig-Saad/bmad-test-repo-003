@@ -1,0 +1,102 @@
+// BMAD Web Platform Database Schema
+// Use this at https://dbdiagram.io/ to generate visual ERD
+
+Table users {
+  id uuid [primary key, default: `uuid_generate_v4()`]
+  email varchar(255) [unique, not null]
+  name varchar(255) [not null]
+  avatar_url text
+  github_username varchar(255)
+  github_access_token text [note: 'Encrypted']
+  figma_access_token text [note: 'Encrypted']
+  role varchar(20) [not null, default: 'user', note: 'admin, user, viewer']
+  created_at timestamp [default: `now()`]
+  last_active timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'User accounts with OAuth integration and role-based access'
+}
+
+Table projects {
+  id uuid [primary key, default: `uuid_generate_v4()`]
+  name varchar(255) [not null]
+  description text
+  owner_id uuid [not null, ref: > users.id]
+  github_repo_url text
+  github_branch varchar(255) [default: 'main']
+  status varchar(20) [not null, default: 'active', note: 'active, archived, draft']
+  settings jsonb [not null, default: '{}', note: 'auto_sync, default_format, collaboration_mode']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  Note: 'Project workspaces for document collaboration'
+}
+
+Table project_members {
+  id uuid [primary key, default: `uuid_generate_v4()`]
+  project_id uuid [not null, ref: > projects.id]
+  user_id uuid [not null, ref: > users.id]
+  role varchar(20) [not null, default: 'member', note: 'admin, editor, viewer, member']
+  joined_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  indexes {
+    (project_id, user_id) [unique]
+  }
+  
+  Note: 'Many-to-many relationship between users and projects'
+}
+
+Table documents {
+  id uuid [primary key, default: `uuid_generate_v4()`]
+  project_id uuid [not null, ref: > projects.id]
+  name varchar(255) [not null]
+  type varchar(50) [not null, note: 'prd, architecture, user_story, test_plan, design_spec, business_case, market_research']
+  primary_format varchar(20) [not null, note: 'markdown, docx, xlsx, pdf, figma']
+  content_hash varchar(64) [note: 'SHA-256 hash for integrity']
+  metadata jsonb [not null, default: '{}']
+  sync_status varchar(20) [not null, default: 'pending', note: 'synced, pending, conflict, error']
+  github_path text [note: 'Path in GitHub repository']
+  figma_file_id varchar(255) [note: 'Figma file identifier']
+  created_by uuid [not null, ref: > users.id]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+  
+  indexes {
+    project_id
+    type
+    sync_status
+    created_by
+  }
+  
+  Note: 'Multi-format documents with version tracking'
+}
+
+Table document_versions {
+  id uuid [primary key, default: `uuid_generate_v4()`]
+  document_id uuid [not null, ref: > documents.id]
+  version_number integer [not null]
+  format varchar(20) [not null, note: 'markdown, docx, xlsx, pdf, figma']
+  content_url text [not null, note: 'Supabase Storage URL']
+  file_size bigint [not null]
+  conversion_metadata jsonb [not null, default: '{}']
+  created_by uuid [not null, ref: > users.id]
+  created_at timestamp [default: `now()`]
+  
+  indexes {
+    document_id
+    created_by
+    (document_id, version_number, format) [unique]
+  }
+  
+  Note: 'Version history and format-specific content storage'
+}
+
+// Relationship descriptions
+Ref: users.id < projects.owner_id [note: 'User owns projects']
+Ref: users.id < project_members.user_id [note: 'User can be member of multiple projects']
+Ref: projects.id < project_members.project_id [note: 'Project can have multiple members']
+Ref: projects.id < documents.project_id [note: 'Project contains documents']
+Ref: users.id < documents.created_by [note: 'User creates documents']
+Ref: documents.id < document_versions.document_id [note: 'Document has multiple versions']
+Ref: users.id < document_versions.created_by [note: 'User creates document versions']

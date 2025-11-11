@@ -1,0 +1,883 @@
+Transcript
+November 7, 2025, 7:04AM
+
+Vivek Wandile started transcription
+
+Speaker 1   0:04
+OK, So what what I was saying was in the OK, let's start with that original slide. We have famous slide we have here, right?
+
+Harpreet Singh   0:04
+Thank you.
+Mhm.
+
+Speaker 1   0:15
+Right.
+So if you see here this, this process, the upstream part of the process, right, upstream part of the development lifecycle, we don't expect the developers, sorry, we don't expect these stakeholders to use the ID.
+We expect the stakeholders to use other tools, right? So what is the tools they have been using? Creating some requirement document, BRD document in Word file and sharing, sharing it on SharePoint or compliance and so on, right? And then and but there is no guided process for them to do it which the?
+
+Harpreet Singh   0:41
+Mhm.
+Mhm, mhm, mhm.
+
+Speaker 1   0:54
+BMAD is trying to do and between that process and this process there is a gap between these two islands which is like how do how do they exchange specs between these slow process. So to to meet that gap we are saying we'll build a BMAD framework is what is meeting the gap but.
+
+Harpreet Singh   0:56
+Um.
+Mm.
+
+Speaker 1   1:17
+The product ideation, product specification, planning and then prioritizing feature prioritization and so on and then creating epic and user stories.
+
+Harpreet Singh   1:18
+Mm.
+
+Speaker 1   1:32
+We want to link that to the IDE, so this will remain in IDE. We'll not worry too much about it except for a few things which is synchronization of the specs. But on this side we want to build a UI. So if we are building the UI, we have to have a back end code for supporting those workflows for the UI.
+So that is the the motivation for this, OK.
+
+Harpreet Singh   1:58
+When you when you say back end code, what does that mean?
+
+Speaker 1   1:58
+Is that clear?
+OK so for example I have to create a I I have to support the beam ad flow for creating a a from a project a product brief creating MRD or from say minutes of the meeting which is in the teams.
+
+Harpreet Singh   2:10
+Mm.
+
+Speaker 1   2:20
+I want to pitch the minutes of the meeting from team and create a product page. OK, So what all is required? Is UI enough or beyond the UI you need to have agents. These agents will take a role of a.
+
+Harpreet Singh   2:23
+Mm.
+OK, mhm.
+
+Speaker 1   2:35
+Say analyst or a product owner or product manager, right? Which is, which is what the BMAD supports, right? So you have to have a ability to support those flows, ability to exchange documents, generate generate documents.
+Read the original specification and then use that as as a part of the next next process flow, tracking those workflows, right? So you need that back end to support that.
+Right. So that's the that is the piece which will be in the back end.
+
+Harpreet Singh   3:08
+Mhm.
+OK, OK.
+
+Speaker 1   3:14
+OK, and So what is? So we have to say we have to look at, OK, how do we realize this, right? We know we want to use the BMAD prompts. We want to use the BMAD workflows. How will we use those BMAD workflows in our back end code which?
+
+Harpreet Singh   3:22
+Mhm.
+Mhm.
+
+Speaker 1   3:32
+The UI will invoke. OK, how is it gonna work together? That is the that is the back end architecture we have to work on.
+
+Harpreet Singh   3:33
+Mhm.
+Mm-hmm. Mm-hmm. OK.
+
+Speaker 1   3:43
+Some pieces I can identify clearly is that you you will definitely require the this solution to link with the repository. That repository may or or two separate repositories, the document repositories and the artifact, the remaining artifact repositories.
+The trees you are, you'll need some place to keep all these, the agent definitions, workflows, tasks, everything right? Which is very static once it is decided that this is a green fleet project, brown fleet project, gaming project, whatever, right?
+
+Harpreet Singh   4:03
+Mhm.
+Mhm, mhm.
+
+Speaker 1   4:23
+You will. You will have that static documents in place for that, right? Then you will.
+
+Harpreet Singh   4:23
+Mm.
+
+Speaker 1   4:33
+If you are saying OK, I'm gonna deal with the code to do a reverse engineering all that, you'll have to have a the connections established with the repository where from where you are going to fetch that code and bring it for reverse engineering, not for actual implementation, right?
+
+Harpreet Singh   4:48
+Mhm.
+
+Speaker 1   4:49
+If you are generating the documents, you want to save those documents, let's say back to GitHub or back or or Confluence or Teams. So you need connectivity as in SharePoint. So you need connectivity with those.
+
+Harpreet Singh   4:57
+Mhm.
+Mm.
+
+Speaker 1   5:07
+And the workflows which will allow the UI to save those documents by taking those workflows right?
+
+Harpreet Singh   5:11
+Mhm.
+Mhm, mhm.
+
+Speaker 1   5:14
+You'll need that.
+So I'm I'm thinking of the. I mean either you can look at it as a project or a workspace concept right where as a time of project initiation you create these agent definitions suitable for that kind of a project type.
+
+Harpreet Singh   5:18
+Mhm.
+
+Speaker 1   5:36
+Greenfield, Brownfield or whatever is the domain, right? And then create push those artifacts into that workspace or that projects repository.
+
+Sridhar Babu Kolapalli   5:47
+Yeah, basically we're going to have a repository of all these templates, right? Based on the type of project from that respect to repository, we will get that content and push it into the local project or a workspace basically.
+
+Speaker 1   5:52
+Hmm.
+Yeah.
+So so the idea I'm getting in my mind for that is that you will have something called the, let's say something called the spec registry, right? Spec registry, config registry. So so why I'm distinguishing between the specification and configuration?
+Is specification is the artifacts which are generated as a result of the project. So basically product brief, PRD, MRD, these are artifacts or specifications which are used as executable specs for downstream processor. When we say configuration we are talking about the agent dot MD, workload dot MD.
+Task dot MD. These are tasks created at project creation time that when you're creating the project you are saying this is the project of this nature, this is going to be the lifecycle of this project. So you have configuration and you have specification. So and the just like we were saying earlier that we allow list of.
+Lot of flows use case specific flow. You will have purpose built purpose purpose built specification templates also that you will have a template saying OK if it is a SDLC project with say.
+React JS library. These are the these are the task, these are the workflows, these are the artifact templates and all that, right? So you will have those template libraries, specification libraries with you and based on the project type, you will actually set up the project during project initiation accordingly.
+So this is the first piece of what I'm saying. The second piece is when you actually generate the artifacts, you'll need a workflow to save them. And when I say workflow to save them, let's say you are working on that artifact in the portal.
+So that document stays in your portal, right? So that needs to be synced with your repository. The repository could be GitHub, repository could be confluence, repository could be SharePoint or whatever. We can decide or we can say OK, I'm going to fix it for GitHub. Everything is on GitHub document.
+Also code also everything right? So let's say so you you need a ability to sync that and when will you sync that? You will sync that only if the user says OK, go ahead and now finalize this or you say OK now I want to take a snapshot of this.
+Push it to the repository based on the user click which says OK, push this into the GitHub or push this into the repository. You push that, so you need to push those workflows. More importantly, I I think we we need to look at how we will manage this agent orchestration.
+Because the if you see the framework, agent roles are switchable based on the workflow rates. For example, you are in the orchestrator, orchestrator switch to a scrum master role or architect role based on the status of.
+The project correct. So how we how we are going to manage that inside our agent, inside our software architecture, whatever architecture we come up with is the core component of what we how we will implement it. Actually other things are basically.
+
+Harpreet Singh   9:01
+Mhm.
+
+Speaker 1   9:19
+The architecture of the application, right? I would say this is the architecture for an agent, right? Where you say how are we going to implement this concept of the agent role switching? Am I going to have a full superset of all the prompts given?
+Which which will run into some 2000 lines? Or am I going to create something which says OK pick load this particular prompt when you are switching the role and how will we achieve that we within the prompt? Also there is there are.
+There are workflows and they get loaded at runtime depending on the workflow you are operating. Because these inside the agent prompt you only have file names saying OK for this particular task, this is the dependency which.
+Says as file, right? So if you have to implement all of that in a web, we have to think differently, right? So that's part of the OK.
+
+Harpreet Singh   10:31
+OK, but all this agent orchestration and everything, VMAT does that for us, right?
+
+Speaker 1   10:39
+BMAT is not executable code. Yeah, so yeah, Harpreet, that's the the BMAT is not doing it in SOA be all all which BMAT projects actually give you is.
+
+Sridhar Babu Kolapalli   10:39
+It is done on the VS code, right? But it is not.
+Go ahead on option.
+
+Speaker 1   10:55
+These markdown files and YAML files, right? Beam ID is not an executable, correct?
+
+Harpreet Singh   10:58
+Right.
+Right, right, right. But it does.
+
+Speaker 1   11:01
+It it just places yeah it places the YAML files correct. It just places the YAML files here and the agent definitions in the dot GitHub repository right? And who are who is orchestrating that get VS code and the copilot combination of these?
+
+Harpreet Singh   11:06
+Right.
+Right, right, right, right.
+
+Speaker 1   11:21
+These two are orchestrating that correct.
+
+Harpreet Singh   11:24
+Mm-hmm. Mm-hmm. Right.
+
+Speaker 1   11:26
+If we have to build our web UI for that, we have to do that, isn't it? If you have to connect with, say, Confluence, we have to support connectivity, adding that connectivity.
+
+Harpreet Singh   11:32
+Right. Mhm, mhm.
+
+Speaker 1   11:42
+Through a UI saying OK, UI UI might say OK, these are the connections I have for this project. So behind the scene you you have to have the ability to support those connections, create integration points for those MCP servers.
+
+Harpreet Singh   11:54
+Mm.
+
+Speaker 1   11:57
+And reading the a simple thing like reading a file. There are tools here that's that is what enables reading the file, editing the file correct. If you see here these are built in tools in the VS code which.
+
+Harpreet Singh   12:08
+Mhm, mhm.
+
+Speaker 1   12:14
+Your this copilot is using to actually read the files, read, execute the say something in a notebook, right? Getting the notebook summary, reading out the notebook cell, running this the cell of the say Jupiter notebook. Every single thing is a tool right? Reading.
+When you when you are saying OK read this file or refer to this file, it is using some tool to read that file, read file tool or editing that edit file tool and all that right? So the BMAD is not doing anything. BMAD is only markdown files and YAML files.
+
+Harpreet Singh   12:42
+Mhm.
+Right, right.
+
+Speaker 1   12:52
+Correct.
+So if we have to implement in your code, we have to implement that agent as code methodology in our code.
+
+Harpreet Singh   13:02
+Mm-hmm. Mm-hmm.
+
+Speaker 1   13:04
+Right Copilot is implementing the that. How is Copilot implementing that? They are saying anything I place into this dot GitHub folder. Where is the dot GitHub folder?
+Where did it when? Yeah here. So Copact alert is implementing that by saying OK anything which is there in the chat modes directory in this kind of naming convention and I will treat that as a agent and then I will expose these things as the drop downs here.
+And if somebody selects this dropdown, I'm supposed to use this as a prompt.
+And and assume that role right? It switches the prompt according to what is what is written here. The menu changes right? Your menu changes based on the placement of this file, nothing else.
+
+Harpreet Singh   13:47
+Yeah.
+Right.
+Mhm.
+
+Speaker 1   14:02
+There is no executable code which be mad as put into your folders or not, not even in your say the main root folders or anything right?
+
+Harpreet Singh   14:02
+Mhm.
+
+Speaker 1   14:18
+So if I had to support this same mechanism agent as code, I have to design that application to support it.
+
+Harpreet Singh   14:18
+Mhm, mhm.
+
+Speaker 1   14:25
+Unless I say I'll not use this, there is something called a web bundles here. If you see here, where is the web bundle? So the web bundles are a little different, right? So it is just this text files.
+You can load this text file and make a agent which is analyst only agent, Architect only agent by just using this using this files from the web bundle. It supports doing that but if you want to do automatic switching between the between different roles and support support that.
+We have to think about it, how we will do it right. So that is what we we need to test it out. Luckily we have this Ignis flow to test out and see how it will work right if you see here this.
+Analyst page and this is just 8989 lines file correct? But if you go to the.
+Orchestrator bundle. The the chat mode bundles are the chat mode. Chat mode code is small. If you go to the web bundle and see analyst dot text, see the amount of code here.
+Because the whole context has to be embedded, task, workflow, everything has to be embedded into a single file here. This is more structured where you say read only what is, load only what is needed at that particular time, right?
+
+Harpreet Singh   15:47
+Mhm.
+
+Speaker 1   15:57
+See the difference? This this is 2000, almost 3000 lines. This guy is just 90 lines because it is only references here see.
+These are just file references. They are not actual actual text, correct?
+
+Harpreet Singh   16:11
+Mhm.
+Mhm.
+
+Speaker 1   16:16
+So maybe currently the simple thing to do for us would be to use these web bundles and and then create separate endpoints for each of these agents and orchestration code is also same similarly similarly big here. If you see this orchestration prompt is.
+1004 find it files but this uh how will we uh use this orchestrator along with the agents if they are all separate endpoints think we have to think about it.
+
+Harpreet Singh   16:36
+Mhm.
+
+Speaker 1   16:47
+Right, so this is 1 aspect of it which is agent orchestration. The 2nd aspect of it is you're going to create these artifacts locally on your web instance right for that you specific user interaction. So how will you read it when the somebody says OK now I have done with this?
+Can I go ahead and run a downstream process or you you you were creating some document artifact, say PRD you were creating user was in the middle of it. He logs out and comes back. You need to give him the same context. He has not saved the file because he has not explicitly said say go ahead and save.
+In GitHub. So how would we manage state? How do we manage these back end synchronization? How do we synchronize back? All those workflows need to be a part of how we will define that. That is also part of the work we need to do.
+Right. And then edit fetching the fetching these artifacts either from the local repo or from the from your local environment because user is still editing it or from the GitHub repository. So that's that's another aspect.
+
+Sridhar Babu Kolapalli   18:03
+OK.
+
+Speaker 1   18:05
+And then other thing is basically authentication, authorization, RBAC, supporting all of that. That is also part of the back end.
+
+Harpreet Singh   18:10
+Mm.
+OK.
+
+Speaker 1   18:24
+OK.
+
+Harpreet Singh   18:26
+So OK.
+
+Speaker 1   18:26
+So can you start listing down that, OK, these are the broad set of requirements. We'll review it, we'll keep adding to it, right? Once we have the requirement, we'll go to the next step saying, OK, these are the building blocks of it and then you can actually use the BIM ad itself.
+Set up a Greenfield project and we will start chatting with it to start developing this, but the initial requirement will come from us.
+
+Harpreet Singh   18:56
+OK.
+Again, this effect I'm reiterating a web application driven by Bmad.
+Methodology that is some.
+
+Speaker 1   19:11
+BMAD is not something you can run. BMAD is just bunch of files. BMAD doesn't run anything.
+
+Harpreet Singh   19:17
+Right.
+Right, right.
+
+Speaker 1   19:22
+Right. So we are saying we will adopt.
+
+Sridhar Babu Kolapalli   19:24
+Basically, BMAD is nothing but is a sophisticated customization instructions to the copilot. If you look at it right, it's not more than that. Yeah, from templates, exactly.
+
+Harpreet Singh   19:32
+Right, right.
+
+Speaker 1   19:32
+Basically be mad is nothing but prompt templates. Yeah, if yeah, and that's it. It is nothing more than prompt templates to drive the workflows, right? So it it there is no dot JS file, there is no dot TS file, there is no py.py file there.
+
+Harpreet Singh   19:38
+Right.
+Mhm.
+Like all persona and instructions, right?
+
+Speaker 1   19:49
+A.
+Yeah, that's it. So when we say we will use BMAD, we will adopt that BMAD method in our application. That's it. There is no BMAD code, BMAD library, nothing.
+
+Harpreet Singh   20:05
+Right.
+OK.
+OK.
+OK. I can't think of any questions more, but yeah, I'll get back.
+
+Speaker 1   20:35
+And use. Yeah, use a deep research perplexity. If you don't have a subscription, get that info gain subscription for perplexity. You use that research or ChatGPT deep research, whatever, right? You use those things or drop deep research.
+
+Harpreet Singh   20:46
+OK.
+OK.
+OK.
+
+Speaker 1   20:56
+So it will give you a structured way of thinking about the about what needs to be architected, right? So and then we will discuss together, right? Nobody knows the whole answer, right? Neither me nor Sridhar nor you, nobody.
+
+Harpreet Singh   21:03
+Sure.
+Mhm.
+
+Sridhar Babu Kolapalli   21:12
+No, we all has to together build it, Harpreet. So we have to come up with a solution approach. We have thoughts, but we need to really take those thoughts and then come up with an end-to-end solution approach, how that is going to work for our customers, right?
+
+Speaker 1   21:14
+Yeah, yeah.
+
+Harpreet Singh   21:17
+Mhm.
+
+Speaker 1   21:17
+In yeah.
+Yeah.
+We will. We will have to do it together, right? So you can say, hey, this is the thought I have or Vivek, I'm stuck with this idea. Can we have a brainstorming session? So that's how we will resolve it. But we have to iterate more often. That's it.
+I read more often, say, OK, this is what I've explored, this is what I found out. Uh, but I think it is still not. It is still hazy. Then let's discuss this together. Then you go back and say, OK, uh, yeah, now based on that now I investigated further. This is what we can do.
+Or sometimes it is just a matter of OK, I will do a quick prototype, find out what I can, what this this option will do, what that option will do. So that is that needs to be simultaneously done also. So if I were you, I would say take this dot text files.
+
+Harpreet Singh   22:13
+OK.
+
+Speaker 1   22:20
+Push it into a prompt component, create a flow and see how does this flow behave the same way as VS code when I run this flow for VS only for upstream part. For the downstream part, I don't think it will. It will work because we don't have all the tools.
+Created in inside the Ignis, right? But for upstream upstream flows you you have a PRD, you want to create a BRD, you have a BRD, you want to create MRD. Those flows see whether you are getting similar results.
+
+Harpreet Singh   22:40
+Mhm.
+
+Speaker 1   22:52
+With those then we say OK fine we will have this say prompts plus workflow to start with and we will call invoke them inside the application. We'll also have orchestrator agent with the same way and and let's see right.
+
+Harpreet Singh   22:54
+Mhm, mhm.
+Mhm, mhm.
+Mm mm mm.
+
+Speaker 1   23:10
+So maybe that's a starting point, right? Maybe that's a starting point for our application in as MVP or version 1.0.
+
+Harpreet Singh   23:13
+Mm-hmm.
+Um.
+
+Speaker 1   23:23
+But maybe you'll get a better idea, so.
+But and I I have told you about the core part of it. But if you think of the workflows, there are a lot of things, right? So in a software development cycle, it is collaborative work the the VS code flows which are very individual flows, right?
+
+Harpreet Singh   23:34
+Hmm.
+Mhm.
+
+Speaker 1   23:47
+Individual in the sense of your VS code is for you, your prompts are for you, your artifacts are for you, right? But that's not what you would do when we say I'm going to use collaboration tools.
+
+Harpreet Singh   23:53
+Mhm, mhm.
+
+Speaker 1   24:03
+To store the document and then everybody will review the document, right? So how are we going to integrate those collaboration flows? And there are many of them right in the say the analyst agent, product manager agent, there are a lot of collaboration flows.
+
+Harpreet Singh   24:04
+Mhm.
+Mhm.
+
+Speaker 1   24:18
+Mentioned in those. So imagine how we will implement them, right? So let's say will I need integration with Ms. 365 because I should be able to, let's say, initiate an e-mail or I should be able will I need integration with other third party tools like Mural?
+
+Harpreet Singh   24:20
+Mhm.
+
+Speaker 1   24:38
+Because I want to set up a this brainstorming session where everybody actually paste their ideas into that mural. What are those other things I will need right? If I want to have a UX designer, for example UX designer to use my portal, he will not use the say VS code, he will not use VS code.
+
+Harpreet Singh   24:45
+Mhm, mhm.
+Mhm.
+Mm-hmm.
+
+Speaker 1   24:58
+Should I need integration with say MCP server for Figma? Figma has a MCP server. Do I need integration with MCP server for Figma and we need to integrate that then OK similarly architect.
+
+Harpreet Singh   25:03
+OK.
+Mm-hmm.
+Mhm.
+
+Speaker 1   25:13
+If the architect is doing the I mean your agent is generating the architecture, what are the different types of architectures it will generate? I I've seen that it is beautifully generating even the C4 style architecture document see.
+But those things are supported and fortunately supported in Mermaid itself. So yeah, just a second. Now my son is calling me. He's gone out somewhere. Just a second.
+
+Harpreet Singh   25:41
+Mm-hmm. OK.
+
+Sridhar Babu Kolapalli   26:00
+But any questions so far? Harpreet, Sumit, Kagan?
+Because we have to build together, right? You need to completely bought into the concept of what we are looking at it. And please let us know if you feel that, oh, this is a nonsense, this doesn't work out for us.
+Right be open.
+Hello.
+
+Harpreet Singh   26:27
+There's one thing Sridhar that I just want to say we are so the intended the intended users for this piece will be for this application will be really small right? Because we are rolling only upstream part wherein only managers are.
+
+Sridhar Babu Kolapalli   26:29
+Uh, go ahead.
+No.
+No, no, that is right. But upstream part is for the Greenfield research. Let us say you come up with an idea.
+
+Harpreet Singh   26:49
+Mhm, mhm.
+
+Sridhar Babu Kolapalli   26:50
+Right. So when you come up with an idea, you need to do a market research, you need to do a product research, you need to look at computation analysis, all that will be done, right? And those users may not familiar with the Visual Studio. Actually we can bring that also into the Visual Studio.
+But that may take some time. So that may not happen immediately, maybe after a few years, because everyone will become like a see. Now these days you saw my articles, right? I have clearly mentioned that when an article from HVR. So I have clearly mentioned that people now not just to think of leveraging the tools, they have to, they have to elevate themselves.
+
+Harpreet Singh   27:11
+Mhm.
+
+Sridhar Babu Kolapalli   27:26
+As an architect as a decision making right while you are leveraging Gen. AI tools. Got it on the same lines here this what we are giving upstream and downstream. We are differentiating that we have both Greenfield and brownfield application. All the downstream applications can be always at brownfield right and.
+
+Harpreet Singh   27:33
+Mm-hmm.
+
+Sridhar Babu Kolapalli   27:46
+Obviously the upstream and downstream together will be our Greenfield applications. When I say Greenfield, it's basically idea to deployment right or a concept to a deployment. So that is where we want to provide the solution even to that. Why we picked up? That's a good question. Why? Why are we doing this?
+
+Harpreet Singh   27:51
+Mhm.
+Right, right, right, right.
+
+Sridhar Babu Kolapalli   28:03
+Because when we looked at a most of the platforms in the market, they always focus only on the downstream. They are completely ignoring the upstream. But what we are trying to do is you cannot ignore upstream because your product lifeline is based on the upstream guys discussion points or upstream thought process that should blow or go into my downstream applications, right?
+
+Harpreet Singh   28:06
+Mhm.
+Hmm.
+
+Sridhar Babu Kolapalli   28:23
+Into the actual implementation. So that's why we're focusing on that's one. And the second one is for both upstream and downstream. The common storage is nothing but my GitHub.
+
+Harpreet Singh   28:33
+Um.
+
+Sridhar Babu Kolapalli   28:34
+Right. So whether I have a templates, let's say I have a templates where BMAD is using those templates to run along with the copilot. What we are going to do in upstream is we are still going to leverage those templates, but we are going to interact with the with the respect to LLM based on the configurations or let's say we have a configuration page.
+On the upstream application right and it internally makes the respect to calls. So we will be having an agent which are running behind the scenes where based on the actions that the user is performing in the upstream application.
+
+Harpreet Singh   28:53
+Mm.
+Mm.
+
+Sridhar Babu Kolapalli   29:05
+You go there.
+
+Harpreet Singh   29:05
+OK, mhm.
+
+Sridhar Babu Kolapalli   29:07
+So this is all our thought process between myself and Vivek. A lot of weekends we have discussed on this thought process and then see how we can bring things together. Go ahead. Sorry.
+
+Harpreet Singh   29:10
+But but.
+But BMAD method does give you an option. I'm not for Greenfield. It does does give you a option for within.
+
+Sridhar Babu Kolapalli   29:22
+VMAT gives you an option within your Visual Studio exactly for upstream. But when we had a discussion with various people who are all part of this market research, product research, competitive analysis, they are not familiar with Visual Studio.
+
+Harpreet Singh   29:36
+Not only BS code, it gives a whole lot of other IDs as well.
+
+Sridhar Babu Kolapalli   29:40
+No, I see what I mean is don't worry about Visual Studio. They're not familiar with IDs. That's what I'm trying to tell you. I'll give you a simple example. We had a meeting with, you know, go to market team, GTM teams, right at a at Infogain level. There are around hundreds of people who are focused only on the GTM side.
+
+Harpreet Singh   29:42
+I'm not sure. I'm not.
+Right.
+OK, OK, OK.
+Mm.
+Mhm.
+
+Sridhar Babu Kolapalli   30:00
+Right. We gave a demo of the of the Ignis platform and then when we actually mentioned saying that OK, this is how my my spec driven development works. And when we opened a Visual Studio and gave some examples, immediately they said this is too technical.
+
+Harpreet Singh   30:01
+Mhm.
+Mhm.
+Mm.
+Oh, OK. Got it. Yeah, yeah.
+
+Sridhar Babu Kolapalli   30:18
+OK, we actually vetted this with the people and then we thought, OK, this is not the way it will work for these guys. So maybe down the line as we get more and more users, yes, they might familiar with IDs and they can start using that time. We will just shut it down this one and bring that into the into the Visual Studio itself.
+
+Harpreet Singh   30:24
+I know.
+Mm mm.
+
+Sridhar Babu Kolapalli   30:37
+You got in.
+
+Harpreet Singh   30:37
+Mm-hmm.
+
+Speaker 1   30:37
+See, a lot of. Yeah. So what happens is let's take the example of analyst, right? If I give him the editing environment where he can edit his his spec without getting into the nitty gritties, OK, what is the folder structure? What is this? All all that, right? A lot of.
+
+Harpreet Singh   30:57
+Mhm.
+
+Speaker 1   30:57
+People get scared with such complicated tool like VS code if you are not a developer, correct? So let them use this upstream web UI for their day-to-day task and they don't have to use it directly, right? They can say OK, I've created a flow so he will create a flow in confluence. Now go ahead and.
+
+Harpreet Singh   31:03
+Exactly.
+
+Speaker 1   31:17
+And you will get a link in Confluence link right? You edit it in Confluence and say hey I updated the page, can you fetch the page again and now start generating PRD. PRD will get generated and pushed into Confluence. You edit it in Confluence and come back and say OK now I want to do this right? So you you you may use.
+
+Harpreet Singh   31:20
+Mhm.
+Mhm.
+
+Speaker 1   31:36
+You may use lesser capabilities of VS code. There you will use only interaction with the agent as the main capability and other thing is you will say OK what is my project? Where are my project artifacts? So you will probably have that on the left hand side.
+That these are the project artifacts I have and to to use those you will use the appropriate tool. For example this Figma I'm saying I was saying right. So you will use Figma tool for your UX design, but the context of that will come from somewhere else.
+
+Harpreet Singh   32:03
+No.
+Mhm.
+
+Speaker 1   32:12
+Right, so or the initial Figma design may come through this MCP server agent linked with our architect agent or UX expert agent, but he will edit it himself. He will say no, I'm still not happy. I I want to use my creativity.
+We'll go ahead and edit it in Pigma. So where will you push those Pigma artifacts? You'll have to push it somewhere where Pigma is able to read it, right? So think about those flows for non developers alone.
+Developers, we will ask them to use IDE. Non developers, where will they go? Architecture diagram. You don't never create in Visual Studio code, right? You create in PowerPoint or some other tools, right?
+
+Harpreet Singh   32:46
+the, the
+
+Speaker 1   33:01
+So architects now never touch the VS code. Perhaps no, no, they should. But this is one example where where will you create the architecture diagrams, right?
+
+Harpreet Singh   33:15
+So again uh to go further on this non IDE users thing thought uh.
+Do you believe that all these non IDE users are also familiar with GitHub and or maybe uh confluence? No.
+
+Sridhar Babu Kolapalli   33:31
+That's why we are not. We're abstracting. We are abstracting. We are abstracting away GitHub. They don't know that the underlying things are happening in GitHub. Nobody knows it. They will be just interacting with a normal application.
+
+Speaker 1   33:33
+So we we are not. We are not.
+
+Harpreet Singh   33:38
+Yeah.
+No bit now that.
+
+Speaker 1   33:40
+Yeah, we are not asking them correct. We're not asking them to say clone the GitHub repository, do a push, do a PR, right? We are saying OK, here is the button. Should I say, should I say save this back? And there is only a GitHub icon. Let's say he pushes the GitHub.
+
+Harpreet Singh   33:46
+Or take.
+
+Speaker 1   33:59
+Icon and then it gets committed to the these are your artifact will get committed to GitHub or or confluence whatever right? So we can provide that option saying OK here are the options for your project configuration. Initial project configuration use this GitHub repository.
+
+Harpreet Singh   34:08
+OK.
+
+Speaker 1   34:18
+For both code and document or use GitHub for code repo for the confluence for document right? So initial setup will be done by some admin. After that it is just a button for him saying OK save this document. Now I'm happy with this document.
+
+Harpreet Singh   34:23
+Mm.
+
+Speaker 1   34:35
+So on the on his document you will have the link which says the tick item which says OK this document is synced. Just like when you have your one drive right in one drive you see either a cloud picture or a tick which says OK this document is synced.
+Or if you right click and say OK sync this document if it is new it will get get pushed. If your document is old and cloud document is new it will get pulled right. Something similar with the documents inside the portal.
+
+Harpreet Singh   34:51
+Mhm.
+Mm-hmm.
+Mhm, mhm.
+
+Speaker 1   35:08
+Correct. You will sync. Always keep those sync. The user doesn't need to know that the sync point is GitHub. Only the admin who sets up initially will decide.
+
+Harpreet Singh   35:11
+Mm.
+Um, OK.
+Mhm.
+
+Speaker 1   35:19
+Heading.
+
+Harpreet Singh   35:20
+OK.
+OK, mhm.
+
+Sridhar Babu Kolapalli   35:24
+Summit has raised his hand. Let's.
+
+Speaker 1   35:26
+Yeah.
+
+Sumeet Kumar   35:27
+Yeah, so even if you take an example of our team, so people like me and Gaurav, we are not actively working on ID, right? We are use different documentation tools for that either.
+
+Speaker 1   35:40
+Yeah.
+
+Sumeet Kumar   35:41
+We are creating it in Excel like road map is in Excel right? The the other things, the competitor research and other things we create it in PowerPoint and send it across. We are not using the any of the Visual School Studio or any.
+
+Sridhar Babu Kolapalli   35:50
+OK.
+
+Speaker 1   35:55
+Right.
+Yeah, and when you're creating say epic or user stories, right? So epic or user stories, if we in the spec driven development we are taking creating a PRD and then we are saying PRD will have high level epic and user stories and then that will be elaborated by scrum master.
+
+Harpreet Singh   35:59
+Mhm.
+
+Sumeet Kumar   36:02
+Yeah, that is also in Jira.
+
+Speaker 1   36:17
+Now those should persist in the the collaboration tool, in this case the say Jira, right? Because how will you propagate this same thing to all the users right? Every users it should get synced with them, right? So if.
+
+Harpreet Singh   36:18
+Mhm.
+Mm mm.
+
+Speaker 1   36:36
+Summit is working on elaborating those zero stories, and if he doesn't push it to, say, Jira, it will not be made available to other people, right? So we'll have to create those additional sync points. So BMAD is not currently.
+
+Harpreet Singh   36:43
+Hmm.
+
+Speaker 1   36:51
+Doing all that right, our value add there is all these enterprise integrations that will be our value add. Just simply making a UI on top of BMAD is not going to give us any any headway, right?
+Only when we integrate where we with this these collaboration portals with the with the code repository with the project management tool like Jira, then only there is a value right? Then only it becomes more useful to non developers.
+Developers may still be able to use it nicely.
+
+Harpreet Singh   37:24
+Mhm, mhm.
+Mhm.
+
+Speaker 1   37:30
+But they will also benefit.
+
+Sumeet Kumar   37:30
+And then only we will cover the entire SDLC right when we say.
+
+Speaker 1   37:33
+Correct. And then you have a visibility, right? You can add there there later on you can add and saying OK, what is the productivity of the whole team? What is the velocity of the whole team? Or they say because now you have integration with Jira, you will say what are the open stories in this particular Sprint I.
+Summit can ask that question as a as a text and he will get an answer directly inside this web UI, right? He doesn't have to go to JIRA, figure out what filter I should apply for Epic or user stories and Sprint and all that, correct?
+
+Harpreet Singh   38:09
+Mhm.
+
+Speaker 1   38:11
+So it can be also used for the simple project management, right? Yeah. And he said OK, what is the status of the user stories XYZ? Because somebody was talking about that in the scrum call, so.
+
+Harpreet Singh   38:15
+Mhm.
+
+Speaker 1   38:26
+Or before the scrum call, if somebody wants to collect and say OK, tell me what are the user stories which got deleted?
+
+Harpreet Singh   38:26
+Mm-hmm.
+
+Speaker 1   38:33
+We could use the same tool.
+
+Sumeet Kumar   38:36
+Yeah, and also it can help us in uh.
+
+Harpreet Singh   38:36
+M.
+
+Speaker 1   38:37
+Right. So imagine, yeah, imagine this to be a value add tool, not just a OK, Miracle be mad. DII may be mad implement Karonga.
+
+Harpreet Singh   38:49
+And Vivek, I believe you might remember that we had that next Gen. SDLCUI, right? Right. It was more of it was built on the same lines only. I can say that. I'm not sure what do you think, but.
+
+Speaker 1   38:55
+Uh.
+But but it was more still a developer centric. OK, it was developer centric. Now we are saying developer centric activities are beautifully nicely done by coding agents like Copilot and with the BMAD framework it enhances their ability to use it for spec driven development.
+
+Harpreet Singh   39:06
+But.
+Yes.
+
+Speaker 1   39:23
+So I will not focus so much on the downstream activities, right? Only thing I will do on the downstream activities, this syncing, syncing with the the artifacts between the web and the this thing and that syncing will be through GitHub, through Jira, all that.
+So those integrations I will add and probably we will create some NPX package for that and say OK you run this package and configure your VS code and then point to your project. You say OK this is your project workspace.
+
+Harpreet Singh   39:51
+Mhm.
+Mm.
+
+Speaker 1   40:02
+And then you are all set as far as developer on VS code is concerned.
+
+Harpreet Singh   40:10
+OK.
+8.
+
+Speaker 1   40:13
+If somebody wants to use it, they would be able to use it. Like if say Summit wants to use VS code for his activities, he should be able to use it. So that will great so but they you would have enhanced user experience if you use it in.
+
+Harpreet Singh   40:23
+Yeah, that will be in that's independent app.
+
+Speaker 1   40:32
+In a web UI because a lot of things are not rendered inside VS code, right? Even I would say even the the markdown documents are not very easy to see in a in the correct visualization inside VS code, although there are say markdown viewers and all that.
+
+Harpreet Singh   40:48
+Mm-hmm.
+
+Speaker 1   40:51
+They don't appear that well. You can't see it that good, right? So even for things like that, it is a better user experience to use this web UI.
+
+Harpreet Singh   40:54
+Mhm.
+
+Sridhar Babu Kolapalli   41:10
+So what is the agenda for the call that we have in next couple of hours, Harpreet?
+
+Harpreet Singh   41:17
+So one at 404 O'clock, right? So that's for a team that's that was this what the suggestion for Vivek was that we should do each and every team member should set up be mad locally and.
+
+Sridhar Babu Kolapalli   41:20
+Yeah, that side.
+OK.
+
+Speaker 1   41:33
+Yeah.
+
+Harpreet Singh   41:33
+Do the project context setting for one of the Ignis projects speed portal or flow?
+
+Sridhar Babu Kolapalli   41:38
+And then my suggestion, let's do it on A1 sample project, then talk do it on the actual project.
+
+Speaker 1   41:43
+So do it for the Ignis Yvaina.
+
+Sridhar Babu Kolapalli   41:45
+Uh uh any any simple one you can do that.
+
+Speaker 1   41:48
+Yeah, Ignis UI is much simpler than say Ignis flow back end.
+
+Harpreet Singh   41:53
+Yeah, yeah, that's what we have been discussing in the morning Ignis portal.
+
+Speaker 1   41:54
+OK, Sumit, what do you say, I mean?
+Yeah, Ignis portal. We do it for Ignis portal.
+
+Sumeet Kumar   42:00
+Yeah.
+Yeah, we can do that. Whatever enhancements we are planning, we can add to that project.
+
+Speaker 1   42:08
+So yeah, so get those inputs right and we can set it up.
+See, now it will onus will be on us to also write the epics and user stories properly. OK, you yeah, you can use. You can take advantage of the Gen. AI to write that for you, but you need to be clear in your head on what is the feature we want to develop.
+
+Sumeet Kumar   42:23
+Yeah, that's the first step. If we are not doing that, then.
+
+Speaker 1   42:37
+If we don't know what feature we want to develop, we can't tell copiler what feature we want to develop.
+
+Sumeet Kumar   42:38
+Yeah.
+
+Speaker 1   42:47
+Correct.
+
+Harpreet Singh   42:49
+Agree.
+
+Sumeet Kumar   42:50
+Yeah.
+
+Sridhar Babu Kolapalli   42:52
+OK, Tim, I need to drop. So just continue. Thank you.
+
+Speaker 1   42:54
+Yeah, OK, we are done actually.
+
+Harpreet Singh   42:55
+None.
+OK, I'm OK as well as a for time being, I'll try to come up with questions.
+
+Speaker 1   43:02
+Yeah, yeah.
+Yeah, yeah. So, yeah, again, you.
+Correct. I set up your own project for this saying OK, this is the web UI for SDLC. You set up a project in VS code and you follow that same method right or creating the initial product brief and business idea.
+
+Harpreet Singh   43:19
+Yes, I know.
+Right, exactly. Try to come up with requirements.
+
+Speaker 1   43:27
+Yeah.
+OK.
+Yeah, yeah, OK.
+
+Harpreet Singh   43:32
+Right.
+
+Speaker 1   43:34
+Alright, yeah.
+
+Sumeet Kumar   43:34
+And if you need any help, please let me know on the.
+
+Harpreet Singh   43:35
+R.
+Yeah, I'll drop the whatever questions I have, I'll drop in this group one.
+
+Speaker 1   43:38
+Yeah.
+
+Sumeet Kumar   43:41
+Sure. Okay.
+
+Speaker 1   43:42
+Yeah. OK. Yeah. Thank you. Yeah. Yeah. Bye. Bye.
+
+Harpreet Singh   43:43
+Right. Thank you. Thank you everyone for your time.
+
+Sumeet Kumar   43:44
+OK. OK. Thank you. Thank you.
+
+Harpreet Singh   43:49
+Alright.
+
+Harpreet Singh stopped transcription
