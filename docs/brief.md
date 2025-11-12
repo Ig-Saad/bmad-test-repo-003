@@ -102,6 +102,20 @@ The BMAD-Driven SDLC Platform Web UI is a comprehensive web-based platform that 
 - **Project Workspace Management:** Complete project orchestration with artifact organization, team member access control, and format-aware collaboration features across the entire project lifecycle
 - **Comprehensive Template Library:** Complete BMAD artifact template suite covering all project phases and document types, available in multiple formats (.doc, .xlsx, markdown) with automatic format conversion and guided workflow execution
 
+### Environment Initialization (Must Have)
+
+- **Repository Configuration Setup:** Mandatory GitHub repository URL configuration, authentication token setup, default branch selection, document path structure definition, and commit message template configuration before users can begin any BMAD workflows
+- **Document Publishing Configuration:** Required SharePoint site URL, document library setup, authentication method configuration, alternative publishing location setup, and document approval workflow definition to enable automated publishing capabilities
+- **User Workspace Initialization:** Default working directory setup, temporary file storage configuration, user permission level assignment, collaboration settings configuration, and auto-save interval setup to establish personalized work environments
+- **MCP Integration Setup:** Model Context Protocol configuration for automated publishing, GitHub MCP integration setup for seamless repository operations, SharePoint MCP integration for document publishing, and secure credential management for all third-party integrations
+
+### Web Deployment Workflow (Must Have)
+
+- **Server-Side Document Management:** All document creation and editing operations performed on web server with real-time collaborative editing capabilities, automatic version tracking during editing sessions, and seamless format synchronization across all supported document types
+- **Approval Workflow Integration:** User-triggered approval processes with notification systems, comment and feedback integration, stakeholder review capabilities, and approval status tracking before documents can be published to external systems
+- **Automated Publishing Pipeline:** User-initiated "Publish" action triggers automated GitHub check-in via MCP, simultaneous publishing to configured SharePoint locations, confirmation and audit trail generation, and version synchronization across all publishing destinations
+- **Document Lifecycle Management:** Complete workflow from creation through review, approval, and publishing with conflict resolution capabilities, backup and recovery systems, and comprehensive audit logging for enterprise compliance requirements
+
 ### Out of Scope for MVP
 
 - Advanced integrations with Confluence, SharePoint, Teams
@@ -116,7 +130,7 @@ The BMAD-Driven SDLC Platform Web UI is a comprehensive web-based platform that 
 
 ### MVP Success Criteria
 
-The MVP will be considered successful when a non-technical product manager can: (1) Create a complete project workspace, (2) Generate a comprehensive artifact suite including market research, business case, PRD, and technical specifications using BMAD methodology, (3) Import Figma designs and generate design specifications in Word format, (4) Collaborate with team members across all artifact types using their preferred document formats, (5) Successfully synchronize all project artifacts with a GitHub repository in both business and technical formats, and (6) Hand off the complete project documentation suite to development teams who can seamlessly continue the workflow in their IDE environment. Success is measured by completing this end-to-end comprehensive artifact generation and multi-format workflow within 8 hours for a typical project, with minimal technical support required.
+The MVP will be considered successful when a non-technical product manager can: (1) Complete environment initialization including GitHub repository setup, SharePoint configuration, and MCP integration within 30 minutes, (2) Create a complete project workspace with proper user permissions and collaboration settings, (3) Generate a comprehensive artifact suite including market research, business case, PRD, and technical specifications using BMAD methodology, (4) Import Figma designs and generate design specifications in Word format, (5) Collaborate with team members across all artifact types using their preferred document formats with real-time editing capabilities, (6) Execute the complete approval workflow with stakeholder review and approval tracking, (7) Successfully publish approved documents via automated GitHub check-in and SharePoint publishing using MCP integration, and (8) Hand off the complete project documentation suite to development teams who can seamlessly continue the workflow in their IDE environment. Success is measured by completing this end-to-end initialization, artifact generation, approval, and publishing workflow within 8 hours for a typical project, with minimal technical support required and full audit trail documentation.
 
 ## Post-MVP Vision
 
@@ -161,6 +175,84 @@ The MVP will be considered successful when a non-technical product manager can: 
 - **Service Architecture:** Microservices architecture with separate services for format translation, agent orchestration, comprehensive artifact management, Figma integration, GitHub synchronization, workflow orchestration, and user management
 - **Integration Requirements:** RESTful APIs for GitHub and Figma integration, webhook support for real-time synchronization, comprehensive artifact processing pipeline with queue management, and extensible plugin architecture for future format and artifact type support
 - **Security/Compliance:** OAuth-based authentication with GitHub and Figma, role-based access control aligned with repository permissions, encrypted artifact storage, comprehensive audit logging for enterprise compliance requirements, and artifact-level access controls
+
+## Environment Initialization Parameters
+
+Before users can begin working with BMAD workflows in the web application, they must complete a comprehensive initialization process that establishes the foundation for document management and publishing workflows.
+
+### Repository Configuration
+
+- **GitHub Repository URL:** Primary repository where all project artifacts will be stored and synchronized, supporting both business formats and markdown versions
+- **Repository Access Token/Authentication:** Secure authentication mechanism (Personal Access Token, OAuth App, or GitHub App) with appropriate permissions for repository read/write operations
+- **Default Branch:** Target branch for document commits (typically 'main' or 'develop') with branch protection rules and merge policies
+- **Repository Structure/Path for Documents:** Organized folder structure for different artifact types (docs/briefs/, docs/prds/, docs/architecture/, docs/stories/) with automatic path creation
+- **Commit Message Templates:** Standardized commit message formats for different document types and operations (creation, updates, approvals, publishing)
+
+### Document Publishing Configuration
+
+- **SharePoint Site URL:** Target SharePoint site for document publishing with proper site collection and subsite configuration
+- **SharePoint Document Library:** Specific document library within SharePoint site with appropriate folder structure and metadata configuration
+- **SharePoint Authentication Method:** Authentication mechanism (Azure AD, Service Principal, or user credentials) with necessary permissions for document upload and management
+- **Alternative Publishing Locations:** Additional publishing destinations (Confluence, Teams, file shares) with respective authentication and configuration settings
+- **Document Approval Workflow:** Multi-stage approval process definition with designated approvers, notification settings, and escalation procedures
+
+### User Workspace Configuration
+
+- **Default Working Directory:** Server-side workspace allocation for each user with appropriate storage quotas and access permissions
+- **Temporary File Storage:** Dedicated temporary storage for document processing, format conversion, and collaborative editing sessions with automatic cleanup policies
+- **User Permission Levels:** Role-based access control defining user capabilities (viewer, editor, approver, administrator) with granular permissions for different artifact types
+- **Collaboration Settings:** Real-time editing preferences, notification settings, sharing permissions, and team member access controls
+- **Auto-save Intervals:** Configurable automatic save frequency for different document types with version history retention policies
+
+### Integration Settings
+
+- **MCP (Model Context Protocol) Configuration:** Core MCP server setup for automated publishing workflows with proper endpoint configuration and security settings
+- **GitHub MCP Integration:** Specialized MCP configuration for GitHub operations including repository access, branch management, and commit automation
+- **SharePoint MCP Integration:** SharePoint-specific MCP setup for document publishing, metadata management, and folder organization
+- **Third-party Tool Integrations:** Additional tool connections (Figma, Confluence, Teams) with respective API configurations and authentication settings
+- **API Keys and Credentials Management:** Secure storage and management of all third-party API keys, tokens, and credentials with encryption and rotation policies
+
+## Web Deployment & Document Management Workflow
+
+The platform implements a comprehensive workflow for web-based document creation, editing, approval, and publishing processes that ensures enterprise-grade document lifecycle management.
+
+### Document Lifecycle Management
+
+**Creation Phase:**
+- Documents created and edited exclusively on web server with real-time collaborative editing capabilities
+- Automatic format detection and conversion support for imported documents
+- Version tracking and change history during editing sessions with user attribution
+- Template-based document creation with BMAD methodology guidance
+
+**Review & Approval Phase:**
+- Multi-stage approval workflow with designated reviewers and approvers
+- User notification system for approval requests, comments, and status changes
+- Comment and feedback integration with threaded discussions and resolution tracking
+- Approval status dashboard with pending, approved, and rejected document visibility
+- Escalation procedures for overdue approvals with automated reminders
+
+**Publishing Phase:**
+- User triggers "Publish" action after successful approval completion
+- Automated GitHub check-in via MCP with proper commit messages and branch management
+- Simultaneous publishing to configured SharePoint locations with metadata preservation
+- Confirmation and audit trail generation with detailed publishing logs
+- Version synchronization across all publishing destinations with conflict resolution
+
+### File Management Strategy
+
+- **Web Server File Operations:** All file creation, editing, and management operations performed server-side with secure file handling and access controls
+- **Temporary vs Permanent Storage:** Clear separation between temporary editing storage and permanent document repositories with appropriate retention policies
+- **File Versioning During Editing:** Comprehensive version control during editing sessions with automatic snapshots and rollback capabilities
+- **Conflict Resolution:** Automated conflict detection and resolution for simultaneous edits with merge capabilities and user notification
+- **Backup and Recovery:** Regular backup procedures for all documents with point-in-time recovery and disaster recovery capabilities
+
+### Security & Access Control
+
+- **User Authentication:** Multi-factor authentication with integration to enterprise identity providers (Azure AD, LDAP, SAML)
+- **Document Access Permissions:** Granular access control at document, section, and field levels with inheritance and override capabilities
+- **GitHub/SharePoint Credential Security:** Secure credential storage with encryption at rest and in transit, credential rotation, and access auditing
+- **Audit Logging:** Comprehensive audit trail for all document operations, user actions, and system events with tamper-proof logging
+- **Data Encryption:** End-to-end encryption for document storage, transmission, and processing with enterprise-grade encryption standards
 
 ## Constraints & Assumptions
 
