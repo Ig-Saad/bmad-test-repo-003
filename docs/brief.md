@@ -10,7 +10,7 @@ Currently, there exists a significant and costly disconnect between upstream sta
 
 **The Gap:** BMad v6 provides revolutionary AI-driven agile workflows with 12 specialized agents, scale-adaptive intelligence, and proven 4-phase methodology, but it's primarily accessible through IDEs using markdown files, creating multiple barriers for non-technical users: (1) IDEs are "too technical" (as evidenced in GTM team feedback), (2) markdown format is unfamiliar to business users who work natively in .doc/.docx, .xlsx, PDF, and design tools like Figma, and (3) v6's sophisticated agent orchestration and scale-adaptive workflows are inaccessible to stakeholders who need web-based interfaces. This forces upstream stakeholders to either avoid using BMad v6's proven methodologies or struggle with both unfamiliar technical interfaces and foreign document formats, missing the benefits of scale-adaptive intelligence and specialized agent expertise.
 
-**Format Disconnect:** Business stakeholders create specifications in Word documents, Excel spreadsheets, PowerPoint presentations, and Figma designs, while developers need markdown files and code-based artifacts. The lack of seamless format translation creates manual conversion overhead, version control issues, and information loss during handoffs.
+**Interface Disconnect:** Business stakeholders create specifications in Word documents, Excel spreadsheets, PowerPoint presentations, and Figma designs, while developers need markdown files and code-based artifacts. The lack of accessible document viewing and editing capabilities in web-based platforms creates manual conversion overhead, version control issues, and information loss during handoffs.
 
 **Impact:** This disconnect results in specification quality issues, increased downstream rework, delayed time-to-market, and inefficient handoffs between business and technical teams. Organizations lose the transformative benefits of BMad v6's scale-adaptive intelligence, specialized agent expertise, and proven 4-phase methodology because both the sophisticated tooling and document formats aren't accessible to the people who need to orchestrate complete project delivery.
 
@@ -37,7 +37,7 @@ The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform t
    - **Phase 3: Solutioning** (Track-dependent) - Architecture, security, DevOps, and test strategy documentation
    - **Phase 4: Implementation** (Iterative) - Story-centric development with iterative artifact updates
 
-**4. Format Translation Hub:** Seamless bidirectional conversion between business formats (.doc/.docx, .xlsx, PDF, Figma designs) and BMad v6's markdown-based artifacts, maintaining content fidelity and version synchronization across all formats while preserving BMad methodology integrity.
+**4. Document Management & Editing Hub:** Comprehensive web-based document viewing and editing capabilities for BMad v6's markdown-based artifacts, maintaining content fidelity and version synchronization while preserving BMad methodology integrity and enabling seamless collaboration.
 
 **5. Comprehensive Artifact Generation Engine:** Web-based creation and management of the complete spectrum of project artifacts following BMad v6's proven templates and workflows, including:
    - **SDLC Artifacts:** Requirements documents, architecture specifications, user stories, test plans, deployment guides, API documentation, and technical references
@@ -46,6 +46,8 @@ The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform t
    - **Training & Communication Artifacts:** User guides, training materials, change management documentation, and project communications
 
 **6. Seamless BMad v6 Integration Architecture:** Bidirectional synchronization with existing BMad v6 IDE workflows, GitHub repositories, and business tools (Confluence, SharePoint, Teams) while preserving both native document formats and BMad methodology throughout the complete workflow lifecycle.
+
+**7. Ignis Platform Telemetry Integration:** Comprehensive telemetry capture and real-time data transmission to the main Ignis Platform for analytics, monitoring, user behavior analysis, and platform optimization, ensuring seamless integration with the broader Ignis ecosystem.
 
 **Key Differentiators:** Unlike existing project management or documentation tools, this platform specifically implements BMad v6's revolutionary scale-adaptive intelligence and intelligent agent orchestration system while enabling comprehensive artifact generation across the entire project lifecycle. Non-technical stakeholders can leverage BMad v6's proven 4-phase methodology and contextually-selected specialized agent expertise to orchestrate complete project delivery - from market research and business case development through technical specifications and deployment documentation - using familiar document formats while maintaining seamless integration with existing BMad v6 IDE workflows. The intelligent orchestrator eliminates complexity by presenting only relevant agents and workflows, transforming business stakeholders from requirement creators into complete project orchestrators powered by BMad v6's AI-driven agile capabilities without cognitive overload.
 
@@ -60,7 +62,7 @@ The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform t
 **Specific Needs:**
 - Native support for business document formats (.doc, .xlsx, PDF)
 - Figma integration for design specification workflows
-- Automatic format translation without content loss
+- Comprehensive document viewing and editing capabilities within the web platform
 - Access to BMad v6's scale-adaptive intelligence through intelligent agent orchestration that presents only relevant agents
 - BMad v6's 4-phase methodology guidance for creating complete project documentation suites
 - Context-aware agent suggestions that eliminate complexity while maintaining access to specialized expertise
@@ -119,17 +121,20 @@ The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform t
 - **Scale-Adaptive Intelligence Engine:** Web-based implementation of BMad v6's three-track system with automatic complexity detection and workflow selection (Quick Flow, BMad Method, Brownfield) with seamless track transitions
 - **Intelligent Agent Orchestration Engine:** Context-aware orchestrator that analyzes user requirements and intelligently selects relevant agents from BMad v6's 12-agent ecosystem (PM, Analyst, Architect, Scrum Master, Developer, Test Architect, UX Designer, Technical Writer, Game Designer, Game Developer, Game Architect, BMad Master), presenting only contextually appropriate agents with progressive engagement as project complexity evolves
 - **4-Phase Workflow Implementation:** Full web-based execution of BMad v6's proven methodology (Analysis → Planning → Solutioning → Implementation) with phase-appropriate artifact generation and stakeholder handoffs
-- **Format Translation Engine:** Bidirectional conversion between business formats (.doc/.docx, .xlsx, PDF) and BMad v6's markdown-based artifacts, maintaining content structure, formatting, and embedded media with 95% fidelity while preserving BMad methodology integrity
+- **Document Viewing & Editing Engine:** Comprehensive web-based document viewing and editing capabilities for BMad v6's markdown-based artifacts, maintaining content structure, formatting, and embedded media while preserving BMad methodology integrity
 - **Figma Integration Core:** Import Figma designs, extract design specifications, and generate technical documentation from design artifacts with automatic updates when designs change, integrated with BMad v6's UX Designer agent workflows
-- **Comprehensive Artifact Generation:** Web-based creation of complete project artifact suites following BMad v6's proven templates and workflows, including SDLC documents (requirements, architecture, user stories, test plans), business documents (market research, business cases, presentations), compliance documentation, and training materials - all in user's preferred format with real-time format synchronization
-- **BMad v6 IDE Integration:** Bidirectional synchronization of all project artifacts between the web platform and existing BMad v6 IDE workflows, supporting both business formats and markdown simultaneously while maintaining workflow continuity
+- **Comprehensive Artifact Generation:** Web-based creation of complete project artifact suites following BMad v6's proven templates and workflows, including SDLC documents (requirements, architecture, user stories, test plans), business documents (market research, business cases, presentations), compliance documentation, and training materials with comprehensive editing and version control capabilities
+- **BMad v6 IDE Integration:** Bidirectional synchronization of all project artifacts between the web platform and existing BMad v6 IDE workflows, supporting markdown-based artifacts while maintaining workflow continuity
 - **Project Workspace Management:** Complete project orchestration with artifact organization, team member access control, and format-aware collaboration features across BMad v6's entire 4-phase project lifecycle
-- **BMad v6 Template Library:** Complete BMad v6 artifact template suite covering all project phases, tracks, and document types, available in multiple formats (.doc, .xlsx, markdown) with automatic format conversion and guided workflow execution
+- **BMad v6 Template Library:** Complete BMad v6 artifact template suite covering all project phases, tracks, and document types, with comprehensive editing capabilities and guided workflow execution
+- **Ignis Platform Telemetry Integration:** Comprehensive telemetry capture including user interactions, workflow performance, agent utilization, document generation metrics, and system performance data with real-time transmission to main Ignis Platform for analytics and optimization
 
 ### Environment Initialization (Must Have)
 
+- **Codebase Configuration Setup (Not Project Creation):** Clear distinction between codebase-level configuration (repository setup, integration configuration) and account-level project management, with proper terminology throughout the interface to avoid confusion
 - **Repository Configuration Setup:** Mandatory GitHub repository URL configuration, authentication token setup, default branch selection, document path structure definition, and commit message template configuration before users can begin any BMad v6 workflows
 - **BMad v6 Integration Configuration:** Required integration with existing BMad v6 IDE installations, agent configuration synchronization, workflow template alignment, and bidirectional artifact synchronization setup
+- **Ignis Platform Configuration:** Mandatory Ignis Platform endpoint configuration, authentication credentials setup, telemetry data schema alignment, and real-time data transmission verification before platform activation
 - **Document Publishing Configuration:** Required SharePoint site URL, document library setup, authentication method configuration, alternative publishing location setup, and document approval workflow definition to enable automated publishing capabilities
 - **User Workspace Initialization:** Default working directory setup, temporary file storage configuration, user permission level assignment, collaboration settings configuration, auto-save interval setup, and BMad v6 track preference configuration to establish personalized work environments
 - **MCP Integration Setup:** Model Context Protocol configuration for automated publishing, GitHub MCP integration setup for seamless repository operations, SharePoint MCP integration for document publishing, BMad v6 workflow MCP integration, and secure credential management for all third-party integrations
@@ -202,21 +207,56 @@ The MVP will be considered successful when a non-technical product manager can: 
 ### Platform Requirements
 - **Target Platforms:** Web-based application accessible through modern browsers (Chrome, Firefox, Safari, Edge) with responsive design for desktop and tablet usage
 - **Browser/OS Support:** Support for browsers released within the last 2 years, with primary focus on desktop environments where specification work typically occurs
-- **Performance Requirements:** Sub-2 second page load times, format conversion within 10 seconds for typical documents, real-time document synchronization with GitHub within 5 seconds, support for documents up to 50MB with embedded media and designs
+- **Performance Requirements:** Sub-2 second page load times, document editing response within 500ms, real-time document synchronization with GitHub within 5 seconds, support for documents up to 50MB with embedded media and designs
 
 ### Technology Preferences
 - **Frontend:** Modern web framework (React, Vue.js, or Angular) with component-based architecture to support BMad v6's 12-agent role switching, scale-adaptive workflow rendering, 4-phase methodology navigation, and multi-format document preview
 - **Backend:** Node.js or Python-based API server with document processing capabilities, leveraging existing BMad v6 framework components and enabling integration with multiple APIs (GitHub, Figma, BMad v6 IDE workflows, document conversion services)
-- **Database:** PostgreSQL for structured data (projects, users, BMad v6 templates, agent configurations, track selections, format mappings) with document storage in GitHub repositories and format-specific storage for business documents
-- **Document Processing:** Integration with document conversion libraries (pandoc, LibreOffice API) and cloud services (Google Docs API, Microsoft Graph API) for high-fidelity format translation while preserving BMad v6 methodology integrity
+- **Database:** PostgreSQL for structured data (projects, users, BMad v6 templates, agent configurations, track selections, phase status, format mappings) with Redis for agent definition caching and session management, plus document storage in GitHub repositories
+- **Document Processing:** Rich text editing capabilities with markdown support, document versioning, and cloud services integration (Google Docs API, Microsoft Graph API) while preserving BMad v6 methodology integrity
 - **BMad v6 Integration:** Direct integration with existing BMad v6 installation, agent configuration synchronization, workflow template sharing, and bidirectional artifact synchronization
+- **Ignis Platform Integration:** Real-time telemetry transmission, analytics data pipeline, user behavior tracking, performance monitoring, and seamless integration with main Ignis Platform ecosystem
 - **Hosting/Infrastructure:** Cloud-native deployment (AWS, Azure, or GCP) with containerized architecture for scalability, plus specialized document processing services and BMad v6 workflow orchestration
 
 ### Architecture Considerations
-- **Repository Structure:** Hybrid approach where the web platform manages metadata and BMad v6 workflow state while maintaining parallel artifact versions (business formats + BMad v6 markdown) in GitHub repositories, organized by BMad v6's 4-phase methodology and track-specific artifact types
-- **Service Architecture:** Microservices architecture with separate services for BMad v6 scale-adaptive intelligence, intelligent agent orchestration with context analysis, format translation, comprehensive artifact management, Figma integration, GitHub synchronization, BMad v6 IDE workflow integration, and user management
-- **Integration Requirements:** RESTful APIs for GitHub, Figma, and BMad v6 IDE integration, webhook support for real-time synchronization, comprehensive artifact processing pipeline with queue management, BMad v6 workflow orchestration, and extensible plugin architecture for future format and artifact type support
-- **Security/Compliance:** OAuth-based authentication with GitHub, Figma, and BMad v6 systems, role-based access control aligned with repository permissions and BMad v6 agent roles, encrypted artifact storage, comprehensive audit logging for enterprise compliance requirements, and artifact-level access controls
+- **Repository Structure:** Hybrid approach where the web platform manages metadata and BMad v6 workflow state while maintaining BMad v6 markdown artifacts in GitHub repositories, organized by BMad v6's 4-phase methodology and track-specific artifact types
+- **Service Architecture:** Microservices architecture with separate services for BMad v6 scale-adaptive intelligence, intelligent agent orchestration with context analysis, document editing and management, comprehensive artifact management, Figma integration, GitHub synchronization, BMad v6 IDE workflow integration, Ignis Platform telemetry service, and user management
+- **Integration Requirements:** RESTful APIs for GitHub, Figma, BMad v6 IDE, and Ignis Platform integration, webhook support for real-time synchronization, comprehensive artifact processing pipeline with queue management, BMad v6 workflow orchestration, real-time telemetry data transmission to Ignis Platform, and extensible plugin architecture for future format and artifact type support
+- **Security/Compliance:** OAuth-based authentication with GitHub, Figma, BMad v6, and Ignis Platform systems, role-based access control aligned with repository permissions and BMad v6 agent roles, encrypted artifact storage, comprehensive audit logging for enterprise compliance requirements, secure telemetry data transmission to Ignis Platform, and artifact-level access controls
+
+### Agent-as-Code Dynamic Loading Architecture
+
+**Challenge:** BMad v6 agents and workflows are dynamically loaded from repository files (.bmad and .github directories) rather than fixed configurations, requiring sophisticated caching and loading strategies for web implementation to avoid token bloat and performance degradation.
+
+**Solution Components:**
+- **Per-User Repository Caching:** Selective cloning and caching of .bmad and .github directories for each user session with intelligent cache invalidation and background updates
+- **Dynamic Agent Loading:** Context-aware loading of agent definitions based on project type, current phase, and user requirements rather than loading all 12 agents simultaneously
+- **Token Optimization Strategy:** Intelligent prompt management that balances functionality with performance, using selective agent definition loading and progressive engagement patterns
+- **MCP Tool Integration:** Efficient file reader/writer tool access for dynamic workflow execution with optimized API call patterns and caching mechanisms
+- **Working Branch Strategy:** Frequent updates to working branch with periodic publishing to main branch to reduce expensive pull request/merge operations
+
+**Performance Optimization:**
+- **Selective Loading:** Load only relevant agent definitions based on current project context and phase
+- **Progressive Engagement:** Start with 2-3 contextually appropriate agents, dynamically load additional agents as project complexity evolves
+- **Caching Strategy:** Pre-load common agent combinations and workflow definitions with background refresh
+- **Token Management:** Optimize prompt size through selective agent definition inclusion and context-aware loading
+
+### Dynamic Phase Progress Tracking Architecture
+
+**Challenge:** Project phases in BMad v6 are dynamically determined by LLM agents updating document status rather than programmatic database updates, requiring sophisticated status tracking mechanisms for web implementation.
+
+**Solution Components:**
+- **MCP Status Server:** Dedicated MCP server that agents can call to update phase completion status programmatically
+- **Document Status Scanning:** Backend mechanism to scan BMad v6 documents for completion markers and status indicators
+- **Phase Extraction Engine:** Dynamic extraction of project phases from workflow definitions based on project type and track selection
+- **Real-time Status Polling:** Frequent status updates on user login and after each chat interaction to maintain accurate progress indicators
+- **Agent-Driven Updates:** LLM agents call MCP server endpoints to update status when completing tasks or reaching milestones
+
+**Implementation Strategy:**
+- **Status API Integration:** RESTful API for phase status management with real-time updates
+- **Workflow Definition Parsing:** Extract available phases from BMad v6 workflow definitions dynamically
+- **Agent Integration:** Provide MCP tools for agents to update completion status during workflow execution
+- **UI Synchronization:** Real-time progress bar updates based on backend status polling and agent updates
 
 ## Environment Initialization Parameters
 
@@ -241,13 +281,14 @@ Before users can begin working with BMad v6 workflows in the web application, th
 ### User Workspace Configuration
 
 - **Default Working Directory:** Server-side workspace allocation for each user with appropriate storage quotas and access permissions
-- **Temporary File Storage:** Dedicated temporary storage for document processing, format conversion, and collaborative editing sessions with automatic cleanup policies
+- **Temporary File Storage:** Dedicated temporary storage for document processing, editing sessions, and collaborative editing with automatic cleanup policies
 - **User Permission Levels:** Role-based access control defining user capabilities (viewer, editor, approver, administrator) with granular permissions for different artifact types
 - **Collaboration Settings:** Real-time editing preferences, notification settings, sharing permissions, and team member access controls
 - **Auto-save Intervals:** Configurable automatic save frequency for different document types with version history retention policies
 
 ### Integration Settings
 
+- **Ignis Platform Configuration:** Main Ignis Platform endpoint URL, authentication credentials (API keys, service tokens), telemetry data schema configuration, real-time data transmission settings, and analytics dashboard integration
 - **MCP (Model Context Protocol) Configuration:** Core MCP server setup for automated publishing workflows with proper endpoint configuration and security settings
 - **GitHub MCP Integration:** Specialized MCP configuration for GitHub operations including repository access, branch management, and commit automation
 - **SharePoint MCP Integration:** SharePoint-specific MCP setup for document publishing, metadata management, and folder organization
@@ -262,7 +303,7 @@ The platform implements a comprehensive workflow for web-based document creation
 
 **Creation Phase:**
 - Documents created and edited exclusively on web server with real-time collaborative editing capabilities
-- Automatic format detection and conversion support for imported documents
+- Rich text editing capabilities with markdown support and real-time preview
 - Version tracking and change history during editing sessions with user attribution
 - Template-based document creation with BMAD methodology guidance
 
@@ -302,11 +343,11 @@ The platform implements a comprehensive workflow for web-based document creation
 - **Budget:** Development budget must accommodate both web platform development with document processing capabilities and ongoing maintenance of existing BMAD framework, requiring efficient resource allocation between new features and platform migration
 - **Timeline:** MVP delivery expected within 6-9 months to capitalize on current market opportunity and internal stakeholder momentum from recent demos and feedback
 - **Resources:** Development team likely consists of 3-5 developers with varying levels of experience in both web development and document processing technologies, plus the existing BMAD framework codebase
-- **Technical:** Must maintain backward compatibility with existing BMAD framework and VS Code extensions while adding complex document conversion capabilities that maintain content fidelity across multiple formats
+- **Technical:** Must maintain backward compatibility with existing BMAD framework and VS Code extensions while adding comprehensive document viewing and editing capabilities that maintain content fidelity and BMad v6 methodology integrity
 
 ### Key Assumptions
 - Non-technical stakeholders will adopt web-based tools more readily than learning VS Code, and will strongly prefer working in familiar document formats (.doc, .xlsx, PDF, Figma) while gaining access to BMad v6's powerful capabilities
-- Document conversion technology can achieve 95%+ fidelity for business-critical content including formatting, tables, images, and embedded media while preserving BMad v6 methodology integrity
+- Web-based document viewing and editing capabilities can provide sufficient functionality for business-critical content including formatting, tables, images, and embedded media while preserving BMad v6 methodology integrity
 - Figma API provides sufficient capabilities for design import, specification generation, and real-time synchronization with design changes, integrated with BMad v6's UX Designer agent workflows
 - GitHub integration will be sufficient for initial MVP, with other repository systems (GitLab, Bitbucket) addressable in later phases, maintaining compatibility with existing BMad v6 IDE workflows
 - Existing BMad v6 templates and workflows can be successfully adapted for web-based interfaces to cover comprehensive artifact generation across all project phases without losing methodology integrity, scale-adaptive intelligence, or specialized agent expertise
@@ -322,17 +363,19 @@ The platform implements a comprehensive workflow for web-based document creation
 - **Workflow Orchestration Resistance:** Organizations may resist adopting BMad v6's comprehensive methodology workflows through web interfaces, preferring to maintain existing fragmented processes despite the proven benefits of scale-adaptive intelligence
 - **Scope Expansion Risk:** Non-technical stakeholders may resist taking on expanded responsibilities as complete project orchestrators powered by BMad v6's capabilities, preferring traditional limited roles despite access to specialized agent expertise
 - **API Dependency Risk:** Heavy reliance on multiple external APIs (Figma, GitHub, BMad v6 systems, document processing services) creates vulnerability to external service changes, rate limiting, or service disruptions
-- **Performance Scalability:** Comprehensive artifact processing, multi-format conversion, and BMad v6 workflow orchestration may create performance bottlenecks as project complexity, artifact volume, and user base increase
+- **Performance Scalability:** Comprehensive artifact processing, document editing operations, and BMad v6 workflow orchestration may create performance bottlenecks as project complexity, artifact volume, and user base increase
 
 ### Open Questions
 - What is the optimal pricing model for different user segments considering BMad v6's scale-adaptive intelligence, specialized agent expertise, and comprehensive artifact generation capabilities?
 - How will the platform handle version conflicts when the same artifacts are edited simultaneously across different formats, BMad v6 phases, and track transitions?
 - What level of BMad v6 customization will enterprises require (custom agent configurations, industry-specific workflows, compliance-specific documentation suites) while maintaining methodology integrity?
-- Should the platform support offline functionality for comprehensive artifact editing and format conversion across all document types while maintaining BMad v6 workflow continuity?
+- Should the platform support offline functionality for comprehensive artifact editing across all document types while maintaining BMad v6 workflow continuity?
 - How will user onboarding address the complexity of BMad v6's scale-adaptive intelligence and 12-agent orchestration while maintaining simplicity for individual artifact creation?
 - What are the specific compliance requirements for comprehensive artifact processing, storage, and audit trails across different industries and document types when using BMad v6 methodology?
 
 ### Areas Needing Further Research
+- **Agent-as-Code Performance Optimization:** Token consumption analysis for different agent loading strategies, latency benchmarking for dynamic workflow execution, and caching effectiveness for agent definitions
+- **Dynamic Phase Progress Implementation:** MCP server architecture design, document status scanning algorithms, and real-time UI synchronization performance
 - BMad v6 integration architecture evaluation and testing for seamless web-to-IDE workflow transitions while maintaining methodology integrity
 - Comprehensive artifact processing technology evaluation and fidelity testing across all target formats and document types with BMad v6 template preservation
 - Figma API capabilities assessment for design import and comprehensive design documentation generation workflows integrated with BMad v6's UX Designer agent
@@ -352,11 +395,11 @@ Based on the meeting transcript and vision document analysis, key findings inclu
 Recent demos revealed clear user segmentation between technical users comfortable with BMad v6 IDE workflows and non-technical stakeholders requiring both web-based interfaces and comprehensive artifact generation capabilities in familiar document formats. GTM teams specifically requested more accessible tools for leveraging BMad v6's proven methodology, scale-adaptive intelligence, and specialized agents for complete project documentation creation and collaboration across all project phases.
 
 **Technical Feasibility Studies:**
-Initial assessment confirms that existing BMad v6 framework components can be adapted for web-based implementation while maintaining methodology integrity, with GitHub API providing sufficient capabilities for bidirectional synchronization with existing IDE workflows. Document conversion technology evaluation shows promising results for maintaining content fidelity across business and technical formats while preserving BMad v6 template structure and agent-specific content.
+Initial assessment confirms that existing BMad v6 framework components can be adapted for web-based implementation while maintaining methodology integrity, with GitHub API providing sufficient capabilities for bidirectional synchronization with existing IDE workflows. Web-based document editing technology evaluation shows promising results for maintaining content fidelity and functionality while preserving BMad v6 template structure and agent-specific content.
 
 ### B. Stakeholder Input
 
-**Development Team Feedback:** Team members have expressed confidence in adapting existing BMad v6 workflows to web interfaces while maintaining methodology integrity, scale-adaptive intelligence, and compatibility with existing IDE workflows. Additional technical complexity of format conversion and BMad v6 integration is acknowledged but considered manageable given the proven framework foundation.
+**Development Team Feedback:** Team members have expressed confidence in adapting existing BMad v6 workflows to web interfaces while maintaining methodology integrity, scale-adaptive intelligence, and compatibility with existing IDE workflows. Additional technical complexity of document editing capabilities and BMad v6 integration is acknowledged but considered manageable given the proven framework foundation.
 
 **Business Stakeholder Requirements:** Non-technical stakeholders have emphasized the need for familiar web-based interfaces with access to BMad v6's scale-adaptive intelligence and comprehensive artifact generation capabilities in their preferred document formats (.doc, .xlsx, PDF, Figma), with particular focus on leveraging BMad v6's 4-phase methodology for complete project lifecycle orchestration, maintaining formatting across all artifact types, and collaborative workflow capabilities powered by specialized agent expertise spanning from initial research through deployment documentation.
 
@@ -373,12 +416,13 @@ Initial assessment confirms that existing BMad v6 framework components can be ad
 ### Immediate Actions
 
 1. **Conduct user interviews with 5-10 target personas** to validate assumptions about BMad v6 scale-adaptive intelligence adoption, comprehensive artifact generation preferences, and multi-format workflow patterns while maintaining methodology integrity
-2. **Evaluate BMad v6 integration architecture** including existing framework components, agent orchestration systems, workflow template structures, and bidirectional synchronization requirements with IDE workflows
-3. **Assess comprehensive artifact processing technologies** including pandoc, LibreOffice API, cloud-based conversion services, and template generation systems for fidelity and performance across all artifact types while preserving BMad v6 methodology structure
+2. **Conduct BMad v6 Agent-as-Code Technical Deep Dive** including whiteboarding session for dynamic loading architecture, performance benchmarking for token consumption, MCP tool integration strategy, and phase progress tracking implementation
+3. **Assess comprehensive document editing technologies** including rich text editors, markdown processors, and template generation systems for functionality and performance across all artifact types while preserving BMad v6 methodology structure
 4. **Evaluate Figma API capabilities** for design import, comprehensive design documentation generation, real-time synchronization requirements, and integration with BMad v6's UX Designer agent workflows
 5. **Create technical architecture document** defining system design, BMad v6 integration approach, comprehensive artifact processing pipeline, API specifications, and integration approaches for complete 4-phase project lifecycle support
-6. **Develop competitive analysis** of existing project management and documentation platforms with focus on AI-driven methodologies, comprehensive artifact generation, and multi-format support capabilities compared to BMad v6's proven approach
+6. **Assess Ignis Platform integration requirements** including telemetry data schema, API endpoints, authentication mechanisms, real-time data transmission protocols, and analytics dashboard integration specifications
+7. **Develop competitive analysis** of existing project management and documentation platforms with focus on AI-driven methodologies, comprehensive artifact generation, and multi-format support capabilities compared to BMad v6's proven approach
 
 ### PM Handoff
 
-This Project Brief provides the full context for BMad v6-Powered SDLC Platform Web UI with comprehensive artifact generation, scale-adaptive intelligence, and multi-format document support capabilities. Please start in 'PRD Generation Mode', review the brief thoroughly to work with the user to create the PRD section by section as the template indicates, asking for any necessary clarification or suggesting improvements. Pay particular attention to BMad v6's scale-adaptive intelligence implementation, 12-agent orchestration system, 4-phase methodology execution, comprehensive artifact generation requirements, BMad v6 IDE integration requirements, format translation capabilities, and their impact on user workflows and technical architecture.
+This Project Brief provides the full context for BMad v6-Powered SDLC Platform Web UI with comprehensive artifact generation, scale-adaptive intelligence, document viewing/editing capabilities, and Ignis Platform telemetry integration. Please start in 'PRD Generation Mode', review the brief thoroughly to work with the user to create the PRD section by section as the template indicates, asking for any necessary clarification or suggesting improvements. Pay particular attention to BMad v6's scale-adaptive intelligence implementation, intelligent agent orchestration system, 4-phase methodology execution, comprehensive artifact generation requirements, BMad v6 IDE integration requirements, document viewing and editing capabilities, Ignis Platform telemetry integration requirements, and their impact on user workflows and technical architecture.
