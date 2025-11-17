@@ -1,21 +1,23 @@
-# BMAD-Driven SDLC Platform Web UI Backend Architecture Document
+# BMad v6-Powered SDLC Platform Web UI Architecture Document
 
 ## Introduction
 
-This document outlines the backend architecture for **BMAD-Driven SDLC Platform Web UI**, including Python-based backend systems, Azure cloud deployment, and integration patterns. It serves as the definitive architectural blueprint for AI-driven development, ensuring consistency and adherence to chosen patterns and technologies.
+This document outlines the comprehensive architecture for **BMad v6-Powered SDLC Platform Web UI**, including both POC validation and full platform implementations. The architecture bridges BMad v6's revolutionary AI-driven agile methodology with web-based accessibility, enabling non-technical stakeholders to leverage scale-adaptive intelligence, intelligent agent orchestration, and proven 4-phase workflows through intuitive interfaces while maintaining seamless integration with existing BMad v6 IDE workflows.
 
-**Relationship to Frontend Architecture:**
-Since this project includes a significant user interface, a separate Frontend Architecture Document will detail the frontend-specific design and MUST be used in conjunction with this document. Core technology stack choices documented herein (see "Tech Stack") are definitive for the entire project, including any frontend components.
+**Dual Architecture Approach:**
+This document presents both POC validation architecture (4-6 week timeline) and comprehensive platform architecture (6-9 month MVP), showing clear evolution paths and shared architectural foundations. The POC validates core concepts while the full platform delivers enterprise-grade capabilities.
 
-### Starter Template or Existing Project
+### Project Classification
 
 Based on the PRD analysis, this is a **greenfield project** requiring custom architecture due to its unique requirements for:
-- Multi-format document processing (.doc, .xlsx, PDF, Figma)
-- BMAD agent orchestration
-- Complex GitHub and Figma integrations
-- Bidirectional format translation
+- BMad v6 scale-adaptive intelligence integration (Quick Flow, BMad Method, Brownfield tracks)
+- Intelligent agent orchestration from 12-agent ecosystem with context-aware selection
+- Complete 4-phase methodology execution (Analysis → Planning → Solutioning → Implementation)
+- Comprehensive artifact generation across SDLC, business, compliance, and training documentation
+- Seamless BMad v6 IDE workflow integration with bidirectional synchronization
+- Ignis Platform telemetry integration for ecosystem connectivity
 
-**Decision:** N/A - This is a greenfield project requiring custom Python backend architecture from scratch, optimized for Azure cloud services.
+**Decision:** Greenfield project requiring custom Node.js/React architecture optimized for cloud-native deployment, BMad v6 methodology preservation, and intelligent agent orchestration.
 
 ### Change Log
 
@@ -23,886 +25,1719 @@ Based on the PRD analysis, this is a **greenfield project** requiring custom arc
 |------|---------|-------------|---------|
 | 2025-11-10 | 1.0 | Initial architecture document creation | Winston (Architect) |
 | 2025-11-11 | 2.0 | Updated for Python backend with Azure deployment | Winston (Architect) |
+| 2025-11-17 | 3.0 | Updated for BMad v6-powered platform with POC and full architecture | Winston (Architect) |
+
+## POC Architecture (Validation Phase)
+
+### POC Technical Summary
+
+The BMad v6-Powered SDLC Platform POC employs a **simplified cloud-native architecture** designed for rapid validation of core concepts within a 4-6 week timeline. The POC focuses on demonstrating intelligent agent orchestration from BMad v6's ecosystem, complete 4-phase methodology execution through web interfaces, and seamless integration with existing BMad v6 IDE workflows. Key validation points include context-aware agent selection (presenting 2-3 relevant agents initially), GitHub and SharePoint integration for bidirectional synchronization, and comprehensive Ignis Platform telemetry integration. The architecture leverages **React 18+ with Next.js 14, Node.js 20+ backend, and PostgreSQL 15** for streamlined development while maintaining BMad v6 methodology integrity and proving 60-70% token consumption reduction through selective agent loading.
+
+### POC Cloud Infrastructure
+
+**Provider:** Cloud-agnostic with preference for AWS/Azure/GCP based on team expertise
+**Key Services:** Container-based deployment (Docker), managed PostgreSQL, Redis for caching, object storage for documents
+**Deployment Strategy:** Single-region deployment with basic monitoring and logging
+
+### POC High Level Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph "POC User Layer"
+        POCBU[Non-Technical Users<br/>Web Interface]
+        POCDEV[Technical Users<br/>Validation & Integration]
+    end
+
+    subgraph "POC Frontend - React/Next.js"
+        POCWEB[React 18+ Web App<br/>Next.js 14 Framework]
+        POCAGENT[Agent Selection UI<br/>Context-Aware Interface]
+        POCPHASE[4-Phase Workflow<br/>Progress Tracking]
+    end
+
+    subgraph "POC Backend Services - Node.js"
+        POCAPI[Node.js 20+ API<br/>Express.js Framework]
+        POCORCH[BMad v6 Agent<br/>Orchestration Engine]
+        POCDOC[Document Generation<br/>BMad v6 Templates]
+        POCTEL[Ignis Platform<br/>Telemetry Service]
+    end
+
+    subgraph "POC Integrations"
+        POCGH[GitHub Integration<br/>Repository Sync]
+        POCSP[SharePoint Integration<br/>Document Management]
+        POCBMAD[BMad v6 Framework<br/>Agent Definitions]
+        POCIGNIS[Ignis Platform<br/>Analytics Endpoint]
+    end
+
+    subgraph "POC Data Layer"
+        POCDB[(PostgreSQL 15<br/>Project & User Data)]
+        POCREDIS[Redis 7<br/>Session & Cache]
+        POCSTORAGE[Object Storage<br/>Documents & Artifacts]
+    end
+
+    POCBU --> POCWEB
+    POCDEV --> POCWEB
+    POCWEB --> POCAPI
+    POCAPI --> POCORCH
+    POCAPI --> POCDOC
+    POCAPI --> POCTEL
+
+    POCORCH --> POCBMAD
+    POCDOC --> POCGH
+    POCDOC --> POCSP
+    POCTEL --> POCIGNIS
+
+    POCAPI --> POCDB
+    POCORCH --> POCREDIS
+    POCDOC --> POCSTORAGE
+```
+
+### POC Architecture Components
+
+**POC Frontend (React/Next.js):**
+- **React 18+ Web Application:** Modern React with hooks and context for state management
+- **Next.js 14 Framework:** Server-side rendering, API routes, and optimized performance
+- **Agent Selection Interface:** Context-aware UI presenting 2-3 relevant BMad v6 agents initially
+- **4-Phase Workflow Navigator:** Visual progress through Configuration, Ideation, Product Definition, Planning
+
+**POC Backend Services (Node.js):**
+- **Express.js API Server:** RESTful API with middleware for authentication and validation
+- **BMad v6 Agent Orchestration:** Context-aware agent selection and progressive engagement logic
+- **Document Generation Engine:** BMad v6 template processing with artifact creation capabilities
+- **Ignis Platform Telemetry:** Comprehensive data capture and real-time transmission service
+
+**POC Integration Layer:**
+- **GitHub Integration:** Repository synchronization with basic commit and branch management
+- **SharePoint Integration:** Document upload and metadata management via Microsoft Graph API
+- **BMad v6 Framework Access:** Direct integration with agent definitions and template system
+- **Ignis Platform Connectivity:** Real-time telemetry data transmission and validation
+
+**POC Data Management:**
+- **PostgreSQL 15:** Primary database for users, projects, agents, workflows, and artifacts
+- **Redis 7:** Session management, agent definition caching, and performance optimization
+- **Object Storage:** Document storage with version control and access management
+
+### POC Success Validation Points
+
+**Technical Validation:**
+- 60-70% token consumption reduction through selective agent loading
+- Sub-3-second response times for agent loading and workflow execution
+- 100% successful bidirectional synchronization with GitHub and SharePoint
+- Real-time telemetry data transmission to Ignis Platform with zero data loss
+
+**User Experience Validation:**
+- 90% user comprehension of complete workflow within 30 minutes
+- 85% task completion rate for end-to-end project setup and artifact generation
+- 95% accuracy in automatic phase completion detection and progress updates
+- 75% user preference for web interface over traditional tools
+
+## Full Platform Architecture (Production Implementation)
+
+### Full Platform Technical Summary
+
+The comprehensive BMad v6-Powered SDLC Platform employs an **enterprise-grade cloud-native microservices architecture** designed for 500+ monthly active users with complete project lifecycle orchestration capabilities. The platform implements BMad v6's full scale-adaptive intelligence engine with automatic complexity detection across three tracks (Quick Flow, BMad Method, Brownfield), intelligent agent orchestration from the complete 12-agent ecosystem, and comprehensive artifact generation spanning SDLC, business, compliance, and training documentation. The architecture leverages **React 18+ frontend, Node.js 20+ microservices, PostgreSQL 15 with Redis 7 caching, and cloud-native deployment** with advanced features including real-time collaborative editing, enterprise security, comprehensive analytics, and seamless integration with existing BMad v6 IDE workflows, GitHub repositories, Figma designs, and business tools (SharePoint, Confluence, Teams).
 
 ## High Level Architecture
 
-### Technical Summary
+### Full Platform Technical Summary
 
-The BMAD-Driven SDLC Platform employs a **cloud-native microservices architecture** deployed on Microsoft Azure, combining a React-based frontend with Python backend services orchestrated through Azure API Management. The system centers around a sophisticated **Format Translation Hub** that maintains bidirectional synchronization between business document formats (.doc/.docx, .xlsx, PDF, Figma) and developer markdown files, while implementing dynamic **BMAD agent orchestration** for role-based workflow execution. Key integration points include real-time GitHub synchronization, Figma API connectivity for design workflows, and a comprehensive document processing pipeline supporting concurrent multi-format editing. The architecture leverages **Azure App Service, Azure Functions, and Azure Database for PostgreSQL** for scalable deployment with built-in authentication, file storage, and real-time collaboration features, enabling seamless handoffs between non-technical stakeholders working in familiar business formats and developers operating in their preferred technical environments.
+The comprehensive BMad v6-Powered SDLC Platform employs an **enterprise-grade cloud-native microservices architecture** supporting complete project lifecycle orchestration for 500+ monthly active users. The platform implements BMad v6's revolutionary scale-adaptive intelligence engine with automatic complexity detection and workflow selection across three tracks (Quick Flow, BMad Method, Brownfield), intelligent agent orchestration from the complete 12-agent ecosystem with context-aware selection and progressive engagement, and comprehensive artifact generation spanning SDLC documents, business artifacts, compliance documentation, and training materials. The architecture leverages **React 18+ frontend with Next.js 14, Node.js 20+ microservices, PostgreSQL 15 with Redis 7 caching** for enterprise-grade deployment with advanced features including real-time collaborative editing, enterprise security and compliance, comprehensive analytics and reporting, and seamless integration with existing BMad v6 IDE workflows, GitHub repositories, Figma designs, and business tools (SharePoint, Confluence, Teams) while maintaining BMad v6 methodology integrity throughout the complete 4-phase workflow execution.
 
-### Cloud Infrastructure
+### Full Platform Cloud Infrastructure
 
-**Provider:** Microsoft Azure
-**Key Services:** Azure App Service (Frontend), Azure Functions (Backend APIs), Azure Database for PostgreSQL, Azure Blob Storage, Azure API Management, Azure Container Instances
-**Deployment Regions:** Primary: East US 2, Secondary: West Europe (for global distribution)
+**Provider:** Cloud-agnostic with multi-cloud support (AWS/Azure/GCP)
+**Key Services:** Container orchestration (Kubernetes), managed databases (PostgreSQL, Redis), object storage, API gateway, monitoring and logging
+**Deployment Regions:** Multi-region deployment with global CDN for optimal performance
+**Scalability:** Auto-scaling groups, load balancers, and horizontal pod autoscaling
 
 ### Repository Structure
 
-**Structure:** Monorepo with workspace-based organization
-**Monorepo Tool:** Poetry (Python dependency management) with workspace structure
-**Package Organization:** Domain-driven packages with shared libraries for types, utilities, and document processing
+**Structure:** Monorepo with workspace-based organization optimized for BMad v6 integration
+**Monorepo Tool:** npm/yarn workspaces with Lerna for package management and versioning
+**Package Organization:** Domain-driven packages with shared libraries for BMad v6 integration, agent orchestration, document processing, and comprehensive artifact generation
 
-### High Level Architecture Diagram
+### Full Platform High Level Architecture Diagram
 
 ```mermaid
 graph TB
     subgraph "User Layer"
-        BU[Business Users<br/>.doc, .xlsx, PDF]
-        DU[Developers<br/>Markdown, IDE]
-        DES[Designers<br/>Figma]
+        NTBU[Non-Technical Stakeholders<br/>Product Managers, Analysts, GTM]
+        TECHBU[Technical Stakeholders<br/>Developers, Architects]
+        COLLABU[Collaborative Users<br/>Cross-functional Teams]
     end
 
-    subgraph "Frontend Layer - Azure App Service"
-        WEB[React Web App<br/>Azure App Service]
-        EDITOR[Multi-Format Editor]
-        COLLAB[Real-time Collaboration]
+    subgraph "Frontend Layer - React/Next.js"
+        WEB[React 18+ Web App<br/>Next.js 14 Framework]
+        SCALEUI[Scale-Adaptive UI<br/>Track Selection Interface]
+        AGENTUI[Intelligent Agent UI<br/>Context-Aware Selection]
+        PHASEUI[4-Phase Workflow UI<br/>Progress Visualization]
+        ARTIFACTUI[Artifact Generation UI<br/>Comprehensive Templates]
     end
 
-    subgraph "API Gateway - Azure API Management"
-        APIM[Azure API Management]
-        AUTH[MSAL<br/>Authentication]
+    subgraph "API Gateway & Load Balancing"
+        GATEWAY[API Gateway<br/>Rate Limiting & Auth]
+        LB[Load Balancer<br/>Multi-Region Distribution]
     end
 
-    subgraph "Backend Services - Azure Functions"
-        TRANS[Format Translation<br/>Python Function]
-        AGENT[BMAD Agent<br/>Orchestration Function]
-        DOC[Document Management<br/>Python Function]
-        SYNC[GitHub Sync<br/>Python Function]
+    subgraph "Core BMad v6 Services - Node.js Microservices"
+        SCALEENG[Scale-Adaptive<br/>Intelligence Engine]
+        AGENTORCH[Intelligent Agent<br/>Orchestration Service]
+        PHASEENG[4-Phase Workflow<br/>Management Engine]
+        ARTIFACTGEN[Comprehensive Artifact<br/>Generation Service]
+        BMADIDE[BMad v6 IDE<br/>Integration Service]
     end
 
-    subgraph "External Integrations"
-        GH[GitHub API]
-        FIG[Figma API]
-        CONV[Document Conversion<br/>Services]
+    subgraph "Integration & External Services"
+        GITHUB[GitHub Integration<br/>Repository Sync]
+        FIGMA[Figma Integration<br/>Design Workflows]
+        SHAREPOINT[SharePoint Integration<br/>Document Management]
+        IGNIS[Ignis Platform<br/>Telemetry & Analytics]
+        BMADCORE[BMad v6 Framework<br/>Agent Definitions & Templates]
     end
 
-    subgraph "Data Layer - Azure Services"
-        DB[(Azure Database<br/>for PostgreSQL)]
-        STORAGE[Azure Blob<br/>Storage]
-        CACHE[Azure Cache<br/>for Redis]
-        QUEUE[Azure Storage Queues<br/>Message Queue]
+    subgraph "Data & Storage Layer"
+        PRIMARYDB[(PostgreSQL 15<br/>Primary Database)]
+        CACHE[Redis 7<br/>Caching & Sessions]
+        DOCSTORAGE[Object Storage<br/>Documents & Artifacts]
+        ANALYTICS[(Analytics Database<br/>Telemetry & Metrics)]
     end
 
-    BU --> WEB
-    DU --> WEB
-    DES --> WEB
+    subgraph "Infrastructure & Monitoring"
+        MONITORING[Monitoring & Logging<br/>Performance Tracking]
+        SECURITY[Security & Compliance<br/>Enterprise Features]
+        BACKUP[Backup & Recovery<br/>Data Protection]
+    end
 
-    WEB --> APIM
-    APIM --> AUTH
-    APIM --> TRANS
-    APIM --> AGENT
-    APIM --> DOC
-    APIM --> SYNC
+    NTBU --> WEB
+    TECHBU --> WEB
+    COLLABU --> WEB
 
-    TRANS --> CONV
-    SYNC --> GH
-    DOC --> FIG
+    WEB --> GATEWAY
+    GATEWAY --> LB
+    LB --> SCALEENG
+    LB --> AGENTORCH
+    LB --> PHASEENG
+    LB --> ARTIFACTGEN
+    LB --> BMADIDE
 
-    TRANS --> DB
-    AGENT --> DB
-    DOC --> STORAGE
-    SYNC --> DB
+    SCALEENG --> BMADCORE
+    AGENTORCH --> BMADCORE
+    PHASEENG --> BMADCORE
+    ARTIFACTGEN --> BMADCORE
+    BMADIDE --> BMADCORE
 
-    TRANS --> QUEUE
-    AGENT --> CACHE
+    ARTIFACTGEN --> GITHUB
+    ARTIFACTGEN --> FIGMA
+    ARTIFACTGEN --> SHAREPOINT
+    AGENTORCH --> IGNIS
+    PHASEENG --> IGNIS
+
+    SCALEENG --> PRIMARYDB
+    AGENTORCH --> CACHE
+    PHASEENG --> PRIMARYDB
+    ARTIFACTGEN --> DOCSTORAGE
+    BMADIDE --> PRIMARYDB
+
+    IGNIS --> ANALYTICS
+    MONITORING --> ANALYTICS
+    SECURITY --> PRIMARYDB
+    BACKUP --> DOCSTORAGE
 ```
 
-#### Architecture Diagram Explanation
+#### Full Platform Architecture Diagram Explanation
 
-This high-level architecture diagram illustrates the complete system structure and data flow:
+This comprehensive architecture diagram illustrates the complete BMad v6-powered system structure and intelligent workflow orchestration:
 
 **User Layer:**
-- **Business Users:** Non-technical stakeholders who work with familiar formats (.doc, .xlsx, PDF) for creating specifications and requirements
-- **Developers:** Technical team members who prefer markdown and IDE-based workflows for implementation
-- **Designers:** Creative professionals using Figma for design specifications and mockups
+- **Non-Technical Stakeholders:** Product managers, business analysts, and GTM teams who leverage BMad v6's scale-adaptive intelligence through familiar web interfaces
+- **Technical Stakeholders:** Developers and architects who maintain existing BMad v6 IDE workflows while collaborating through the web platform
+- **Collaborative Users:** Cross-functional teams utilizing the platform for complete project lifecycle orchestration with intelligent agent guidance
 
 **Frontend Layer:**
-- **React Web App:** Single-page application hosted on Azure App Service, providing the unified interface for all user types
-- **Multi-Format Editor:** Component supporting editing in multiple document formats with real-time preview
-- **Real-time Collaboration:** Features enabling simultaneous editing and live updates across different user sessions
+- **React 18+ Web Application:** Modern single-page application with Next.js 14 framework providing server-side rendering and optimized performance
+- **Scale-Adaptive UI:** Interface for automatic complexity detection and intelligent track selection (Quick Flow, BMad Method, Brownfield)
+- **Intelligent Agent UI:** Context-aware agent selection interface presenting relevant agents from BMad v6's 12-agent ecosystem with progressive engagement
+- **4-Phase Workflow UI:** Visual navigation through BMad v6's proven methodology (Analysis → Planning → Solutioning → Implementation)
+- **Artifact Generation UI:** Comprehensive template-based document creation interface supporting SDLC, business, compliance, and training documentation
 
-**API Gateway Layer:**
-- **Azure API Management:** Centralized entry point providing rate limiting, authentication, monitoring, and API versioning
-- **MSAL Authentication:** Microsoft Authentication Library integration for seamless Azure AD SSO
+**Core BMad v6 Services:**
+- **Scale-Adaptive Intelligence Engine:** Automatic complexity detection, track selection, and seamless workflow transitions based on project evolution
+- **Intelligent Agent Orchestration Service:** Context-aware agent selection, progressive engagement, and specialized expertise coordination from the complete 12-agent ecosystem
+- **4-Phase Workflow Management Engine:** Complete methodology execution with automatic phase completion detection and stakeholder handoff management
+- **Comprehensive Artifact Generation Service:** Template-based document creation following BMad v6 standards with methodology integrity validation
+- **BMad v6 IDE Integration Service:** Seamless bidirectional synchronization with existing BMad v6 workflows and development team handoff capabilities
 
-**Backend Services:**
-- **Format Translation Function:** Handles bidirectional conversion between business formats and markdown using Pandoc and python-docx
-- **BMAD Agent Orchestration:** Manages AI agent workflows for guided specification creation and validation
-- **Document Management Function:** Core CRUD operations, version control, and metadata management
-- **GitHub Sync Function:** Maintains bidirectional synchronization with GitHub repositories
+**Integration & External Services:**
+- **GitHub Integration:** Repository synchronization, commit management, and seamless handoff to existing BMad v6 IDE workflows
+- **Figma Integration:** Design import, specification extraction, and UX Designer agent workflow integration
+- **SharePoint Integration:** Enterprise document management with metadata synchronization and approval workflows
+- **Ignis Platform:** Comprehensive telemetry capture, real-time data transmission, and analytics integration for ecosystem connectivity
+- **BMad v6 Framework:** Direct access to agent definitions, template system, and methodology components
 
-**External Integrations:**
-- **GitHub API:** For repository management, file synchronization, and webhook handling
-- **Figma API:** For design file integration and collaborative design workflows
-- **Document Conversion Services:** External services for complex format transformations
+**Data & Storage Layer:**
+- **PostgreSQL 15:** Primary database for users, projects, agents, workflows, phases, tracks, artifacts, and comprehensive metadata management
+- **Redis 7:** High-performance caching for agent definitions, session management, and performance optimization
+- **Object Storage:** Scalable document storage with version control, access management, and CDN integration
+- **Analytics Database:** Dedicated storage for telemetry data, user behavior analytics, and performance metrics
 
-**Data Layer:**
-- **PostgreSQL Database:** Primary data store for documents, users, projects, and metadata
-- **Azure Blob Storage:** Object storage for document files, versions, and media assets
-- **Redis Cache:** High-performance caching for session data, document previews, and API responses
-- **Azure Storage Queues:** Simple message queuing for asynchronous document processing tasks
+**Infrastructure & Monitoring:**
+- **Monitoring & Logging:** Comprehensive performance tracking, error monitoring, and system health management
+- **Security & Compliance:** Enterprise-grade security features, audit logging, and compliance management
+- **Backup & Recovery:** Data protection, disaster recovery, and business continuity planning
 
-**Data Flow Patterns:**
-1. **User Requests:** All user types access the system through the React web application
-2. **API Gateway:** All backend communication flows through Azure API Management for security and monitoring
-3. **Service Communication:** Backend services communicate with external APIs and data stores
-4. **Async Processing:** Heavy operations like document conversion are queued for background processing
+**Intelligent Data Flow Patterns:**
+1. **Context-Aware User Experience:** Users access scale-adaptive intelligence through intuitive interfaces that present appropriate complexity levels
+2. **Intelligent Agent Orchestration:** System analyzes project context and presents relevant agents with progressive engagement as complexity evolves
+3. **Methodology-Driven Workflow:** BMad v6's 4-phase structure guides users through proven project execution with automatic completion detection
+4. **Seamless Integration:** Bidirectional synchronization maintains workflow continuity between web platform and existing BMad v6 IDE environments
+5. **Comprehensive Telemetry:** Real-time data capture and transmission to Ignis Platform for analytics, optimization, and ecosystem connectivity
 
 ### Architectural Patterns
 
-- **Serverless Architecture:** Azure Functions for scalable backend processing - _Rationale:_ Optimal cost efficiency and automatic scaling for variable document processing workloads
-- **Microservices Pattern:** Domain-driven service separation - _Rationale:_ Independent deployment and scaling of document processing, agent orchestration, and integration services
-- **Repository Pattern:** Abstract data access logic with Python ORMs - _Rationale:_ Enables testing and future database migration flexibility for complex document metadata
-- **API Gateway Pattern:** Azure API Management for centralized routing - _Rationale:_ Centralized auth, rate limiting, monitoring, and versioning for multiple Python microservices
-- **Event-Driven Architecture:** Azure Storage Queues for async processing - _Rationale:_ Handle long-running document processing without blocking user interface, simple and cost-effective
-- **CQRS Pattern:** Separate read/write models for document operations - _Rationale:_ Optimize for complex document queries while maintaining write performance using PostgreSQL
-- **Saga Pattern:** Orchestrate multi-step document workflows - _Rationale:_ Ensure consistency across format conversion, GitHub sync, and collaboration features using Azure Durable Functions
+- **Microservices Architecture:** Domain-driven service separation optimized for BMad v6 integration - _Rationale:_ Independent deployment and scaling of scale-adaptive intelligence, agent orchestration, 4-phase workflow management, and comprehensive artifact generation services
+- **Intelligent Agent Orchestration Pattern:** Context-aware agent selection and progressive engagement - _Rationale:_ Optimize token consumption and user experience by presenting only relevant agents from BMad v6's 12-agent ecosystem based on project context and complexity evolution
+- **Scale-Adaptive Intelligence Pattern:** Automatic complexity detection and track selection - _Rationale:_ Provide appropriate workflow depth (Quick Flow, BMad Method, Brownfield) based on project requirements while maintaining BMad v6 methodology integrity
+- **4-Phase Workflow Pattern:** Structured methodology execution with automatic progression - _Rationale:_ Ensure comprehensive project coverage through BMad v6's proven Analysis → Planning → Solutioning → Implementation phases with completion detection
+- **Repository Pattern:** Abstract data access logic with Node.js ORMs - _Rationale:_ Enables testing and future database migration flexibility for complex BMad v6 metadata, agent configurations, and workflow state management
+- **API Gateway Pattern:** Centralized routing and load balancing - _Rationale:_ Centralized auth, rate limiting, monitoring, and versioning for multiple Node.js microservices with multi-region distribution
+- **Event-Driven Architecture:** Message queues for async processing - _Rationale:_ Handle long-running artifact generation, agent orchestration, and integration synchronization without blocking user interface
+- **CQRS Pattern:** Separate read/write models for complex operations - _Rationale:_ Optimize for complex agent queries, workflow state management, and artifact retrieval while maintaining write performance
+- **Saga Pattern:** Orchestrate multi-step BMad v6 workflows - _Rationale:_ Ensure consistency across phase transitions, agent handoffs, artifact generation, and external integrations (GitHub, SharePoint, Ignis Platform)
 
-## Azure Deployment Architecture
+## Technology Stack Comparison
 
-### Deployment Diagram
+### POC vs Full Platform Technology Selection
+
+| Category | POC Technology | Full Platform Technology | Rationale |
+|----------|----------------|--------------------------|-----------|
+| **Frontend Framework** | React 18+ with Next.js 14 | React 18+ with Next.js 14 | Consistent technology for seamless evolution |
+| **Backend Language** | Node.js 20+ | Node.js 20+ | JavaScript ecosystem alignment, rapid development |
+| **Backend Framework** | Express.js | Express.js with microservices | Scalable architecture evolution |
+| **Database** | PostgreSQL 15 | PostgreSQL 15 with read replicas | Production-grade scaling and performance |
+| **Cache** | Redis 7 | Redis 7 with clustering | Enhanced performance and availability |
+| **Authentication** | Basic OAuth (GitHub) | Enterprise SSO + OAuth | Security and compliance requirements |
+| **Deployment** | Single container/VM | Kubernetes with auto-scaling | Enterprise scalability and reliability |
+| **Monitoring** | Basic logging | Comprehensive APM + analytics | Production monitoring and optimization |
+| **Integration Scope** | GitHub + SharePoint | Full enterprise integration suite | Complete business tool ecosystem |
+| **BMad v6 Integration** | Core agent orchestration | Complete 12-agent ecosystem | Full methodology implementation |
+
+### Shared Technology Foundation
+
+**Core Technologies (Consistent Across Both):**
+- **React 18+ with Next.js 14:** Modern frontend framework with server-side rendering, API routes, and optimized performance
+- **Node.js 20+:** JavaScript runtime with excellent ecosystem support for BMad v6 integration and rapid development
+- **PostgreSQL 15:** Robust relational database with JSON support for complex BMad v6 metadata and workflow state
+- **Redis 7:** High-performance caching for agent definitions, session management, and performance optimization
+- **TypeScript:** Type safety across frontend and backend for better development experience and code quality
+
+**BMad v6 Integration Technologies:**
+- **Agent Definition Loading:** Dynamic loading of BMad v6 agent configurations with context-aware selection
+- **Template System Access:** Direct integration with BMad v6 template library for comprehensive artifact generation
+- **Workflow Orchestration:** Implementation of BMad v6's 4-phase methodology with automatic progression and completion detection
+- **Scale-Adaptive Intelligence:** Complexity detection and track selection (Quick Flow, BMad Method, Brownfield) algorithms
+
+## Cloud Deployment Architecture
+
+### POC Deployment Diagram
 
 ```mermaid
 graph TB
     subgraph "Internet"
-        USERS[Users]
-        GITHUB[GitHub API]
-        FIGMA[Figma API]
+        POCUSERS[POC Users<br/>5-10 Concurrent]
+        POCGITHUB[GitHub API]
+        POCSHAREPOINT[SharePoint API]
+        POCIGNIS[Ignis Platform]
     end
 
-    subgraph "Azure Front Door + CDN"
-        AFD[Azure Front Door]
-        CDN[Azure CDN]
-    end
-
-    subgraph "Azure Resource Group: bmad-platform-prod"
-        subgraph "Compute Services"
-            WEBAPP[Azure App Service<br/>React Frontend<br/>Linux/Windows, Node.js 18]
-            APIAPP[Azure App Service<br/>FastAPI Backend<br/>Linux, Python 3.11]
-            FUNC[Azure Functions<br/>Python 3.11 Runtime<br/>Consumption Plan]
-            ACI[Azure Container Instances<br/>Document Processing<br/>Custom Python Images]
+    subgraph "POC Cloud Environment"
+        subgraph "Load Balancing"
+            POCLB[Load Balancer<br/>Basic Distribution]
         end
 
-        subgraph "API Management"
-            APIM[Azure API Management<br/>Standard Tier<br/>Rate Limiting & Auth]
+        subgraph "Application Layer"
+            POCFRONTEND[React/Next.js App<br/>Container/VM Deployment]
+            POCAPI[Node.js API Server<br/>Express.js Backend]
         end
 
-        subgraph "Data Services"
-            POSTGRES[Azure Database<br/>for PostgreSQL<br/>Flexible Server]
-            REDIS[Azure Cache<br/>for Redis<br/>Standard Tier]
-            BLOB[Azure Blob Storage<br/>Hot Tier<br/>Document Files]
+        subgraph "BMad v6 Services"
+            POCAGENT[Agent Orchestration<br/>Context-Aware Selection]
+            POCWORKFLOW[4-Phase Workflow<br/>Management Service]
+            POCARTIFACT[Artifact Generation<br/>BMad v6 Templates]
         end
 
-        subgraph "Messaging & Events"
-            STORAGEQUEUE[Azure Storage Queues<br/>Document Processing<br/>Simple & Cost-Effective]
-            EVENTGRID[Azure Event Grid<br/>System Events]
+        subgraph "Data Layer"
+            POCDB[(PostgreSQL 15<br/>Single Instance)]
+            POCREDIS[Redis 7<br/>Basic Caching]
+            POCSTORAGE[Object Storage<br/>Document Files]
         end
 
-        subgraph "Security & Identity"
-            MSAL[Microsoft Authentication Library<br/>MSAL + SSO Integration]
-            KEYVAULT[Azure Key Vault<br/>Secrets & Certificates]
-        end
-
-        subgraph "Monitoring & Logging"
-            APPINSIGHTS[Application Insights<br/>Performance Monitoring]
-            MONITOR[Azure Monitor<br/>Logs & Metrics]
+        subgraph "Monitoring"
+            POCLOG[Basic Logging<br/>Application Logs]
+            POCMETRICS[Performance Metrics<br/>Response Times]
         end
     end
 
-    USERS --> AFD
-    AFD --> CDN
-    CDN --> WEBAPP
+    POCUSERS --> POCLB
+    POCLB --> POCFRONTEND
+    POCFRONTEND --> POCAPI
+    POCAPI --> POCAGENT
+    POCAPI --> POCWORKFLOW
+    POCAPI --> POCARTIFACT
 
-    WEBAPP --> APIAPP
-    WEBAPP --> APIM
-    APIAPP --> APIM
-    APIM --> FUNC
-    APIM --> AAD
+    POCAGENT --> POCDB
+    POCWORKFLOW --> POCDB
+    POCARTIFACT --> POCSTORAGE
+    POCAPI --> POCREDIS
 
-    FUNC --> POSTGRES
-    FUNC --> REDIS
-    FUNC --> BLOB
-    FUNC --> STORAGEQUEUE
-    FUNC --> GITHUB
-    FUNC --> FIGMA
+    POCARTIFACT --> POCGITHUB
+    POCARTIFACT --> POCSHAREPOINT
+    POCAGENT --> POCIGNIS
 
-    ACI --> BLOB
-    ACI --> POSTGRES
-    STORAGEQUEUE --> ACI
-
-    FUNC --> KEYVAULT
-    WEBAPP --> APPINSIGHTS
-    FUNC --> APPINSIGHTS
-    APPINSIGHTS --> MONITOR
-
-    EVENTGRID --> FUNC
+    POCAPI --> POCLOG
+    POCFRONTEND --> POCMETRICS
 ```
 
-#### Azure Deployment Diagram Explanation
+### Full Platform Deployment Diagram
 
-This deployment architecture diagram shows the complete Azure infrastructure and service interactions:
+```mermaid
+graph TB
+    subgraph "Internet & External Services"
+        USERS[Global Users<br/>500+ MAU]
+        GITHUB[GitHub API<br/>Enterprise Integration]
+        FIGMA[Figma API<br/>Design Workflows]
+        SHAREPOINT[SharePoint API<br/>Document Management]
+        CONFLUENCE[Confluence API<br/>Knowledge Base]
+        IGNIS[Ignis Platform<br/>Analytics & Telemetry]
+        BMADIDE[BMad v6 IDE<br/>Existing Workflows]
+    end
 
-**Internet Layer:**
-- **Users:** End users accessing the platform from various locations globally
-- **GitHub API:** External integration for repository management and synchronization
-- **Figma API:** External design tool integration for collaborative workflows
+    subgraph "Global CDN & Load Balancing"
+        CDN[Global CDN<br/>Multi-Region Distribution]
+        GLB[Global Load Balancer<br/>Intelligent Routing]
+    end
 
-**Azure Front Door + CDN:**
-- **Azure Front Door:** Global load balancer providing SSL termination, DDoS protection, and intelligent routing to the nearest Azure region
-- **Azure CDN:** Content delivery network for caching static assets (CSS, JS, images) and document previews globally for improved performance
+    subgraph "Production Environment - Multi-Region"
+        subgraph "Container Orchestration"
+            K8S[Kubernetes Cluster<br/>Auto-Scaling & Management]
+            INGRESS[Ingress Controller<br/>SSL & Routing]
+        end
 
-**Compute Services (within Azure Resource Group):**
-- **Azure App Service (Frontend):** Hosts the React application with auto-scaling capabilities, supporting both Linux and Windows runtimes
-- **Azure App Service (API):** Hosts the FastAPI backend application with Python 3.11 runtime on Linux for optimal performance
-- **Azure Functions:** Serverless compute for background processing, document conversion, and webhook handling with consumption-based pricing
-- **Azure Container Instances:** On-demand containers for heavy document processing tasks that require custom environments or extended processing time
+        subgraph "Frontend Services"
+            FRONTEND[React/Next.js Apps<br/>Multiple Replicas]
+            STATICASSETS[Static Asset Server<br/>Optimized Delivery]
+        end
 
-**API Management:**
-- **Azure API Management:** Provides centralized API gateway functionality including authentication, rate limiting, request/response transformation, monitoring, and API versioning
+        subgraph "API Gateway & Auth"
+            APIGATEWAY[API Gateway<br/>Rate Limiting & Versioning]
+            AUTHSERVICE[Authentication Service<br/>Enterprise SSO + OAuth]
+        end
 
-**Data Services:**
-- **Azure Database for PostgreSQL:** Managed relational database with automatic backups, high availability, and read replicas for scalability
-- **Azure Cache for Redis:** In-memory data store for session management, document previews, and API response caching
-- **Azure Blob Storage:** Scalable object storage with hot, cool, and archive tiers for cost optimization of document files
+        subgraph "Core BMad v6 Microservices"
+            SCALESERVICE[Scale-Adaptive<br/>Intelligence Service]
+            AGENTSERVICE[Intelligent Agent<br/>Orchestration Service]
+            PHASESERVICE[4-Phase Workflow<br/>Management Service]
+            ARTIFACTSERVICE[Comprehensive Artifact<br/>Generation Service]
+            BMADINTEGRATION[BMad v6 IDE<br/>Integration Service]
+        end
 
-**Messaging & Events:**
-- **Azure Storage Queues:** Simple, cost-effective message queuing for document processing workflows with at-least-once delivery
-- **Azure Event Grid:** Event-driven architecture enabling reactive programming and system-wide notifications
+        subgraph "Integration Services"
+            GITHUBSERVICE[GitHub Integration<br/>Repository Sync]
+            FIGMASERVICE[Figma Integration<br/>Design Import]
+            SHAREPOINTSERVICE[SharePoint Integration<br/>Document Management]
+            IGNISSERVICE[Ignis Platform<br/>Telemetry Service]
+        end
 
-**Security & Identity:**
-- **MSAL (Microsoft Authentication Library):** Enterprise-grade authentication with Azure AD integration for seamless SSO
-- **Azure Key Vault:** Secure storage and management of secrets, certificates, and encryption keys with hardware security module (HSM) backing
+        subgraph "Data Layer - Distributed"
+            PRIMARYDB[(PostgreSQL Cluster<br/>Primary + Read Replicas)]
+            CACHECLUSTER[Redis Cluster<br/>Distributed Caching]
+            OBJECTSTORAGE[Distributed Object Storage<br/>Multi-Region Replication]
+            ANALYTICSDB[(Analytics Database<br/>Time-Series Data)]
+        end
 
-**Monitoring & Logging:**
-- **Application Insights:** Real-time application performance monitoring, distributed tracing, and custom telemetry collection
-- **Azure Monitor:** Centralized logging, metrics collection, and alerting with integration to Azure DevOps for incident management
+        subgraph "Message Queue & Events"
+            MESSAGEQUEUE[Message Queue<br/>Async Processing]
+            EVENTBUS[Event Bus<br/>Service Communication]
+        end
 
-**Traffic Flow Patterns:**
-1. **User Traffic:** Users → Azure Front Door → CDN → App Service (Frontend)
-2. **API Calls:** Frontend → API Management → App Service (API) or Azure Functions
-3. **Authentication:** All services → MSAL → Azure AD for token validation
-4. **Data Access:** Backend services → PostgreSQL/Redis/Blob Storage for data operations
-5. **Background Processing:** API → Storage Queues → Container Instances for heavy operations
-6. **External Integration:** Functions → GitHub/Figma APIs for synchronization
-7. **Monitoring:** All services → Application Insights → Azure Monitor for observability
+        subgraph "Monitoring & Security"
+            MONITORING[Comprehensive Monitoring<br/>APM + Metrics]
+            LOGGING[Centralized Logging<br/>Log Aggregation]
+            SECURITY[Security Services<br/>Compliance & Audit]
+            BACKUP[Backup & Recovery<br/>Data Protection]
+        end
+    end
 
-**High Availability & Disaster Recovery:**
-- **Multi-region deployment:** Primary in East US 2, secondary in West Europe
-- **Auto-scaling:** App Services and Functions scale based on demand
-- **Database replication:** PostgreSQL with read replicas and automated backups
-- **CDN distribution:** Global content delivery for optimal performance
+    USERS --> CDN
+    CDN --> GLB
+    GLB --> INGRESS
+    INGRESS --> FRONTEND
+    FRONTEND --> APIGATEWAY
+    APIGATEWAY --> AUTHSERVICE
+
+    APIGATEWAY --> SCALESERVICE
+    APIGATEWAY --> AGENTSERVICE
+    APIGATEWAY --> PHASESERVICE
+    APIGATEWAY --> ARTIFACTSERVICE
+    APIGATEWAY --> BMADINTEGRATION
+
+    SCALESERVICE --> PRIMARYDB
+    AGENTSERVICE --> CACHECLUSTER
+    PHASESERVICE --> PRIMARYDB
+    ARTIFACTSERVICE --> OBJECTSTORAGE
+    BMADINTEGRATION --> PRIMARYDB
+
+    ARTIFACTSERVICE --> GITHUBSERVICE
+    ARTIFACTSERVICE --> FIGMASERVICE
+    ARTIFACTSERVICE --> SHAREPOINTSERVICE
+    AGENTSERVICE --> IGNISSERVICE
+
+    GITHUBSERVICE --> GITHUB
+    FIGMASERVICE --> FIGMA
+    SHAREPOINTSERVICE --> SHAREPOINT
+    IGNISSERVICE --> IGNIS
+    BMADINTEGRATION --> BMADIDE
+
+    SCALESERVICE --> MESSAGEQUEUE
+    AGENTSERVICE --> EVENTBUS
+    IGNISSERVICE --> ANALYTICSDB
+
+    K8S --> MONITORING
+    FRONTEND --> LOGGING
+    AUTHSERVICE --> SECURITY
+    OBJECTSTORAGE --> BACKUP
+```
+
+#### Deployment Architecture Explanation
+
+**POC Deployment Architecture:**
+
+The POC deployment focuses on validation with simplified infrastructure supporting 5-10 concurrent users:
+
+**POC Components:**
+- **React/Next.js Frontend:** Container-deployed application with BMad v6 agent selection interface and 4-phase workflow navigation
+- **Node.js API Server:** Express.js backend handling BMad v6 agent orchestration, workflow management, and artifact generation
+- **BMad v6 Services:** Context-aware agent selection, 4-phase workflow management, and template-based artifact generation
+- **Data Layer:** Single PostgreSQL instance with Redis caching for agent definitions and session management
+- **External Integrations:** GitHub for repository sync, SharePoint for document management, Ignis Platform for telemetry
+
+**Full Platform Deployment Architecture:**
+
+The production deployment supports enterprise-grade scalability with 500+ monthly active users:
+
+**Global Infrastructure:**
+- **CDN & Load Balancing:** Multi-region content delivery with intelligent routing for optimal performance
+- **Container Orchestration:** Kubernetes clusters with auto-scaling and management for high availability
+- **Frontend Services:** Multiple React/Next.js replicas with static asset optimization and global distribution
+
+**Core BMad v6 Microservices:**
+- **Scale-Adaptive Intelligence Service:** Automatic complexity detection and track selection (Quick Flow, BMad Method, Brownfield)
+- **Intelligent Agent Orchestration Service:** Context-aware agent selection from 12-agent ecosystem with progressive engagement
+- **4-Phase Workflow Management Service:** Complete methodology execution with automatic phase completion detection
+- **Comprehensive Artifact Generation Service:** Template-based document creation across SDLC, business, compliance, and training documentation
+- **BMad v6 IDE Integration Service:** Seamless bidirectional synchronization with existing BMad v6 workflows
+
+**Integration Services:**
+- **GitHub Integration:** Repository synchronization with existing BMad v6 IDE workflows and development team handoff
+- **Figma Integration:** Design import and UX Designer agent workflow integration
+- **SharePoint Integration:** Enterprise document management with metadata synchronization and approval workflows
+- **Ignis Platform Telemetry:** Comprehensive data capture and real-time transmission for analytics and optimization
+
+**Data Architecture:**
+- **PostgreSQL Cluster:** Primary database with read replicas for scalability and high availability
+- **Redis Cluster:** Distributed caching for agent definitions, session management, and performance optimization
+- **Distributed Object Storage:** Multi-region document storage with version control and CDN integration
+- **Analytics Database:** Time-series data storage for telemetry, user behavior analytics, and performance metrics
+
+**Enterprise Features:**
+- **Comprehensive Monitoring:** Application performance monitoring, distributed tracing, and custom metrics collection
+- **Centralized Logging:** Log aggregation, query capabilities, and integration with incident management systems
+- **Security & Compliance:** Enterprise-grade security features, audit logging, and compliance management
+- **Backup & Recovery:** Data protection, disaster recovery, and business continuity planning
+
+**Intelligent Traffic Flow Patterns:**
+1. **Context-Aware User Experience:** Global users access scale-adaptive intelligence through CDN-optimized interfaces
+2. **Intelligent Agent Orchestration:** System analyzes project context and presents relevant agents with progressive engagement
+3. **BMad v6 Methodology Execution:** 4-phase workflow guides users through proven project execution with automatic completion detection
+4. **Seamless Integration:** Bidirectional synchronization maintains workflow continuity between web platform and existing BMad v6 IDE environments
+5. **Comprehensive Telemetry:** Real-time data capture and transmission to Ignis Platform for analytics and ecosystem connectivity
 
 ### Infrastructure Components
 
-**Frontend Hosting:**
-- **Azure App Service (Linux/Windows):** Hosts React application with Node.js 18 runtime
-- **Azure Front Door:** Global load balancing and SSL termination
-- **Azure CDN:** Static asset caching and global distribution
+**POC Infrastructure Components:**
 
-**Backend Services:**
-- **Azure App Service (Linux):** FastAPI backend with Python 3.11 runtime for main API
-- **Azure Functions (Python 3.11):** Serverless functions for background processing and webhooks
-- **Azure Container Instances:** Custom document processing containers for complex conversions
-- **Azure API Management:** Centralized API gateway with authentication and rate limiting
+**Application Hosting:**
+- **React/Next.js Frontend:** Container-based deployment with Node.js 20+ runtime and BMad v6 agent selection interface
+- **Node.js API Server:** Express.js backend with BMad v6 agent orchestration and 4-phase workflow management
+- **Basic Load Balancing:** Simple distribution for 5-10 concurrent users with health checks
 
-**Data Layer:**
-- **Azure Database for PostgreSQL:** Managed database with automatic backups and high availability
-- **Azure Cache for Redis:** In-memory caching for session data and document previews
-- **Azure Blob Storage:** Object storage for documents with lifecycle management
+**BMad v6 Services:**
+- **Agent Orchestration Service:** Context-aware agent selection from BMad v6 ecosystem with progressive engagement
+- **4-Phase Workflow Service:** Complete methodology execution (Configuration, Ideation, Product Definition, Planning)
+- **Artifact Generation Service:** Template-based document creation using BMad v6 standards
+
+**Data & Storage:**
+- **PostgreSQL 15:** Single instance database for users, projects, agents, workflows, and artifacts
+- **Redis 7:** Basic caching for agent definitions, session management, and performance optimization
+- **Object Storage:** Document storage with version control and basic access management
+
+**External Integrations:**
+- **GitHub Integration:** Repository synchronization with basic commit and branch management
+- **SharePoint Integration:** Document upload and metadata management via Microsoft Graph API
+- **Ignis Platform Integration:** Real-time telemetry data transmission and validation
+
+**Full Platform Infrastructure Components:**
+
+**Frontend & CDN:**
+- **React/Next.js Applications:** Multiple replicas with Next.js 14 framework, server-side rendering, and optimized performance
+- **Global CDN:** Multi-region content delivery with intelligent caching and static asset optimization
+- **Load Balancers:** Global load balancing with intelligent routing and SSL termination
+
+**Core BMad v6 Microservices:**
+- **Scale-Adaptive Intelligence Service:** Automatic complexity detection and track selection with seamless transitions
+- **Intelligent Agent Orchestration Service:** Complete 12-agent ecosystem with context-aware selection and progressive engagement
+- **4-Phase Workflow Management Service:** Full methodology execution with automatic phase completion detection
+- **Comprehensive Artifact Generation Service:** Complete template library supporting SDLC, business, compliance, and training documentation
+- **BMad v6 IDE Integration Service:** Seamless bidirectional synchronization with existing BMad v6 workflows
+
+**Enterprise Data Layer:**
+- **PostgreSQL Cluster:** Primary database with read replicas, automatic failover, and high availability
+- **Redis Cluster:** Distributed caching with clustering, persistence, and high availability
+- **Distributed Object Storage:** Multi-region storage with replication, versioning, and CDN integration
+- **Analytics Database:** Time-series database for telemetry, metrics, and user behavior analytics
 
 **Integration & Messaging:**
-- **Azure Storage Queues:** Simple, cost-effective message queuing for document processing workflows
-- **Azure Event Grid:** Event-driven architecture for system notifications
+- **Message Queue System:** Distributed message queuing for async processing and service communication
+- **Event Bus:** Event-driven architecture for real-time notifications and service coordination
+- **API Gateway:** Centralized routing, rate limiting, authentication, and API versioning
 
-**Security & Compliance:**
-- **Microsoft Authentication Library (MSAL):** Enterprise SSO integration with Azure AD
-- **Azure Key Vault:** Secure storage for API keys, connection strings, and certificates
+**Enterprise Security & Compliance:**
+- **Authentication Service:** Enterprise SSO integration with OAuth 2.0 and multi-factor authentication
+- **Security Services:** Comprehensive security features, audit logging, and compliance management
+- **Secrets Management:** Secure storage and rotation of API keys, certificates, and credentials
+
+**Monitoring & Operations:**
+- **Application Performance Monitoring:** Real-time monitoring, distributed tracing, and custom metrics
+- **Centralized Logging:** Log aggregation, search capabilities, and integration with alerting systems
+- **Backup & Recovery:** Automated backups, disaster recovery, and business continuity planning
 
 ## Tech Stack
 
-This is the DEFINITIVE technology selection for the entire project:
+This is the DEFINITIVE technology selection for both POC and full platform implementations:
 
 ### Cloud Infrastructure
-- **Provider:** Microsoft Azure
-- **Key Services:** Azure App Service, Azure Functions, Azure Database for PostgreSQL, Azure Blob Storage, Azure API Management
-- **Deployment Regions:** Primary: East US 2, Secondary: West Europe
+- **Provider:** Cloud-agnostic with multi-cloud support (AWS/Azure/GCP based on team expertise and requirements)
+- **POC Services:** Container deployment, managed PostgreSQL, Redis, object storage, basic monitoring
+- **Full Platform Services:** Kubernetes orchestration, distributed databases, CDN, comprehensive monitoring, enterprise security
+- **Deployment Strategy:** POC single-region, Full Platform multi-region with global distribution
 
 ### Technology Stack Table
 
 | Category | Technology | Version | Purpose | Rationale |
 |----------|------------|---------|---------|-----------|
-| **Backend Language** | Python | 3.11+ | Primary backend development language | Excellent for document processing, rich ecosystem for ML/AI, strong Azure support |
-| **Backend Framework** | FastAPI | 0.104+ | High-performance async API framework | Type hints, automatic OpenAPI docs, excellent performance, async support for I/O operations |
-| **API Gateway** | Azure API Management | Latest | API routing and management | Centralized auth, rate limiting, monitoring, versioning for microservices |
-| **Serverless Functions** | Azure Functions | 4.x | Event-driven compute | Cost-effective scaling, perfect for document processing jobs, Python runtime support |
-| **Database** | Azure Database for PostgreSQL | 15+ | Primary relational database | Document metadata, user management, JSON support, managed service with high availability |
-| **Cache** | Azure Cache for Redis | 7+ | Session and document cache | Fast document preview caching, session management, rate limiting for API calls |
-| **File Storage** | Azure Blob Storage | Latest | Document and media storage | Scalable object storage, CDN integration, supports large document files up to 50MB |
-| **Message Queue** | Azure Storage Queues | Latest | Simple async message processing | Cost-effective message queuing for document conversion jobs, built into storage account |
-| **Authentication** | MSAL (Microsoft Authentication Library) | Latest | Enterprise SSO integration | Azure AD integration, single sign-on, role-based access control |
-| **ORM** | SQLAlchemy | 2.0+ | Database abstraction layer | Type-safe database operations, migration support, async support |
-| **Document Processing** | Pandoc + python-docx | Latest | Format conversion engine | High-fidelity document conversion, Python-native document manipulation |
-| **Task Queue** | Celery + Azure Storage Queues | Latest | Background job processing | Distributed task execution for document conversion, simple queue backend |
-| **API Documentation** | FastAPI + Swagger UI | Latest | Interactive API documentation | Auto-generated docs from type hints, testing interface |
-| **Testing Framework** | pytest + pytest-asyncio | Latest | Unit and integration testing | Comprehensive testing for async Python code, fixtures for database testing |
-| **Code Quality** | Black + isort + mypy | Latest | Code formatting and type checking | Consistent code style, static type checking, import organization |
-| **Dependency Management** | Poetry | 1.6+ | Python package management | Deterministic builds, virtual environment management, dependency resolution |
-| **Container Runtime** | Docker | Latest | Containerization | Consistent deployment across environments, Azure Container Instances support |
-| **IaC Tool** | Azure Resource Manager + Bicep | Latest | Infrastructure as Code | Native Azure IaC, type-safe resource definitions, integrated with Azure DevOps |
-| **CI/CD** | Azure DevOps Pipelines | Latest | Automated testing and deployment | Integrated with Azure services, Python-optimized pipelines, multi-stage deployments |
-| **Monitoring** | Azure Application Insights | Latest | Performance and error tracking | Real-time monitoring, distributed tracing, custom metrics for document processing |
-| **Logging** | Azure Monitor Logs | Latest | Centralized logging | Structured logging, query capabilities, integration with Application Insights |
+| **Frontend Framework** | React | 18+ | Modern UI framework | Component-based architecture, excellent ecosystem, BMad v6 agent interface support |
+| **Frontend Meta-Framework** | Next.js | 14+ | Full-stack React framework | Server-side rendering, API routes, optimized performance, production-ready |
+| **Frontend Styling** | TailwindCSS | Latest | Utility-first CSS framework | Rapid UI development, consistent design system, matches existing POC design |
+| **Backend Language** | Node.js | 20+ | JavaScript runtime | Unified language stack, excellent ecosystem, rapid development for BMad v6 integration |
+| **Backend Framework** | Express.js | Latest | Web application framework | Mature, flexible, extensive middleware ecosystem, microservices support |
+| **Database** | PostgreSQL | 15+ | Primary relational database | JSON support for BMad v6 metadata, ACID compliance, excellent performance |
+| **Cache** | Redis | 7+ | In-memory data store | Agent definition caching, session management, performance optimization |
+| **Authentication** | OAuth 2.0 + JWT | Latest | Authentication & authorization | GitHub integration, enterprise SSO support, stateless authentication |
+| **ORM/Query Builder** | Prisma or TypeORM | Latest | Database abstraction layer | Type-safe database operations, migrations, excellent TypeScript support |
+| **BMad v6 Integration** | Direct Framework Access | Latest | Agent orchestration & templates | Context-aware agent loading, template system access, methodology preservation |
+| **Document Processing** | Markdown processors + converters | Latest | Artifact generation engine | BMad v6 template processing, multi-format support, content fidelity |
+| **Message Queue** | Redis Pub/Sub or cloud queues | Latest | Async processing | Background jobs, agent orchestration, integration synchronization |
+| **API Documentation** | OpenAPI/Swagger | Latest | Interactive API documentation | Auto-generated docs, testing interface, developer experience |
+| **Testing Framework** | Jest + Testing Library | Latest | Unit and integration testing | Comprehensive testing for React and Node.js, BMad v6 workflow validation |
+| **Code Quality** | ESLint + Prettier + TypeScript | Latest | Code quality and type safety | Consistent code style, static type checking, better developer experience |
+| **Package Management** | npm/yarn workspaces | Latest | Monorepo management | Workspace organization, dependency management, build optimization |
+| **Container Runtime** | Docker | Latest | Containerization | Consistent deployment, development environment parity |
+| **Container Orchestration** | Kubernetes (Full Platform) | Latest | Container management | Auto-scaling, service discovery, rolling deployments, high availability |
+| **CI/CD** | GitHub Actions or cloud pipelines | Latest | Automated testing and deployment | Integrated workflows, multi-environment deployments, BMad v6 validation |
+| **Monitoring** | Application Performance Monitoring | Latest | Performance and error tracking | Real-time monitoring, distributed tracing, BMad v6 workflow metrics |
+| **Logging** | Structured logging solution | Latest | Centralized logging | Log aggregation, search capabilities, troubleshooting support |
+| **Telemetry Integration** | Ignis Platform SDK | Latest | Analytics and telemetry | Real-time data transmission, user behavior analytics, ecosystem connectivity |
 
 ## Data Models
 
-Based on the PRD requirements for comprehensive document management, format translation, and collaborative workflows, here are the core data models using SQLAlchemy:
+Based on the PRD requirements for BMad v6 scale-adaptive intelligence, intelligent agent orchestration, 4-phase workflow management, and comprehensive artifact generation, here are the core data models optimized for both POC and full platform implementations:
 
 ### User Model
 
-**Purpose:** Represents platform users with MSAL authentication and role-based access
+**Purpose:** Represents platform users with GitHub OAuth authentication and BMad v6 workflow access
 
-```python
-from sqlalchemy import Column, String, DateTime, Boolean, Text, Enum
-from sqlalchemy.dialects.postgresql import UUID, JSONB
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql import func
-import uuid
-import enum
+```typescript
+// User entity for BMad v6-powered platform
+interface User {
+  id: string;                    // UUID primary key
+  githubId: string;             // GitHub user ID for OAuth
+  email: string;                // User email from GitHub
+  name: string;                 // Display name
+  avatarUrl?: string;           // GitHub avatar URL
+  role: UserRole;               // Platform role
+  preferences: UserPreferences; // BMad v6 workflow preferences
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-Base = declarative_base()
+enum UserRole {
+  ADMIN = "admin",              // Platform administrator
+  PROJECT_MANAGER = "project_manager",  // Can create and manage projects
+  STAKEHOLDER = "stakeholder",  // Can participate in workflows
+  VIEWER = "viewer"             // Read-only access
+}
 
-class UserRole(enum.Enum):
-    ADMIN = "admin"
-    USER = "user"
-    VIEWER = "viewer"
-
-class User(Base):
-    __tablename__ = "users"
-
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    email = Column(String(255), unique=True, nullable=False, index=True)
-    name = Column(String(255), nullable=False)
-    azure_ad_object_id = Column(String(255), unique=True, nullable=False, index=True)
-    avatar_url = Column(Text)
-    github_username = Column(String(255))
-    github_access_token = Column(Text)  # Encrypted at application level
-    figma_access_token = Column(Text)   # Encrypted at application level
-    role = Column(Enum(UserRole), nullable=False, default=UserRole.USER)
-    is_active = Column(Boolean, default=True, nullable=False)
-    last_login = Column(DateTime(timezone=True))
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
-
-    # Relationships
-    owned_projects = relationship("Project", back_populates="owner", foreign_keys="Project.owner_id")
-    created_documents = relationship("Document", back_populates="creator")
-    project_memberships = relationship("ProjectMember", back_populates="user")
-```
-
-**Relationships:**
-- One-to-many with Projects (as owner)
-- Many-to-many with Projects (via ProjectMember)
-- One-to-many with Documents (as creator)
+interface UserPreferences {
+  preferredTrack?: BMadTrack;   // Default track preference
+  favoriteAgents: string[];     // Preferred agent IDs
+  notificationSettings: NotificationSettings;
+  uiPreferences: UIPreferences;
+}
 
 ### Project Model
 
-**Purpose:** Container for related documents and collaborative workspace management
+**Purpose:** BMad v6 project container with scale-adaptive intelligence and 4-phase workflow management
 
-```python
-class ProjectStatus(enum.Enum):
-    ACTIVE = "active"
-    ARCHIVED = "archived"
-    DRAFT = "draft"
+```typescript
+interface Project {
+  id: string;                           // UUID primary key
+  name: string;                         // Project name
+  description?: string;                 // Project description
+  ownerId: string;                      // User ID of project owner
+  status: ProjectStatus;                // Current project status
 
-class Project(Base):
-    __tablename__ = "projects"
+  // BMad v6 Scale-Adaptive Intelligence
+  selectedTrack: BMadTrack;             // Current track (Quick Flow, BMad Method, Brownfield)
+  complexityScore: number;              // Automatic complexity assessment (0-100)
+  trackHistory: TrackTransition[];      // Track change history
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    name = Column(String(255), nullable=False)
-    description = Column(Text)
-    owner_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    github_repo_url = Column(Text)
-    github_branch = Column(String(255), default="main")
-    status = Column(Enum(ProjectStatus), nullable=False, default=ProjectStatus.ACTIVE)
-    settings = Column(JSONB, nullable=False, default={
-        "auto_sync": True,
-        "default_format": "markdown",
-        "collaboration_mode": "open"
-    })
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+  // 4-Phase Workflow State
+  currentPhase: BMadPhase;              // Current phase in workflow
+  phaseProgress: PhaseProgress[];       // Progress tracking for each phase
+  completedPhases: BMadPhase[];         // Successfully completed phases
 
-    # Relationships
-    owner = relationship("User", back_populates="owned_projects", foreign_keys=[owner_id])
-    documents = relationship("Document", back_populates="project", cascade="all, delete-orphan")
-    members = relationship("ProjectMember", back_populates="project", cascade="all, delete-orphan")
-```
+  // Integration Configuration
+  githubConfig?: GitHubIntegration;     // GitHub repository configuration
+  sharepointConfig?: SharePointIntegration; // SharePoint document management
+  figmaConfig?: FigmaIntegration;       // Figma design integration
+  ignisConfig: IgnisIntegration;        // Ignis Platform telemetry
 
-**Relationships:**
-- Many-to-one with User (owner)
-- Many-to-many with User (via ProjectMember)
-- One-to-many with Documents
+  // Agent Orchestration
+  activeAgents: string[];               // Currently engaged agent IDs
+  agentHistory: AgentEngagement[];      // Agent interaction history
+  contextData: ProjectContext;          // Context for agent selection
 
-### Document Model
+  // Metadata
+  createdAt: Date;
+  updatedAt: Date;
+  lastActivityAt: Date;
+}
 
-**Purpose:** Core entity representing documents in multiple formats with version tracking
+enum ProjectStatus {
+  DRAFT = "draft",                      // Initial project setup
+  ACTIVE = "active",                    // Active development
+  ON_HOLD = "on_hold",                  // Temporarily paused
+  COMPLETED = "completed",              // Project finished
+  ARCHIVED = "archived"                 // Archived project
+}
 
-```python
-class DocumentType(enum.Enum):
-    PRD = "prd"
-    ARCHITECTURE = "architecture"
-    USER_STORY = "user_story"
-    TEST_PLAN = "test_plan"
-    DESIGN_SPEC = "design_spec"
-    BUSINESS_CASE = "business_case"
-    MARKET_RESEARCH = "market_research"
+enum BMadTrack {
+  QUICK_FLOW = "quick_flow",            // Rapid prototyping track
+  BMAD_METHOD = "bmad_method",          // Full methodology track
+  BROWNFIELD = "brownfield"             // Existing system enhancement
+}
 
-class DocumentFormat(enum.Enum):
-    MARKDOWN = "markdown"
-    DOCX = "docx"
-    XLSX = "xlsx"
-    PDF = "pdf"
-    FIGMA = "figma"
+enum BMadPhase {
+  ANALYSIS = "analysis",                // Optional brainstorming and research
+  PLANNING = "planning",                // Required PRD and tech-spec creation
+  SOLUTIONING = "solutioning",          // Architecture, security, DevOps
+  IMPLEMENTATION = "implementation"     // Story-centric development
+}
 
-class SyncStatus(enum.Enum):
-    SYNCED = "synced"
-    PENDING = "pending"
-    CONFLICT = "conflict"
-    ERROR = "error"
+interface PhaseProgress {
+  phase: BMadPhase;
+  status: PhaseStatus;
+  completionPercentage: number;
+  requiredArtifacts: string[];          // Required artifact types
+  completedArtifacts: string[];        // Completed artifact IDs
+  estimatedHours?: number;
+  actualHours?: number;
+  startedAt?: Date;
+  completedAt?: Date;
+}
 
-class Document(Base):
-    __tablename__ = "documents"
+enum PhaseStatus {
+  NOT_STARTED = "not_started",
+  IN_PROGRESS = "in_progress",
+  REVIEW = "review",
+  COMPLETED = "completed",
+  BLOCKED = "blocked"
+}
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    project_id = Column(UUID(as_uuid=True), ForeignKey("projects.id"), nullable=False)
-    name = Column(String(255), nullable=False)
-    type = Column(Enum(DocumentType), nullable=False)
-    primary_format = Column(Enum(DocumentFormat), nullable=False)
-    content_hash = Column(String(64))  # SHA-256 hash for integrity
-    metadata = Column(JSONB, nullable=False, default={})
-    sync_status = Column(Enum(SyncStatus), nullable=False, default=SyncStatus.PENDING)
-    github_path = Column(Text)  # Path in GitHub repository
-    figma_file_id = Column(String(255))  # Figma file identifier
-    created_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
-    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+### Agent Model
 
-    # Relationships
-    project = relationship("Project", back_populates="documents")
-    creator = relationship("User", back_populates="created_documents")
-    versions = relationship("DocumentVersion", back_populates="document", cascade="all, delete-orphan")
-    collaboration_sessions = relationship("CollaborationSession", back_populates="document")
-```
+**Purpose:** BMad v6 intelligent agent definitions and orchestration state
 
-**Relationships:**
-- Many-to-one with Project
-- Many-to-one with User (creator)
-- One-to-many with DocumentVersions
-- One-to-many with CollaborationSessions
+```typescript
+interface Agent {
+  id: string;                           // Agent identifier
+  name: string;                         // Agent name (e.g., "Mary", "Winston")
+  title: string;                        // Agent title (e.g., "Business Analyst", "Architect")
+  icon: string;                         // Agent icon/emoji
+  specialization: AgentSpecialization;  // Primary expertise area
+  capabilities: AgentCapability[];      // List of agent capabilities
+  contextRequirements: ContextRequirement[]; // Context needed for optimal performance
 
-### Supporting Models
+  // Agent Configuration
+  promptTemplates: PromptTemplate[];    // Agent-specific prompt templates
+  workflowPatterns: WorkflowPattern[];  // Preferred workflow patterns
+  outputFormats: string[];              // Supported output formats
 
-**DocumentVersion Model:**
-```python
-class DocumentVersion(Base):
-    __tablename__ = "document_versions"
+  // Performance Metrics
+  averageResponseTime: number;          // Average response time in seconds
+  tokenConsumption: TokenMetrics;       // Token usage statistics
+  successRate: number;                  // Task completion success rate
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    document_id = Column(UUID(as_uuid=True), ForeignKey("documents.id"), nullable=False)
-    version_number = Column(Integer, nullable=False)
-    format = Column(Enum(DocumentFormat), nullable=False)
-    content_url = Column(Text, nullable=False)  # Azure Blob Storage URL
-    file_size = Column(BigInteger, nullable=False)
-    conversion_metadata = Column(JSONB, nullable=False, default={})
-    created_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+  // Metadata
+  version: string;                      // Agent version
+  lastUpdated: Date;
+  isActive: boolean;
+}
 
-    # Relationships
-    document = relationship("Document", back_populates="versions")
-    creator = relationship("User")
+enum AgentSpecialization {
+  BUSINESS_ANALYSIS = "business_analysis",
+  PROJECT_MANAGEMENT = "project_management",
+  ARCHITECTURE = "architecture",
+  UX_DESIGN = "ux_design",
+  DEVELOPMENT = "development",
+  TESTING = "testing",
+  DEVOPS = "devops",
+  SECURITY = "security",
+  DATA_ANALYSIS = "data_analysis",
+  TECHNICAL_WRITING = "technical_writing",
+  PRODUCT_STRATEGY = "product_strategy",
+  MARKET_RESEARCH = "market_research"
+}
 
-    __table_args__ = (
-        UniqueConstraint('document_id', 'version_number', 'format', name='uq_document_version_format'),
-        Index('idx_document_versions_document_id', 'document_id'),
-    )
-```
+interface AgentEngagement {
+  id: string;
+  projectId: string;
+  agentId: string;
+  phase: BMadPhase;
+  startedAt: Date;
+  endedAt?: Date;
+  context: EngagementContext;
+  artifacts: string[];                  // Generated artifact IDs
+  tokenConsumption: number;
+  performanceMetrics: PerformanceMetrics;
+}
 
-**ProjectMember Model:**
-```python
-class ProjectRole(enum.Enum):
-    OWNER = "owner"
-    EDITOR = "editor"
-    VIEWER = "viewer"
+### Artifact Model
 
-class ProjectMember(Base):
-    __tablename__ = "project_members"
+**Purpose:** BMad v6 comprehensive artifact management with template-based generation
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    project_id = Column(UUID(as_uuid=True), ForeignKey("projects.id"), nullable=False)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    role = Column(Enum(ProjectRole), nullable=False, default=ProjectRole.VIEWER)
-    invited_by = Column(UUID(as_uuid=True), ForeignKey("users.id"))
-    joined_at = Column(DateTime(timezone=True), server_default=func.now())
+```typescript
+interface Artifact {
+  id: string;                           // UUID primary key
+  projectId: string;                    // Associated project
+  name: string;                         // Artifact name
+  type: ArtifactType;                   // Artifact classification
+  category: ArtifactCategory;           // Artifact category
+  phase: BMadPhase;                     // Associated BMad phase
 
-    # Relationships
-    project = relationship("Project", back_populates="members")
-    user = relationship("User", back_populates="project_memberships", foreign_keys=[user_id])
-    inviter = relationship("User", foreign_keys=[invited_by])
+  // Content Management
+  content: string;                      // Markdown content
+  templateId?: string;                  // BMad v6 template used
+  version: number;                      // Version number
+  status: ArtifactStatus;               // Current status
 
-    __table_args__ = (
-        UniqueConstraint('project_id', 'user_id', name='uq_project_member'),
-        Index('idx_project_members_user_id', 'user_id'),
-    )
-```
+  // Generation Metadata
+  generatedBy: string;                  // Agent ID that generated artifact
+  generationContext: GenerationContext; // Context used for generation
+  qualityScore: number;                 // Quality assessment (0-100)
+  completenessScore: number;            // Completeness assessment (0-100)
 
-**CollaborationSession Model:**
-```python
-class CollaborationSession(Base):
-    __tablename__ = "collaboration_sessions"
+  // Collaboration
+  reviewers: string[];                  // User IDs of reviewers
+  approvers: string[];                  // User IDs of approvers
+  comments: Comment[];                  // Review comments
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    document_id = Column(UUID(as_uuid=True), ForeignKey("documents.id"), nullable=False)
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    session_token = Column(String(255), unique=True, nullable=False)
-    format = Column(Enum(DocumentFormat), nullable=False)
-    cursor_position = Column(JSONB, default={})
-    is_active = Column(Boolean, default=True, nullable=False)
-    started_at = Column(DateTime(timezone=True), server_default=func.now())
-    last_activity = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+  // Integration
+  githubPath?: string;                  // GitHub file path
+  sharepointUrl?: string;               // SharePoint document URL
+  figmaFileId?: string;                 // Figma file reference
 
-    # Relationships
-    document = relationship("Document", back_populates="collaboration_sessions")
-    user = relationship("User")
+  // Metadata
+  createdAt: Date;
+  updatedAt: Date;
+  lastReviewedAt?: Date;
+  approvedAt?: Date;
+}
 
-    __table_args__ = (
-        Index('idx_collaboration_sessions_document_id', 'document_id'),
-        Index('idx_collaboration_sessions_active', 'is_active'),
-    )
-```
+enum ArtifactType {
+  // SDLC Documents
+  PROJECT_BRIEF = "project_brief",
+  PRD = "prd",
+  TECHNICAL_SPECIFICATION = "technical_specification",
+  ARCHITECTURE_DOCUMENT = "architecture_document",
+  USER_STORIES = "user_stories",
+  TEST_PLAN = "test_plan",
+  DEPLOYMENT_GUIDE = "deployment_guide",
+
+  // Business Documents
+  MARKET_RESEARCH = "market_research",
+  BUSINESS_CASE = "business_case",
+  COMPETITIVE_ANALYSIS = "competitive_analysis",
+  STAKEHOLDER_ANALYSIS = "stakeholder_analysis",
+
+  // Compliance Documents
+  SECURITY_ASSESSMENT = "security_assessment",
+  PRIVACY_IMPACT_ASSESSMENT = "privacy_impact_assessment",
+  COMPLIANCE_CHECKLIST = "compliance_checklist",
+
+  // Training Documents
+  USER_MANUAL = "user_manual",
+  TRAINING_GUIDE = "training_guide",
+  API_DOCUMENTATION = "api_documentation"
+}
+
+enum ArtifactCategory {
+  SDLC = "sdlc",
+  BUSINESS = "business",
+  COMPLIANCE = "compliance",
+  TRAINING = "training"
+}
+
+enum ArtifactStatus {
+  DRAFT = "draft",
+  IN_REVIEW = "in_review",
+  APPROVED = "approved",
+  PUBLISHED = "published",
+  ARCHIVED = "archived"
+}
+### Workflow Model
+
+**Purpose:** BMad v6 workflow execution state and transition management
+
+```typescript
+interface Workflow {
+  id: string;                           // UUID primary key
+  projectId: string;                    // Associated project
+  track: BMadTrack;                     // Current track
+  currentPhase: BMadPhase;              // Current phase
+
+  // Phase Management
+  phases: WorkflowPhase[];              // Phase definitions and progress
+  transitions: PhaseTransition[];       // Phase transition history
+
+  // Agent Orchestration
+  activeAgents: AgentAssignment[];      // Currently active agents
+  agentHistory: AgentEngagement[];      // Complete agent interaction history
+
+  // Workflow State
+  status: WorkflowStatus;               // Overall workflow status
+  completionPercentage: number;         // Overall completion (0-100)
+  estimatedCompletionDate?: Date;       // Projected completion
+
+  // Performance Metrics
+  startedAt: Date;
+  lastActivityAt: Date;
+  totalHours: number;
+  tokenConsumption: number;
+
+  // Metadata
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface WorkflowPhase {
+  phase: BMadPhase;
+  status: PhaseStatus;
+  requiredArtifacts: ArtifactRequirement[];
+  completedArtifacts: string[];         // Artifact IDs
+  assignedAgents: string[];             // Agent IDs
+  estimatedHours: number;
+  actualHours: number;
+  startedAt?: Date;
+  completedAt?: Date;
+  blockers: Blocker[];
+}
+
+interface PhaseTransition {
+  id: string;
+  fromPhase?: BMadPhase;                // null for initial phase
+  toPhase: BMadPhase;
+  triggeredBy: TransitionTrigger;
+  triggeredAt: Date;
+  triggeredByUser?: string;             // User ID if manual
+  completionCriteria: CompletionCriteria[];
+  artifacts: string[];                  // Artifacts that triggered transition
+}
+
+enum WorkflowStatus {
+  NOT_STARTED = "not_started",
+  IN_PROGRESS = "in_progress",
+  BLOCKED = "blocked",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled"
+}
+
+enum TransitionTrigger {
+  AUTOMATIC = "automatic",              // Triggered by completion criteria
+  MANUAL = "manual",                    // Triggered by user
+  AGENT_RECOMMENDATION = "agent_recommendation"
+}
+
+### Integration Model
+
+**Purpose:** External system integration configuration and status
+
+```typescript
+interface Integration {
+  id: string;
+  projectId: string;
+  type: IntegrationType;
+  name: string;
+  configuration: IntegrationConfig;
+  status: IntegrationStatus;
+
+  // Sync State
+  lastSyncAt?: Date;
+  nextSyncAt?: Date;
+  syncFrequency: SyncFrequency;
+
+  // Error Handling
+  lastError?: IntegrationError;
+  retryCount: number;
+  maxRetries: number;
+
+  // Metadata
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
+}
+
+enum IntegrationType {
+  GITHUB = "github",
+  SHAREPOINT = "sharepoint",
+  FIGMA = "figma",
+  IGNIS_PLATFORM = "ignis_platform",
+  BMAD_IDE = "bmad_ide"
+}
+
+interface GitHubIntegration extends IntegrationConfig {
+  repositoryUrl: string;
+  branch: string;
+  accessToken: string;                  // Encrypted
+  webhookUrl?: string;
+  syncPaths: SyncPath[];
+}
+
+interface SharePointIntegration extends IntegrationConfig {
+  siteUrl: string;
+  libraryName: string;
+  accessToken: string;                  // Encrypted
+  folderStructure: FolderMapping[];
+}
+
+interface IgnisIntegration extends IntegrationConfig {
+  endpoint: string;
+  apiKey: string;                       // Encrypted
+  telemetryTypes: TelemetryType[];
+  batchSize: number;
+  transmissionInterval: number;         // seconds
+}
 
 ## API Specification
 
-Based on FastAPI framework selected in the Tech Stack, here's the comprehensive REST API specification:
+Based on Node.js/Express.js framework selected in the Tech Stack, here's the comprehensive REST API specification for the BMad v6-powered platform:
 
-### FastAPI Application Structure
+### Express.js Application Structure
 
-```python
-from fastapi import FastAPI, Depends, HTTPException, UploadFile, File
-from fastapi.security import HTTPBearer
-from pydantic import BaseModel, UUID4
-from typing import Optional, List
-import enum
+```typescript
+import express from 'express';
+import { authenticate, authorize } from '../middleware/auth';
+import { validateRequest } from '../middleware/validation';
+import { BMadTrack, BMadPhase, AgentSpecialization } from '../types';
 
-app = FastAPI(
-    title="BMAD Platform API",
-    description="Document processing and collaboration platform",
-    version="1.0.0"
-)
+const app = express();
 
-# Authentication dependency
-security = HTTPBearer()
+// Middleware
+app.use(express.json());
+app.use(authenticate); // JWT/OAuth authentication
+app.use('/api/v1', router);
 
-async def get_current_user(token: str = Depends(security)) -> User:
-    # MSAL token validation logic
-    pass
+// OpenAPI/Swagger documentation
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'BMad v6-Powered SDLC Platform API',
+      version: '1.0.0',
+      description: 'Scale-adaptive intelligence and intelligent agent orchestration platform'
+    }
+  },
+  apis: ['./routes/*.ts']
+};
 ```
 
 ### Core API Endpoints
 
-**Document Management Endpoints:**
+**BMad v6 Scale-Adaptive Intelligence Endpoints:**
 
-```python
-# Pydantic schemas for request/response
-class DocumentUploadRequest(BaseModel):
-    project_id: UUID4
-    name: str
-    type: DocumentType
-    format: DocumentFormat
+```typescript
+// Project and Track Management
+interface CreateProjectRequest {
+  name: string;
+  description?: string;
+  githubRepoUrl?: string;
+  initialComplexity?: number;
+  preferredTrack?: BMadTrack;
+}
 
-class DocumentResponse(BaseModel):
-    id: UUID4
-    project_id: UUID4
-    name: str
-    type: DocumentType
-    primary_format: DocumentFormat
-    sync_status: SyncStatus
-    created_at: datetime
-    updated_at: datetime
+interface ProjectResponse {
+  id: string;
+  name: string;
+  selectedTrack: BMadTrack;
+  currentPhase: BMadPhase;
+  complexityScore: number;
+  phaseProgress: PhaseProgress[];
+  activeAgents: string[];
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-class DocumentUpdateRequest(BaseModel):
-    content: str
-    format: DocumentFormat
-    conflict_resolution: str = "create_version"
+// POST /api/v1/projects
+router.post('/projects', validateRequest(CreateProjectRequest), async (req, res) => {
+  /**
+   * Create new BMad v6 project with scale-adaptive intelligence
+   * - Analyze initial complexity
+   * - Select appropriate track (Quick Flow, BMad Method, Brownfield)
+   * - Initialize 4-phase workflow
+   * - Recommend initial agents
+   */
+  const project = await projectService.createProject(req.body, req.user);
+  res.status(201).json(project);
+});
 
-# API Routes
-@app.post("/api/v1/documents/upload", response_model=DocumentResponse)
-async def upload_document(
-    file: UploadFile = File(...),
-    request: DocumentUploadRequest = Depends(),
-    current_user: User = Depends(get_current_user)
-):
-    """Upload a new document and queue for format conversion"""
-    # Validate file, store in Azure Blob Storage, create database record
-    # Queue conversion job in Azure Storage Queue
-    pass
+// GET /api/v1/projects/{projectId}/track-analysis
+router.get('/projects/:projectId/track-analysis', async (req, res) => {
+  /**
+   * Get scale-adaptive intelligence analysis
+   * - Current complexity assessment
+   * - Track recommendation rationale
+   * - Potential track transitions
+   */
+  const analysis = await scaleAdaptiveService.analyzeProject(req.params.projectId);
+  res.json(analysis);
+});
 
-@app.get("/api/v1/documents/{document_id}", response_model=DocumentResponse)
-async def get_document(
-    document_id: UUID4,
-    format: Optional[DocumentFormat] = None,
-    version: Optional[int] = None,
-    current_user: User = Depends(get_current_user)
-):
-    """Retrieve document content in specified format"""
-    # Check permissions, retrieve from database/storage
-    pass
-
-@app.put("/api/v1/documents/{document_id}/content")
-async def update_document_content(
-    document_id: UUID4,
-    request: DocumentUpdateRequest,
-    current_user: User = Depends(get_current_user)
-):
-    """Update document content with conflict resolution"""
-    # Handle conflict resolution, create version, trigger sync
-    pass
+// PUT /api/v1/projects/{projectId}/track
+router.put('/projects/:projectId/track', async (req, res) => {
+  /**
+   * Transition project track based on complexity evolution
+   * - Validate transition criteria
+   * - Update workflow requirements
+   * - Adjust agent recommendations
+   */
+  const { newTrack, reason } = req.body;
+  const result = await scaleAdaptiveService.transitionTrack(
+    req.params.projectId,
+    newTrack,
+    reason
+  );
+  res.json(result);
+});
 ```
 
-**Format Conversion Endpoints:**
+**Intelligent Agent Orchestration Endpoints:**
 
-```python
-class ConversionRequest(BaseModel):
-    document_id: UUID4
-    target_format: DocumentFormat
-    options: dict = {
-        "preserve_formatting": True,
-        "include_images": True,
-        "quality_level": "balanced"
-    }
+```typescript
+interface AgentSelectionRequest {
+  projectId: string;
+  phase: BMadPhase;
+  context?: ProjectContext;
+  maxAgents?: number;
+}
 
-class ConversionJobResponse(BaseModel):
-    job_id: UUID4
-    status: str
-    estimated_completion: Optional[datetime]
+interface AgentRecommendationResponse {
+  recommendedAgents: AgentRecommendation[];
+  rationale: string;
+  contextAnalysis: ContextAnalysis;
+  progressiveEngagementPlan: EngagementPlan;
+}
 
-@app.post("/api/v1/conversion/convert", response_model=ConversionJobResponse)
-async def convert_document(
-    request: ConversionRequest,
-    current_user: User = Depends(get_current_user)
-):
-    """Queue document conversion job"""
-    # Validate request, queue job in Azure Storage Queue
-    pass
+// GET /api/v1/projects/{projectId}/agent-recommendations
+router.get('/projects/:projectId/agent-recommendations', async (req, res) => {
+  /**
+   * Get context-aware agent recommendations
+   * - Analyze project context and current phase
+   * - Recommend 2-3 most relevant agents initially
+   * - Provide progressive engagement plan
+   */
+  const recommendations = await agentOrchestrationService.getRecommendations(
+    req.params.projectId,
+    req.query
+  );
+  res.json(recommendations);
+});
 
-@app.get("/api/v1/conversion/{job_id}/status")
-async def get_conversion_status(
-    job_id: UUID4,
-    current_user: User = Depends(get_current_user)
-):
-    """Get conversion job status and results"""
-    pass
+// POST /api/v1/projects/{projectId}/agents/{agentId}/engage
+router.post('/projects/:projectId/agents/:agentId/engage', async (req, res) => {
+  /**
+   * Engage specific agent for project phase
+   * - Load agent context and capabilities
+   * - Initialize agent-specific workflow
+   * - Track engagement metrics
+   */
+  const engagement = await agentOrchestrationService.engageAgent(
+    req.params.projectId,
+    req.params.agentId,
+    req.body.context
+  );
+  res.json(engagement);
+});
+
+// GET /api/v1/agents/{agentId}/performance
+router.get('/agents/:agentId/performance', async (req, res) => {
+  /**
+   * Get agent performance metrics
+   * - Token consumption statistics
+   * - Response time analytics
+   * - Success rate metrics
+   */
+  const metrics = await agentService.getPerformanceMetrics(req.params.agentId);
+  res.json(metrics);
+});
 ```
 
-**Real-time Collaboration Endpoints:**
+**4-Phase Workflow Management Endpoints:**
 
-```python
-class CollaborationSessionRequest(BaseModel):
-    document_id: UUID4
-    format: DocumentFormat
+```typescript
+interface PhaseTransitionRequest {
+  projectId: string;
+  fromPhase?: BMadPhase;
+  toPhase: BMadPhase;
+  completionCriteria: CompletionCriteria[];
+  artifacts: string[];
+}
 
-class CollaborationEvent(BaseModel):
-    session_id: UUID4
-    event_type: str
-    event_data: dict
+// GET /api/v1/projects/{projectId}/workflow
+router.get('/projects/:projectId/workflow', async (req, res) => {
+  /**
+   * Get complete workflow state
+   * - Current phase and progress
+   * - Phase completion criteria
+   * - Required and completed artifacts
+   * - Next phase requirements
+   */
+  const workflow = await workflowService.getWorkflowState(req.params.projectId);
+  res.json(workflow);
+});
 
-@app.post("/api/v1/collaboration/sessions")
-async def create_collaboration_session(
-    request: CollaborationSessionRequest,
-    current_user: User = Depends(get_current_user)
-):
-    """Create or join collaboration session"""
-    pass
+// POST /api/v1/projects/{projectId}/phases/transition
+router.post('/projects/:projectId/phases/transition', async (req, res) => {
+  /**
+   * Transition to next phase
+   * - Validate completion criteria
+   * - Update agent recommendations
+   * - Initialize next phase requirements
+   */
+  const transition = await workflowService.transitionPhase(
+    req.params.projectId,
+    req.body
+  );
+  res.json(transition);
+});
 
-@app.get("/api/v1/collaboration/{document_id}/stream")
-async def document_event_stream(
-    document_id: UUID4,
-    current_user: User = Depends(get_current_user)
-):
-    """Server-Sent Events stream for real-time updates"""
-    async def event_generator():
-        while True:
-            # Check Redis for document updates
-            update = await redis_client.blpop(f"document:{document_id}:updates", timeout=30)
-            if update:
-                yield f"data: {update[1]}\n\n"
+// GET /api/v1/projects/{projectId}/phases/{phase}/requirements
+router.get('/projects/:projectId/phases/:phase/requirements', async (req, res) => {
+  /**
+   * Get phase-specific requirements
+   * - Required artifact types
+   * - Recommended agents
+   * - Completion criteria
+   * - Estimated timeline
+   */
+  const requirements = await workflowService.getPhaseRequirements(
+    req.params.projectId,
+    req.params.phase
+  );
+  res.json(requirements);
+});
+```
+**Comprehensive Artifact Generation Endpoints:**
 
-    return StreamingResponse(event_generator(), media_type="text/plain")
+```typescript
+interface ArtifactGenerationRequest {
+  projectId: string;
+  type: ArtifactType;
+  templateId?: string;
+  context: GenerationContext;
+  agentId: string;
+  phase: BMadPhase;
+}
 
-@app.post("/api/v1/collaboration/events")
-async def send_collaboration_event(
-    event: CollaborationEvent,
-    current_user: User = Depends(get_current_user)
-):
-    """Send collaboration event to other participants"""
-    # Broadcast event via Redis pub/sub
-    pass
+interface ArtifactResponse {
+  id: string;
+  name: string;
+  type: ArtifactType;
+  category: ArtifactCategory;
+  content: string;
+  status: ArtifactStatus;
+  qualityScore: number;
+  completenessScore: number;
+  generatedBy: string;
+  createdAt: Date;
+}
+
+// POST /api/v1/projects/{projectId}/artifacts/generate
+router.post('/projects/:projectId/artifacts/generate', async (req, res) => {
+  /**
+   * Generate comprehensive artifacts using BMad v6 templates
+   * - SDLC documents (PRD, architecture, user stories, test plans)
+   * - Business documents (market research, business cases, presentations)
+   * - Compliance documentation (security assessments, privacy impact)
+   * - Training materials (user manuals, API documentation)
+   */
+  const artifact = await artifactService.generateArtifact(
+    req.params.projectId,
+    req.body
+  );
+  res.status(201).json(artifact);
+});
+
+// GET /api/v1/projects/{projectId}/artifacts
+router.get('/projects/:projectId/artifacts', async (req, res) => {
+  /**
+   * Get all project artifacts with filtering
+   * - Filter by type, category, phase, status
+   * - Include quality and completeness scores
+   * - Support pagination and sorting
+   */
+  const artifacts = await artifactService.getProjectArtifacts(
+    req.params.projectId,
+    req.query
+  );
+  res.json(artifacts);
+});
+
+// PUT /api/v1/artifacts/{artifactId}/content
+router.put('/artifacts/:artifactId/content', async (req, res) => {
+  /**
+   * Update artifact content with version control
+   * - Maintain BMad v6 template structure
+   * - Validate methodology compliance
+   * - Track changes and reviewers
+   */
+  const { content, comment } = req.body;
+  const updatedArtifact = await artifactService.updateContent(
+    req.params.artifactId,
+    content,
+    comment,
+    req.user
+  );
+  res.json(updatedArtifact);
+});
+
+// GET /api/v1/templates
+router.get('/templates', async (req, res) => {
+  /**
+   * Get BMad v6 template library
+   * - Filter by phase, track, artifact type
+   * - Include template metadata and structure
+   * - Support search and categorization
+   */
+  const templates = await templateService.getTemplates(req.query);
+  res.json(templates);
+});
+```
+
+**Strategic Integration Endpoints:**
+
+```typescript
+interface IntegrationConfigRequest {
+  type: IntegrationType;
+  configuration: IntegrationConfig;
+  syncFrequency: SyncFrequency;
+}
+
+// POST /api/v1/projects/{projectId}/integrations
+router.post('/projects/:projectId/integrations', async (req, res) => {
+  /**
+   * Configure project integrations
+   * - GitHub repository synchronization
+   * - SharePoint document management
+   * - Figma design workflows
+   * - Ignis Platform telemetry
+   */
+  const integration = await integrationService.configureIntegration(
+    req.params.projectId,
+    req.body
+  );
+  res.status(201).json(integration);
+});
+
+// POST /api/v1/projects/{projectId}/sync/github
+router.post('/projects/:projectId/sync/github', async (req, res) => {
+  /**
+   * Sync artifacts with GitHub repository
+   * - Bidirectional synchronization
+   * - Maintain BMad v6 IDE workflow compatibility
+   * - Handle merge conflicts and version control
+   */
+  const syncResult = await githubService.syncProject(
+    req.params.projectId,
+    req.body
+  );
+  res.json(syncResult);
+});
+
+// POST /api/v1/projects/{projectId}/sync/sharepoint
+router.post('/projects/:projectId/sync/sharepoint', async (req, res) => {
+  /**
+   * Sync artifacts with SharePoint
+   * - Enterprise document management
+   * - Metadata synchronization
+   * - Approval workflow integration
+   */
+  const syncResult = await sharepointService.syncProject(
+    req.params.projectId,
+    req.body
+  );
+  res.json(syncResult);
+});
+
+// POST /api/v1/telemetry/ignis
+router.post('/telemetry/ignis', async (req, res) => {
+  /**
+   * Send telemetry data to Ignis Platform
+   * - User behavior analytics
+   * - Workflow performance metrics
+   * - Agent utilization statistics
+   * - System performance data
+   */
+  const result = await ignisService.sendTelemetry(req.body);
+  res.json(result);
+});
 ```
 
 ## Components
 
-Based on the architectural patterns, tech stack, and data models, here are the major logical components:
+Based on the BMad v6-powered architectural patterns, tech stack, and data models, here are the major logical components:
 
-### Frontend Application (Azure App Service)
+### Frontend Application (React/Next.js)
 
-**Responsibility:** React-based web application providing multi-format document editing, real-time collaboration, and project management interfaces
-
-**Key Interfaces:**
-- Document Editor API for multi-format content editing
-- Real-time updates via Server-Sent Events (SSE)
-- File Upload/Download API for document management
-- MSAL authentication integration for SSO
-
-**Dependencies:** Azure API Management, Azure Functions backend services, Azure Blob Storage
-
-**Technology Stack:** React 18+, TypeScript, Azure App Service (Linux or Windows), Node.js 18, MSAL.js, EventSource API for real-time features
-
-### Document Management Service (Azure Function)
-
-**Responsibility:** Core document lifecycle management including storage, versioning, metadata tracking, and access control
+**Responsibility:** Modern React-based web application providing BMad v6 scale-adaptive intelligence interfaces, intelligent agent orchestration, 4-phase workflow navigation, and comprehensive artifact management
 
 **Key Interfaces:**
-- RESTful API for document CRUD operations with version tracking
-- Multi-format content storage and retrieval via Azure Blob Storage
-- Document metadata search using PostgreSQL full-text search
-- MSAL-based authentication and role-based access control
+- Scale-Adaptive Intelligence UI for automatic complexity detection and track selection
+- Intelligent Agent Selection Interface with context-aware recommendations and progressive engagement
+- 4-Phase Workflow Navigator with visual progress tracking and automatic completion detection
+- Comprehensive Artifact Generation Interface supporting SDLC, business, compliance, and training documentation
+- Real-time collaboration features with WebSocket connections and live updates
 
-**Dependencies:** Azure Database for PostgreSQL, Azure Blob Storage, Format Translation Service, MSAL
+**Dependencies:** API Gateway, BMad v6 Core Services, Authentication Service, CDN for static assets
 
-**Technology Stack:** Python 3.11, FastAPI, SQLAlchemy 2.0, Azure Functions, Pydantic, MSAL Python SDK
+**Technology Stack:** React 18+, Next.js 14, TypeScript, TailwindCSS, WebSocket client, OAuth 2.0 client libraries
 
-### Format Translation Service (Azure Function + Container Instances)
+### Scale-Adaptive Intelligence Service (Node.js Microservice)
 
-**Responsibility:** Bidirectional conversion between business document formats (.doc, .xlsx, PDF) and markdown with high fidelity preservation
-
-**Key Interfaces:**
-- Async document conversion API with format validation
-- Conversion job queue using Azure Storage Queues
-- Fidelity scoring and quality assessment metrics
-- Batch conversion for multiple documents
-
-**Dependencies:** Pandoc, python-docx, Azure Storage Queues, Azure Container Instances for heavy processing
-
-**Technology Stack:** Python 3.11, Pandoc, python-docx, Celery with Azure Storage Queue backend, Azure Functions, Azure Container Instances
-
-### GitHub Integration Service (Azure Function)
-
-**Responsibility:** Bidirectional synchronization with GitHub repositories, maintaining both business and technical document formats
+**Responsibility:** BMad v6's core intelligence engine providing automatic complexity detection, track selection (Quick Flow, BMad Method, Brownfield), and seamless track transitions based on project evolution
 
 **Key Interfaces:**
-- GitHub OAuth integration and repository access
-- Document sync with three-way merge conflict resolution
-- Webhook handling for external repository changes
-- Branch and commit management with automated PR creation
+- Project complexity analysis API with scoring algorithms and track recommendations
+- Track transition management with validation criteria and workflow adjustments
+- Performance optimization with track-specific workflow configurations
+- Integration with agent orchestration for track-appropriate agent recommendations
 
-**Dependencies:** GitHub API, Document Management Service, Format Translation Service, Azure Key Vault
+**Dependencies:** PostgreSQL for project data, Redis for caching, BMad v6 Framework components
 
-**Technology Stack:** Python 3.11, PyGithub, FastAPI, Azure Functions, Azure Key Vault for token storage
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, machine learning libraries for complexity analysis
 
-### Real-time Collaboration Service (Server-Sent Events)
+### Intelligent Agent Orchestration Service (Node.js Microservice)
 
-**Responsibility:** Multi-user document editing with conflict resolution, cursor tracking, and live synchronization
+**Responsibility:** Context-aware agent selection from BMad v6's 12-agent ecosystem, progressive engagement management, and specialized expertise coordination
 
 **Key Interfaces:**
-- Server-Sent Events (SSE) for real-time document updates
-- HTTP endpoints for collaboration actions (cursor moves, text changes)
-- Session management and participant tracking via Redis
-- Change broadcasting using simple pub/sub pattern
+- Agent recommendation API with context analysis and relevance scoring
+- Agent engagement management with performance tracking and token optimization
+- Progressive engagement logic presenting 2-3 relevant agents initially with dynamic expansion
+- Agent performance analytics with response times, success rates, and token consumption metrics
 
-**Dependencies:** Document Management Service, Azure Cache for Redis, FastAPI StreamingResponse
+**Dependencies:** Redis for agent definition caching, PostgreSQL for engagement history, BMad v6 agent definitions
 
-**Technology Stack:** FastAPI with SSE support, Python 3.11, Azure Cache for Redis, EventSource API (browser native)
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, Redis for caching, agent-specific prompt management
 
-## Simplified Real-Time Architecture
+### 4-Phase Workflow Management Service (Node.js Microservice)
 
-### Server-Sent Events (SSE) vs SignalR
+**Responsibility:** Complete BMad v6 methodology execution through Analysis → Planning → Solutioning → Implementation phases with automatic progression and completion detection
 
-**Why Server-Sent Events:**
-- **Native Browser Support:** Built into all modern browsers, no additional libraries
-- **HTTP-Based:** Uses standard HTTP connections, works through firewalls and proxies
-- **Automatic Reconnection:** Browsers handle reconnection automatically
-- **Simple Implementation:** FastAPI has built-in SSE support with `StreamingResponse`
-- **Unidirectional:** Perfect for server-to-client updates (document changes, notifications)
-- **No External Dependencies:** No need for Azure SignalR Service
+**Key Interfaces:**
+- Workflow state management API with phase tracking and progress monitoring
+- Phase transition logic with completion criteria validation and stakeholder notifications
+- Artifact requirement management with phase-specific templates and quality validation
+- Integration with agent orchestration for phase-appropriate agent recommendations
 
-**Real-Time Collaboration Flow:**
+**Dependencies:** PostgreSQL for workflow state, Message Queue for async processing, Artifact Generation Service
+
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, workflow orchestration libraries
+
+### Comprehensive Artifact Generation Service (Node.js Microservice)
+
+**Responsibility:** Template-based artifact creation using BMad v6 standards, supporting SDLC documents, business artifacts, compliance documentation, and training materials
+
+**Key Interfaces:**
+- Artifact generation API with BMad v6 template processing and content creation
+- Template library management with phase-appropriate recommendations and customization
+- Quality assessment with completeness scoring and methodology compliance validation
+- Version control and collaboration features with review workflows and approval tracking
+
+**Dependencies:** Object Storage for artifacts, PostgreSQL for metadata, BMad v6 template system
+
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, markdown processing libraries, template engines
+
+### BMad v6 IDE Integration Service (Node.js Microservice)
+
+**Responsibility:** Seamless bidirectional synchronization with existing BMad v6 IDE workflows, maintaining workflow continuity and enabling smooth handoff to development teams
+
+**Key Interfaces:**
+- Bidirectional synchronization API with conflict resolution and merge management
+- Workflow handoff management with development team notifications and artifact preparation
+- Integration validation with BMad v6 IDE compatibility verification
+- Performance monitoring with sync status tracking and error handling
+
+**Dependencies:** GitHub Integration Service, PostgreSQL for sync state, BMad v6 Framework components
+
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, Git libraries, BMad v6 integration components
+
+### GitHub Integration Service (Node.js Microservice)
+
+**Responsibility:** Bidirectional synchronization with GitHub repositories, maintaining BMad v6 IDE workflow compatibility and seamless development team handoff
+
+**Key Interfaces:**
+- GitHub OAuth integration with repository access and webhook management
+- BMad v6 artifact synchronization with markdown format preservation and metadata handling
+- Conflict resolution with three-way merge and version control integration
+- Development team handoff with automated PR creation and workflow notifications
+
+**Dependencies:** GitHub API, BMad v6 IDE Integration Service, Artifact Generation Service, Secrets Management
+
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, Octokit (GitHub API client), Git libraries
+
+### SharePoint Integration Service (Node.js Microservice)
+
+**Responsibility:** Enterprise document management integration with metadata synchronization and approval workflow support
+
+**Key Interfaces:**
+- Microsoft Graph API integration for SharePoint document libraries
+- Enterprise metadata synchronization with taxonomy alignment and governance compliance
+- Approval workflow integration with stakeholder notifications and audit trails
+- Document versioning with SharePoint version control and access management
+
+**Dependencies:** Microsoft Graph API, Artifact Generation Service, Authentication Service
+
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, Microsoft Graph SDK, OAuth 2.0 client
+
+### Ignis Platform Telemetry Service (Node.js Microservice)
+
+**Responsibility:** Comprehensive telemetry capture and real-time transmission to Ignis Platform for analytics, optimization, and ecosystem connectivity
+
+**Key Interfaces:**
+- Real-time telemetry collection with user behavior analytics and workflow performance metrics
+- Agent utilization tracking with token consumption monitoring and performance optimization
+- System performance monitoring with response times, error rates, and resource utilization
+- Batch transmission with data integrity validation and retry mechanisms
+
+**Dependencies:** Ignis Platform API, Analytics Database, Message Queue for batching
+
+**Technology Stack:** Node.js 20+, Express.js, TypeScript, analytics libraries, time-series data processing
+
+## BMad v6 Real-Time Architecture
+
+### WebSocket vs Server-Sent Events for BMad v6
+
+**Why WebSocket for BMad v6:**
+- **Bidirectional Communication:** Essential for agent interactions and real-time workflow updates
+- **Low Latency:** Critical for responsive agent orchestration and phase transitions
+- **Persistent Connections:** Optimal for continuous workflow monitoring and progress updates
+- **Rich Protocol Support:** Enables complex agent communication patterns and context sharing
+
+**BMad v6 Real-Time Workflow Flow:**
 
 ```mermaid
-graph LR
-    subgraph "Real-Time Document Collaboration"
-        USER1[User 1<br/>Editing Document]
-        USER2[User 2<br/>Viewing Document]
-        API[FastAPI Backend<br/>SSE Endpoint]
-        REDIS[Redis Cache<br/>Pub/Sub]
-        DB[(PostgreSQL<br/>Document Storage)]
+graph TB
+    subgraph "BMad v6 Real-Time Workflow Orchestration"
+        USER[User<br/>Project Orchestrator]
+        AGENT[Intelligent Agent<br/>Context-Aware Selection]
+        WORKFLOW[4-Phase Workflow<br/>Management Engine]
+        ARTIFACTS[Artifact Generation<br/>Real-time Updates]
+        INTEGRATIONS[External Integrations<br/>GitHub, SharePoint, Ignis]
     end
 
-    USER1 -->|Edit Document| API
-    API -->|Save Changes| DB
-    API -->|Publish Update| REDIS
-    REDIS -->|Subscribe| API
-    API -->|SSE Stream| USER2
+    subgraph "Real-Time Communication Layer"
+        WS[WebSocket Server<br/>Node.js/Socket.io]
+        REDIS[Redis Pub/Sub<br/>Message Broadcasting]
+        QUEUE[Message Queue<br/>Async Processing]
+    end
+
+    USER -->|Agent Selection| WS
+    WS -->|Context Analysis| AGENT
+    AGENT -->|Workflow Update| WORKFLOW
+    WORKFLOW -->|Artifact Request| ARTIFACTS
+    ARTIFACTS -->|Integration Sync| INTEGRATIONS
+
+    AGENT -->|Progress Update| REDIS
+    WORKFLOW -->|Phase Transition| REDIS
+    ARTIFACTS -->|Generation Complete| REDIS
+    INTEGRATIONS -->|Sync Status| REDIS
+
+    REDIS -->|Broadcast Updates| WS
+    WS -->|Real-time Updates| USER
+
+    WORKFLOW -->|Async Tasks| QUEUE
+    ARTIFACTS -->|Background Processing| QUEUE
+    INTEGRATIONS -->|Batch Operations| QUEUE
 ```
 
-**SSE Implementation Example:**
+## Security Architecture
 
-**Backend (FastAPI):**
-```python
-from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
-import asyncio
-import json
+### BMad v6 Security Framework
 
-app = FastAPI()
+The BMad v6-powered platform implements comprehensive security measures across all layers, ensuring enterprise-grade protection for sensitive project data, agent interactions, and external integrations.
 
-@app.get("/documents/{document_id}/stream")
-async def document_stream(document_id: str):
-    async def event_stream():
-        while True:
-            # Check for document updates in Redis
-            update = await redis_client.blpop(f"document:{document_id}:updates", timeout=30)
-            if update:
-                data = json.loads(update[1])
-                yield f"data: {json.dumps(data)}\n\n"
-            else:
-                # Send heartbeat to keep connection alive
-                yield f"data: {json.dumps({'type': 'heartbeat'})}\n\n"
+### Authentication & Authorization
 
-    return StreamingResponse(event_stream(), media_type="text/plain")
+**OAuth 2.0 + JWT Implementation:**
+- **GitHub OAuth Integration:** Primary authentication method with GitHub account linking
+- **Enterprise SSO Support:** SAML 2.0 and OpenID Connect for enterprise identity providers
+- **JWT Token Management:** Stateless authentication with secure token refresh and revocation
+- **Multi-Factor Authentication:** Optional MFA for enhanced security in enterprise environments
 
-@app.post("/documents/{document_id}/update")
-async def update_document(document_id: str, update_data: dict):
-    # Save to database
-    await save_document_update(document_id, update_data)
-
-    # Broadcast to all connected clients
-    await redis_client.lpush(
-        f"document:{document_id}:updates",
-        json.dumps(update_data)
-    )
-
-    return {"status": "success"}
-```
-
-**Frontend (React):**
+**Role-Based Access Control (RBAC):**
 ```typescript
-// Simple SSE client - no additional libraries needed
-function useDocumentStream(documentId: string) {
-    const [updates, setUpdates] = useState([]);
+enum UserRole {
+  ADMIN = "admin",                    // Platform administration
+  PROJECT_MANAGER = "project_manager", // Project creation and management
+  STAKEHOLDER = "stakeholder",        // Workflow participation
+  VIEWER = "viewer"                   // Read-only access
+}
 
-    useEffect(() => {
-        const eventSource = new EventSource(`/api/documents/${documentId}/stream`);
+interface Permission {
+  resource: string;                   // Project, artifact, agent, workflow
+  action: string;                     // create, read, update, delete, execute
+  conditions?: AccessCondition[];     // Context-based access rules
+}
+```
 
-        eventSource.onmessage = (event) => {
+**Project-Level Security:**
+- **Project Ownership:** Clear ownership model with delegation capabilities
+- **Team Member Permissions:** Granular permissions for project collaboration
+- **Artifact-Level Access:** Fine-grained control over sensitive documents
+- **Agent Access Control:** Restrictions on agent engagement based on user roles
+
+### Data Protection
+
+**Encryption at Rest:**
+- **Database Encryption:** PostgreSQL transparent data encryption (TDE) for all sensitive data
+- **Object Storage Encryption:** AES-256 encryption for all stored artifacts and documents
+- **Secrets Management:** Dedicated secrets management service for API keys and credentials
+- **Key Rotation:** Automated key rotation policies for enhanced security
+
+**Encryption in Transit:**
+- **TLS 1.3:** All API communications encrypted with modern TLS protocols
+- **Certificate Management:** Automated certificate provisioning and renewal
+- **API Gateway Security:** Centralized SSL termination and security policy enforcement
+- **WebSocket Security:** Secure WebSocket connections (WSS) for real-time communications
+
+**Data Classification:**
+```typescript
+enum DataClassification {
+  PUBLIC = "public",                  // Publicly shareable information
+  INTERNAL = "internal",              // Internal project information
+  CONFIDENTIAL = "confidential",      // Sensitive business information
+  RESTRICTED = "restricted"           // Highly sensitive or regulated data
+}
+
+interface DataProtectionPolicy {
+  classification: DataClassification;
+  encryptionRequired: boolean;
+  accessLogging: boolean;
+  retentionPeriod: number;           // Days
+  geographicRestrictions?: string[]; // Allowed regions
+}
+```
+
+### Integration Security
+
+**External API Security:**
+- **OAuth 2.0 Flows:** Secure authentication with GitHub, SharePoint, and Figma APIs
+- **Token Encryption:** All external API tokens encrypted at rest with key rotation
+- **Rate Limiting:** Comprehensive rate limiting to prevent abuse and ensure availability
+- **Webhook Validation:** Cryptographic validation of incoming webhooks from external services
+
+**BMad v6 Framework Security:**
+- **Agent Definition Integrity:** Cryptographic verification of agent definitions and templates
+- **Context Isolation:** Secure isolation of project contexts to prevent data leakage
+- **Audit Logging:** Comprehensive logging of all agent interactions and workflow transitions
+- **Performance Monitoring:** Security-focused monitoring to detect anomalous behavior
+
+### Compliance & Audit
+
+**Audit Logging:**
+```typescript
+interface AuditEvent {
+  id: string;
+  timestamp: Date;
+  userId: string;
+  action: string;                     // create, read, update, delete, execute
+  resource: string;                   // Affected resource
+  resourceId: string;
+  details: AuditDetails;
+  ipAddress: string;
+  userAgent: string;
+  result: 'success' | 'failure';
+  riskScore?: number;                 // Calculated risk assessment
+}
+
+interface AuditDetails {
+  previousValue?: any;                // For update operations
+  newValue?: any;                     // For create/update operations
+  agentId?: string;                   // For agent interactions
+  phaseTransition?: PhaseTransition;  // For workflow changes
+  integrationSync?: SyncOperation;    // For external integrations
+}
+```
+
+**Compliance Features:**
+- **GDPR Compliance:** Data subject rights, consent management, and data portability
+- **SOC 2 Type II:** Security controls aligned with SOC 2 requirements
+- **ISO 27001:** Information security management system compliance
+- **Industry-Specific:** Healthcare (HIPAA), Financial (SOX), Government (FedRAMP) compliance options
+
+**Data Retention & Privacy:**
+- **Automated Data Lifecycle:** Configurable retention policies with automated deletion
+- **Right to be Forgotten:** GDPR-compliant data deletion capabilities
+- **Data Minimization:** Collection and processing of only necessary data
+- **Privacy by Design:** Privacy considerations integrated into all system components
+
+### Threat Protection
+
+**Application Security:**
+- **Input Validation:** Comprehensive input sanitization and validation
+- **SQL Injection Prevention:** Parameterized queries and ORM-based data access
+- **XSS Protection:** Content Security Policy (CSP) and output encoding
+- **CSRF Protection:** Anti-CSRF tokens for all state-changing operations
+
+**Infrastructure Security:**
+- **Network Segmentation:** Isolated network segments for different service tiers
+- **DDoS Protection:** Cloud-native DDoS protection and rate limiting
+- **Intrusion Detection:** Real-time monitoring and alerting for security threats
+- **Vulnerability Management:** Regular security scanning and patch management
+
+**Monitoring & Incident Response:**
+- **Security Information and Event Management (SIEM):** Centralized security monitoring
+- **Anomaly Detection:** Machine learning-based detection of unusual patterns
+- **Incident Response Plan:** Documented procedures for security incident handling
+- **Forensic Capabilities:** Detailed logging and data preservation for investigations
             const data = JSON.parse(event.data);
             if (data.type !== 'heartbeat') {
                 setUpdates(prev => [...prev, data]);
