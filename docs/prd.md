@@ -9,7 +9,7 @@
 - Achieve 80% adoption rate among non-technical stakeholders within 6 months while maintaining seamless integration with existing BMad v6 IDE workflows
 - Transform non-technical stakeholders from requirement creators into complete project orchestrators powered by BMad v6's 12-agent ecosystem and 3-track system (Quick Flow, BMad Method, Brownfield)
 - Establish comprehensive artifact generation capabilities across SDLC, business, compliance, and training documentation using BMad v6's proven templates
-- Enable seamless bidirectional synchronization with GitHub repositories, business tools (SharePoint, Confluence), and existing BMad v6 IDE workflows
+- Enable seamless bidirectional synchronization with GitHub repositories and existing BMad v6 IDE workflows, with document storage primarily in Git repositories and future SharePoint integration planned through Model Context Protocol (MCPs)
 
 ### Background Context
 
@@ -46,19 +46,19 @@ This PRD addresses the critical market opportunity to democratize BMad v6's prov
 
 **FR9:** The system shall provide BMad v6 template library with complete artifact template suite covering all project phases, tracks, and document types, with comprehensive editing capabilities and guided workflow execution.
 
-**FR10:** The system shall implement comprehensive Ignis Platform telemetry integration with real-time data transmission including user interactions, workflow performance, agent utilization, document generation metrics, and system performance data for analytics and optimization.
+**FR10:** The system shall implement comprehensive enterprise observability integration using OpenTelemetry Protocol (OTLP) with configurable destinations for enterprise observability tools, including user interactions, workflow performance, agent utilization, token consumption tracking and reporting, document generation metrics, and system performance data for analytics and optimization with seamless Ignis Platform ecosystem integration.
 
 ### Non Functional
 
 **NFR1:** Scale-adaptive intelligence shall enable Quick Flow track completion in under 4 hours, BMad Method track Phase 1-2 completion in under 8 hours, with 90% appropriate track selection accuracy and seamless transitions between tracks when project complexity changes.
 
-**NFR2:** The system shall maintain 99.5% uptime for critical integrations (GitHub, existing BMad v6 IDE workflows, Figma, Ignis Platform) and core BMad v6 workflow orchestration services.
+**NFR2:** The system shall maintain 99.5% uptime for critical integrations (GitHub, existing BMad v6 IDE workflows, Figma, Ignis Platform ecosystem) and core BMad v6 workflow orchestration services with fully dockerized cloud-native deployment.
 
 **NFR3:** Web application shall achieve sub-2 second page load times, document editing response within 500ms, and support concurrent editing by up to 50 users per project workspace with real-time BMad v6 workflow synchronization.
 
 **NFR4:** The system shall support modern browsers (Chrome, Firefox, Safari, Edge) released within the last 2 years with responsive design for desktop and tablet usage, optimized for specification work environments.
 
-**NFR5:** Document storage and processing shall comply with enterprise security requirements including encrypted storage, comprehensive audit logging, secure telemetry data transmission to Ignis Platform, and data privacy regulations with artifact-level access controls.
+**NFR5:** Document storage and processing shall comply with enterprise security requirements including encrypted storage, comprehensive audit logging, OpenTelemetry Protocol (OTLP) for secure observability data transmission, session-less JWT-based architecture, and data privacy regulations with artifact-level access controls.
 
 **NFR6:** The system shall scale to support 500+ monthly active users with BMad v6 workflow orchestration queue management, agent definition caching, and cloud-native deployment architecture supporting variable processing loads.
 
@@ -122,9 +122,9 @@ The platform shall use a monorepo structure to manage the web application, BMad 
 - Comprehensive Artifact Generation Service (BMad v6 template processing, document creation, and methodology integrity validation)
 - BMad v6 IDE Integration Service (bidirectional synchronization with existing BMad v6 workflows and seamless handoff management)
 - Figma Integration Service (design import, specification extraction, and UX Designer agent workflow integration)
-- Ignis Platform Telemetry Service (comprehensive data capture, real-time transmission, and analytics integration)
+- Enterprise Observability Service (comprehensive data capture using OTLP, token utilization tracking, real-time transmission to configurable destinations, and Ignis Platform ecosystem integration)
 - Project Orchestration Service (4-phase workflow management, phase completion detection, and artifact organization)
-- Authentication Service (OAuth with GitHub/Figma/Ignis Platform and enterprise user management)
+- Authentication Service (EntraID/Azure AD SSO for enterprise integration, GitHub token-based repository access, JWT-based session-less architecture, and enterprise user management)
 
 Each service shall be independently deployable while sharing common libraries for BMad v6 methodology execution, agent definition management, and comprehensive integration utilities.
 
@@ -141,15 +141,15 @@ Each service shall be independently deployable while sharing common libraries fo
 
 **Document Processing Stack:** Leverage pandoc for core markdown conversion, LibreOffice API for advanced document processing, and cloud-based services (Google Docs API, Microsoft Graph API) for high-fidelity business document handling.
 
-**Frontend Framework:** React-based single-page application with component libraries supporting format-specific editing interfaces, real-time collaboration features, and responsive design for desktop/tablet usage.
+**Frontend Framework:** React-based single-page application with component libraries supporting format-specific editing interfaces, real-time collaboration features, and responsive design for desktop/tablet usage. Web UI generated using BMad framework for methodology consistency.
 
-**Database Strategy:** PostgreSQL for structured data (projects, users, metadata) with hybrid document storage - business documents in cloud storage (AWS S3/Azure Blob) and markdown versions in GitHub repositories.
+**Database Strategy:** PostgreSQL for structured data (projects, users, metadata) with session-less JWT-based architecture and Redis for caching. Document storage primarily in GitHub repositories with hybrid cloud storage (AWS S3/Azure Blob) for specific business document formats.
 
 **API Integration Architecture:** RESTful APIs with webhook support for real-time synchronization, rate limiting and retry logic for external services, and extensible plugin architecture for future format and tool integrations.
 
-**Security and Compliance:** OAuth 2.0 with GitHub and Figma, encrypted document storage with audit logging, role-based access control aligned with repository permissions, and enterprise compliance features (SOC2, GDPR readiness).
+**Security and Compliance:** EntraID/Azure AD Single Sign-On (SSO) authentication for enterprise integration, GitHub token-based repository access, JWT-based session-less architecture, encrypted document storage with audit logging, role-based access control aligned with repository permissions, and enterprise compliance features (SOC2, GDPR readiness).
 
-**Performance and Scalability:** Cloud-native deployment (AWS/Azure/GCP) with containerized services, document processing queue management with Redis/RabbitMQ, CDN for document delivery, and auto-scaling for variable processing loads.
+**Performance and Scalability:** Cloud-native deployment (AWS/Azure/GCP) with fully dockerized containerized services (no IaaS/VMs), Fastify Web Server for parallel request processing, document processing queue management with Redis/RabbitMQ, CDN for document delivery, and auto-scaling for variable processing loads.
 
 **Development and Deployment:** CI/CD pipeline with automated testing, format conversion validation, and staged deployments. Docker containerization for consistent development and production environments.
 
@@ -223,12 +223,12 @@ I want to sign in using my GitHub account and establish seamless integration wit
 so that I can access the platform while maintaining continuity with development team workflows and repository access.
 
 #### Acceptance Criteria
-1. OAuth 2.0 authentication implemented with GitHub providing secure user login and BMad v6 workflow access
+1. EntraID/Azure AD Single Sign-On (SSO) authentication implemented for enterprise integration with secure user login and BMad v6 workflow access
 2. User profile creation and management with GitHub account linking and BMad v6 IDE integration validation
 3. Repository access permissions validated with existing BMad v6 workflow compatibility verification
 4. BMad v6 IDE integration setup with bidirectional synchronization configuration and workflow handoff preparation
 5. Token management and refresh handling for sustained GitHub API access and BMad v6 workflow continuity
-6. User session management with secure logout, token revocation, and BMad v6 integration state preservation
+6. JWT-based session-less architecture with secure logout, token revocation, and BMad v6 integration state preservation
 
 ### Story 1.5: BMad v6 Template Library Integration
 

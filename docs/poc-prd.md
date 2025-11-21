@@ -15,7 +15,7 @@
 
 The BMad v6 framework provides revolutionary AI-driven agile workflows with scale-adaptive intelligence, 12 specialized agents, and proven 4-phase methodology, but accessibility barriers prevent non-technical stakeholders from leveraging these powerful capabilities. This POC addresses the critical gap by demonstrating how web-based interfaces can democratize BMad v6's sophisticated agent orchestration and methodology while maintaining full integration with existing IDE workflows.
 
-The POC validates the core hypothesis that non-technical stakeholders (product managers, business analysts, GTM teams) will readily adopt BMad v6's proven methodology when provided with familiar web interfaces and document formats, eliminating the technical barriers that currently limit access to scale-adaptive intelligence and specialized agent expertise.
+The POC validates the core hypothesis that non-technical stakeholders (product managers, business analysts, GTM teams) will readily adopt BMad v6's proven methodology when provided with familiar web interfaces and document formats, eliminating the technical barriers that currently limit access to scale-adaptive intelligence and specialized agent expertise. The POC web UI itself will be generated using the BMad framework, providing concrete validation of the framework's capability for complex application development.
 
 ### Change Log
 
@@ -27,7 +27,7 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
 
 ### Functional
 
-**FR1:** The system shall provide user authentication via GitHub OAuth with secure session management and basic project workspace creation capabilities.
+**FR1:** The system shall provide user authentication via EntraID/Azure AD Single Sign-On (SSO) for enterprise integration with JWT-based session-less architecture and basic project workspace creation capabilities.
 
 **FR2:** The system shall implement intelligent agent orchestration from BMad v6's ecosystem, presenting only contextually relevant agents (Analyst, PM, Architect, UX Expert) based on project phase rather than overwhelming users with all 12 agents.
 
@@ -37,15 +37,15 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
 
 **FR5:** The system shall implement bidirectional GitHub integration for repository synchronization, automated commits, and seamless handoff to existing BMad v6 IDE workflows.
 
-**FR6:** The system shall provide SharePoint integration for document management, proving platform extensibility and enterprise document workflow capabilities.
+**FR6:** The system shall demonstrate document storage in GitHub repositories with foundation for future SharePoint integration via Model Context Protocol (MCPs), proving platform extensibility and enterprise document workflow capabilities.
 
-**FR7:** The system shall implement comprehensive Ignis Platform telemetry integration with real-time data transmission for user behavior analytics, workflow performance monitoring, and platform optimization.
+**FR7:** The system shall implement comprehensive enterprise observability integration using OpenTelemetry Protocol (OTLP) with configurable destinations for user behavior analytics, workflow performance monitoring, token consumption tracking and reporting, and seamless Ignis Platform ecosystem integration.
 
 **FR8:** The system shall support multi-LLM integration (GPT-4, Claude, Gemini) with agent-specific context management and conversational AI interface for workflow guidance.
 
 **FR9:** The system shall implement dynamic phase progress tracking with automatic completion detection and real-time progress updates based on agent interactions and document generation.
 
-**FR10:** The system shall provide codebase configuration setup (distinct from project creation) with clear terminology and integration configuration for GitHub, SharePoint, and Ignis Platform connections.
+**FR10:** The system shall provide codebase configuration setup (distinct from project creation) with clear terminology and integration configuration for GitHub token-based repository access and Ignis Platform ecosystem connections.
 
 ### Non Functional
 
@@ -55,7 +55,7 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
 
 **NFR3:** Document generation shall complete within 30 seconds for standard BMad v6 artifacts (project brief, PRD, architecture document) with proper template structure preservation.
 
-**NFR4:** The system shall maintain 99% uptime for GitHub and SharePoint synchronization during POC testing period with zero data loss in bidirectional synchronization.
+**NFR4:** The system shall maintain 99% uptime for GitHub synchronization during POC testing period with zero data loss in bidirectional synchronization, demonstrating foundation for future SharePoint integration via MCPs.
 
 **NFR5:** The system shall support 5-10 concurrent users during POC validation with responsive performance and stable workflow execution.
 
@@ -63,7 +63,7 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
 
 **NFR7:** The system shall provide comprehensive error handling and recovery for integration failures, document processing issues, and workflow interruptions with clear user feedback.
 
-**NFR8:** All telemetry data transmission to Ignis Platform shall be real-time with 100% successful data capture and transmission validation during testing period.
+**NFR8:** All telemetry data transmission using OpenTelemetry Protocol (OTLP) shall be real-time with 100% successful data capture and transmission validation during testing period, including token utilization metrics and performance reporting.
 
 ## User Interface Design Goals
 
@@ -81,7 +81,7 @@ The POC interface shall demonstrate the "SDLC IDE over Web" concept through intu
 
 ### Core Screens and Views
 
-**Authentication & Setup:** GitHub OAuth login with codebase configuration setup, integration configuration for GitHub/SharePoint/Ignis Platform, and clear distinction between codebase-level configuration and project management.
+**Authentication & Setup:** EntraID/Azure AD SSO login with codebase configuration setup, integration configuration for GitHub token-based access and Ignis Platform ecosystem, and clear distinction between codebase-level configuration and project management.
 
 **Project Dashboard:** Phase progress visualization, active agent display, document generation status, and integration synchronization indicators with real-time updates.
 
@@ -89,7 +89,7 @@ The POC interface shall demonstrate the "SDLC IDE over Web" concept through intu
 
 **Document Viewer/Editor:** In-platform viewing and editing of generated artifacts with version control, BMad v6 template structure preservation, and synchronization status indicators.
 
-**Integration Status Dashboard:** Real-time monitoring of GitHub synchronization, SharePoint document management, and Ignis Platform telemetry transmission with clear status indicators and troubleshooting guidance.
+**Integration Status Dashboard:** Real-time monitoring of GitHub synchronization, document storage status, and OpenTelemetry Protocol (OTLP) telemetry transmission to Ignis Platform ecosystem with clear status indicators and troubleshooting guidance.
 
 ### Accessibility: WCAG AA
 
@@ -117,7 +117,7 @@ The POC shall use a monorepo structure to manage the React frontend, Node.js bac
 - GitHub Integration Service (repository synchronization and workflow handoff)
 - SharePoint Integration Service (document management and enterprise workflow validation)
 - Ignis Platform Telemetry Service (comprehensive data capture and real-time transmission)
-- Authentication Service (GitHub OAuth and session management)
+- Authentication Service (EntraID/Azure AD SSO and JWT-based session-less architecture)
 
 Each service shall be independently testable while sharing common libraries for BMad v6 integration, document processing, and external API management.
 
@@ -132,17 +132,17 @@ Each service shall be independently testable while sharing common libraries for 
 
 ### Additional Technical Assumptions and Requests
 
-**Frontend Framework:** React 18+ with Next.js 14 framework, TailwindCSS for styling (matching existing POC design system), TypeScript for type safety, and responsive design components for desktop/tablet usage.
+**Frontend Framework:** React 18+ with Next.js 14 framework, TailwindCSS for styling (matching existing POC design system), TypeScript for type safety, and responsive design components for desktop/tablet usage. Web UI generated using BMad framework for methodology consistency.
 
-**Backend Technology:** Node.js 20+ with Express.js for API services, supporting BMad v6 agent orchestration, document processing workflows, and multi-LLM integration with agent-specific prompt management.
+**Backend Technology:** Node.js 20+ with Fastify Web Server for high-performance parallel request processing, supporting BMad v6 agent orchestration, document processing workflows, and multi-LLM integration with agent-specific prompt management. Fully dockerized deployment architecture.
 
-**Database Strategy:** PostgreSQL 15 for structured data (projects, users, agent configurations, workflow state) with Redis 7 for session management, agent definition caching, and real-time data processing.
+**Database Strategy:** PostgreSQL 15 for structured data (projects, users, agent configurations, workflow state) with Redis 7 for agent definition caching and real-time data processing. JWT-based session-less architecture for stateless user context management.
 
 **BMad v6 Integration:** Direct integration with existing BMad v6 framework components, agent definition loading, template system access, and workflow orchestration while maintaining methodology integrity throughout web implementation.
 
 **API Integration Architecture:** RESTful APIs for GitHub, SharePoint, and Ignis Platform integration with webhook support for real-time synchronization, comprehensive error handling, and secure credential management for all third-party connections.
 
-**Security and Compliance:** OAuth 2.0 with GitHub authentication, encrypted session management, secure telemetry data transmission to Ignis Platform, role-based access control, and comprehensive audit logging for enterprise validation.
+**Security and Compliance:** EntraID/Azure AD Single Sign-On (SSO) authentication for enterprise integration, GitHub token-based repository access, JWT-based session-less architecture, OpenTelemetry Protocol (OTLP) for secure telemetry transmission, role-based access control, and comprehensive audit logging for enterprise validation.
 
 **Performance and Scalability:** Optimized for POC validation with 5-10 concurrent users, agent definition caching for performance, selective loading optimization for token consumption reduction, and cloud-native deployment readiness for future scaling.
 
@@ -169,15 +169,15 @@ Integrate comprehensive telemetry capture with real-time Ignis Platform transmis
 
 **Epic Goal:** Establish the foundational POC infrastructure with secure GitHub OAuth authentication, basic project workspace creation, and BMad v6 framework integration. This epic delivers the essential platform foundation that enables users to securely access the system, configure codebase connections, and begin leveraging BMad v6 methodology through web interfaces, providing immediate validation of the core "SDLC IDE over Web" concept.
 
-### Story 1.1: GitHub OAuth Authentication & Session Management
+### Story 1.1: EntraID/Azure AD SSO Authentication & JWT Architecture
 
 As a non-technical stakeholder,
-I want to sign in using my GitHub account with secure session management,
-so that I can access the POC platform and validate integration with my development workflows.
+I want to sign in using my enterprise Azure AD account with secure authentication,
+so that I can access the POC platform with consistent enterprise identity integration and validate repository access.
 
 #### Acceptance Criteria
-1. GitHub OAuth 2.0 authentication implemented with secure user login and profile creation
-2. User session management with secure token handling, refresh capabilities, and proper logout functionality
+1. EntraID/Azure AD Single Sign-On (SSO) authentication implemented with secure user login and enterprise profile integration
+2. JWT-based session-less architecture with secure token handling, refresh capabilities, and proper logout functionality
 3. Basic user profile display showing GitHub account information and repository access permissions
 4. Session persistence across browser sessions with appropriate security timeouts
 5. Error handling for authentication failures with clear user feedback and retry mechanisms

@@ -18,7 +18,11 @@ Currently, there exists a significant and costly disconnect between upstream sta
 
 ## Proposed Solution
 
-The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform that makes BMad-CORE's revolutionary AI-driven agile framework accessible to non-technical stakeholders through an intuitive web interface with native multi-format document support. The solution leverages BMad v6's proven architecture while extending it to web-based workflows. The platform consists of six core components:
+The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform that makes BMad-CORE's revolutionary AI-driven agile framework accessible to non-technical stakeholders through an intuitive web interface with native multi-format document support. The solution leverages BMad v6's proven architecture while extending it to web-based workflows.
+
+**Meta-Development Approach:** The web UI itself will be generated using the BMad framework, demonstrating the platform's capabilities while ensuring consistency with BMad v6 methodology and architectural patterns. This self-generating approach validates the framework's effectiveness for complex web application development.
+
+The platform consists of seven core components:
 
 **1. Scale-Adaptive Intelligence Engine:** Web-based implementation of BMad v6's three-track system with automatic complexity detection and workflow selection:
    - **Quick Flow Track:** Bug fixes and small features (minutes to hours) with streamlined web interfaces
@@ -45,9 +49,9 @@ The BMad v6-Powered SDLC Platform Web UI is a comprehensive web-based platform t
    - **Compliance Artifacts:** Regulatory documentation, audit trails, governance reports, and compliance checklists
    - **Training & Communication Artifacts:** User guides, training materials, change management documentation, and project communications
 
-**6. Seamless BMad v6 Integration Architecture:** Bidirectional synchronization with existing BMad v6 IDE workflows, GitHub repositories, and business tools (Confluence, SharePoint, Teams) while preserving both native document formats and BMad methodology throughout the complete workflow lifecycle.
+**6. Seamless BMad v6 Integration Architecture:** Bidirectional synchronization with existing BMad v6 IDE workflows and GitHub repositories, with document storage primarily in Git repositories. Future SharePoint integration planned through Model Context Protocol (MCPs) for simplified enterprise document management while preserving both native document formats and BMad methodology throughout the complete workflow lifecycle.
 
-**7. Ignis Platform Telemetry Integration:** Comprehensive telemetry capture and real-time data transmission to the main Ignis Platform for analytics, monitoring, user behavior analysis, and platform optimization, ensuring seamless integration with the broader Ignis ecosystem.
+**7. Enterprise Observability & Analytics Integration:** Comprehensive telemetry capture using OpenTelemetry Protocol (OTLP) with configurable destinations for enterprise observability tools. The platform integrates seamlessly with the Ignis Platform ecosystem - Ignis being the broader enterprise platform that encompasses BMad v6 methodology, agent orchestration, and enterprise SDLC capabilities. This integration includes token utilization tracking, performance metrics, user behavior analytics, and real-time monitoring dashboards for platform optimization and usage reporting.
 
 **Key Differentiators:** Unlike existing project management or documentation tools, this platform specifically implements BMad v6's revolutionary scale-adaptive intelligence and intelligent agent orchestration system while enabling comprehensive artifact generation across the entire project lifecycle. Non-technical stakeholders can leverage BMad v6's proven 4-phase methodology and contextually-selected specialized agent expertise to orchestrate complete project delivery - from market research and business case development through technical specifications and deployment documentation - using familiar document formats while maintaining seamless integration with existing BMad v6 IDE workflows. The intelligent orchestrator eliminates complexity by presenting only relevant agents and workflows, transforming business stakeholders from requirement creators into complete project orchestrators powered by BMad v6's AI-driven agile capabilities without cognitive overload.
 
@@ -211,18 +215,18 @@ The MVP will be considered successful when a non-technical product manager can: 
 
 ### Technology Preferences
 - **Frontend:** Modern web framework (React, Vue.js, or Angular) with component-based architecture to support BMad v6's 12-agent role switching, scale-adaptive workflow rendering, 4-phase methodology navigation, and multi-format document preview
-- **Backend:** Node.js or Python-based API server with document processing capabilities, leveraging existing BMad v6 framework components and enabling integration with multiple APIs (GitHub, Figma, BMad v6 IDE workflows, document conversion services)
-- **Database:** PostgreSQL for structured data (projects, users, BMad v6 templates, agent configurations, track selections, phase status, format mappings) with Redis for agent definition caching and session management, plus document storage in GitHub repositories
+- **Backend:** Node.js with Fastify Web Server for high-performance parallel request processing, leveraging existing BMad v6 framework components and enabling integration with multiple APIs (GitHub, Figma, BMad v6 IDE workflows, document conversion services). Dockerized deployment architecture for containerized scalability.
+- **Database:** PostgreSQL for structured data (projects, users, BMad v6 templates, agent configurations, track selections, phase status, format mappings) with Redis for agent definition caching. Session-less architecture using JWT tokens for stateless user context management, plus document storage in GitHub repositories
 - **Document Processing:** Rich text editing capabilities with markdown support, document versioning, and cloud services integration (Google Docs API, Microsoft Graph API) while preserving BMad v6 methodology integrity
 - **BMad v6 Integration:** Direct integration with existing BMad v6 installation, agent configuration synchronization, workflow template sharing, and bidirectional artifact synchronization
-- **Ignis Platform Integration:** Real-time telemetry transmission, analytics data pipeline, user behavior tracking, performance monitoring, and seamless integration with main Ignis Platform ecosystem
-- **Hosting/Infrastructure:** Cloud-native deployment (AWS, Azure, or GCP) with containerized architecture for scalability, plus specialized document processing services and BMad v6 workflow orchestration
+- **Enterprise Observability Integration:** OpenTelemetry Protocol (OTLP) support for configurable metrics/traces transmission to enterprise observability tools, token utilization tracking and reporting, performance monitoring, user behavior analytics, and seamless integration with Ignis Platform ecosystem
+- **Hosting/Infrastructure:** Cloud-native deployment (AWS, Azure, or GCP) with fully dockerized containerized architecture (no IaaS/VMs), plus specialized document processing services and BMad v6 workflow orchestration
 
 ### Architecture Considerations
 - **Repository Structure:** Hybrid approach where the web platform manages metadata and BMad v6 workflow state while maintaining BMad v6 markdown artifacts in GitHub repositories, organized by BMad v6's 4-phase methodology and track-specific artifact types
 - **Service Architecture:** Microservices architecture with separate services for BMad v6 scale-adaptive intelligence, intelligent agent orchestration with context analysis, document editing and management, comprehensive artifact management, Figma integration, GitHub synchronization, BMad v6 IDE workflow integration, Ignis Platform telemetry service, and user management
 - **Integration Requirements:** RESTful APIs for GitHub, Figma, BMad v6 IDE, and Ignis Platform integration, webhook support for real-time synchronization, comprehensive artifact processing pipeline with queue management, BMad v6 workflow orchestration, real-time telemetry data transmission to Ignis Platform, and extensible plugin architecture for future format and artifact type support
-- **Security/Compliance:** OAuth-based authentication with GitHub, Figma, BMad v6, and Ignis Platform systems, role-based access control aligned with repository permissions and BMad v6 agent roles, encrypted artifact storage, comprehensive audit logging for enterprise compliance requirements, secure telemetry data transmission to Ignis Platform, and artifact-level access controls
+- **Security/Compliance:** EntraID/Azure AD Single Sign-On (SSO) authentication for enterprise integration with other Ignis applications, GitHub token-based integration for repository operations, JWT-based session-less architecture, role-based access control aligned with repository permissions and BMad v6 agent roles, encrypted artifact storage, comprehensive audit logging for enterprise compliance requirements, and artifact-level access controls
 
 ### Agent-as-Code Dynamic Loading Architecture
 

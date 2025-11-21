@@ -4,6 +4,17 @@
 
 This document outlines the comprehensive architecture for **BMad v6-Powered SDLC Platform Web UI**, including both POC validation and full platform implementations. The architecture bridges BMad v6's revolutionary AI-driven agile methodology with web-based accessibility, enabling non-technical stakeholders to leverage scale-adaptive intelligence, intelligent agent orchestration, and proven 4-phase workflows through intuitive interfaces while maintaining seamless integration with existing BMad v6 IDE workflows.
 
+## Related Documentation
+
+**For POC Implementation:**
+- **[POC Technical Architecture](./poc-technical-architecture.md)** - Detailed microservices architecture for 5-epic POC implementation
+- **[POC PRD](./poc-prd.md)** - POC requirements, scope, and validation criteria
+- **[Epic User Stories](./stories/)** - Comprehensive user story elaborations for all 5 POC epics
+
+**For Full Platform:**
+- **[Full Platform PRD](./prd.md)** - Complete platform vision and enterprise requirements
+- **Current Document** - Strategic architecture and full platform technical vision
+
 **Dual Architecture Approach:**
 This document presents both POC validation architecture (4-6 week timeline) and comprehensive platform architecture (6-9 month MVP), showing clear evolution paths and shared architectural foundations. The POC validates core concepts while the full platform delivers enterprise-grade capabilities.
 
@@ -55,7 +66,7 @@ graph TB
     end
 
     subgraph "POC Backend Services - Node.js"
-        POCAPI[Node.js 20+ API<br/>Express.js Framework]
+        POCAPI[Node.js 20+ API<br/>Fastify Framework]
         POCORCH[BMad v6 Agent<br/>Orchestration Engine]
         POCDOC[Document Generation<br/>BMad v6 Templates]
         POCTEL[Ignis Platform<br/>Telemetry Service]
@@ -100,7 +111,7 @@ graph TB
 - **4-Phase Workflow Navigator:** Visual progress through Configuration, Ideation, Product Definition, Planning
 
 **POC Backend Services (Node.js):**
-- **Express.js API Server:** RESTful API with middleware for authentication and validation
+- **Fastify API Server:** High-performance RESTful API with plugins for authentication and validation
 - **BMad v6 Agent Orchestration:** Context-aware agent selection and progressive engagement logic
 - **Document Generation Engine:** BMad v6 template processing with artifact creation capabilities
 - **Ignis Platform Telemetry:** Comprehensive data capture and real-time transmission service
@@ -311,7 +322,7 @@ This comprehensive architecture diagram illustrates the complete BMad v6-powered
 |----------|----------------|--------------------------|-----------|
 | **Frontend Framework** | React 18+ with Next.js 14 | React 18+ with Next.js 14 | Consistent technology for seamless evolution |
 | **Backend Language** | Node.js 20+ | Node.js 20+ | JavaScript ecosystem alignment, rapid development |
-| **Backend Framework** | Express.js | Express.js with microservices | Scalable architecture evolution |
+| **Backend Framework** | Fastify | Fastify with microservices | High-performance scalable architecture with parallel request processing |
 | **Database** | PostgreSQL 15 | PostgreSQL 15 with read replicas | Production-grade scaling and performance |
 | **Cache** | Redis 7 | Redis 7 with clustering | Enhanced performance and availability |
 | **Authentication** | Basic OAuth (GitHub) | Enterprise SSO + OAuth | Security and compliance requirements |
@@ -355,7 +366,7 @@ graph TB
 
         subgraph "Application Layer"
             POCFRONTEND[React/Next.js App<br/>Container/VM Deployment]
-            POCAPI[Node.js API Server<br/>Express.js Backend]
+            POCAPI[Node.js API Server<br/>Fastify Backend]
         end
 
         subgraph "BMad v6 Services"
@@ -514,7 +525,7 @@ The POC deployment focuses on validation with simplified infrastructure supporti
 
 **POC Components:**
 - **React/Next.js Frontend:** Container-deployed application with BMad v6 agent selection interface and 4-phase workflow navigation
-- **Node.js API Server:** Express.js backend handling BMad v6 agent orchestration, workflow management, and artifact generation
+- **Node.js API Server:** Fastify backend handling BMad v6 agent orchestration, workflow management, and artifact generation with parallel request processing
 - **BMad v6 Services:** Context-aware agent selection, 4-phase workflow management, and template-based artifact generation
 - **Data Layer:** Single PostgreSQL instance with Redis caching for agent definitions and session management
 - **External Integrations:** GitHub for repository sync, SharePoint for document management, Ignis Platform for telemetry
@@ -566,7 +577,7 @@ The production deployment supports enterprise-grade scalability with 500+ monthl
 
 **Application Hosting:**
 - **React/Next.js Frontend:** Container-based deployment with Node.js 20+ runtime and BMad v6 agent selection interface
-- **Node.js API Server:** Express.js backend with BMad v6 agent orchestration and 4-phase workflow management
+- **Node.js API Server:** Fastify backend with BMad v6 agent orchestration and 4-phase workflow management
 - **Basic Load Balancing:** Simple distribution for 5-10 concurrent users with health checks
 
 **BMad v6 Services:**
@@ -630,30 +641,32 @@ This is the DEFINITIVE technology selection for both POC and full platform imple
 - **Deployment Strategy:** POC single-region, Full Platform multi-region with global distribution
 
 ### Technology Stack Table
+**Last Updated:** 2025-11-21
+**Version Verification:** All versions verified for compatibility and currency
 
 | Category | Technology | Version | Purpose | Rationale |
 |----------|------------|---------|---------|-----------|
-| **Frontend Framework** | React | 18+ | Modern UI framework | Component-based architecture, excellent ecosystem, BMad v6 agent interface support |
-| **Frontend Meta-Framework** | Next.js | 14+ | Full-stack React framework | Server-side rendering, API routes, optimized performance, production-ready |
-| **Frontend Styling** | TailwindCSS | Latest | Utility-first CSS framework | Rapid UI development, consistent design system, matches existing POC design |
-| **Backend Language** | Node.js | 20+ | JavaScript runtime | Unified language stack, excellent ecosystem, rapid development for BMad v6 integration |
-| **Backend Framework** | Express.js | Latest | Web application framework | Mature, flexible, extensive middleware ecosystem, microservices support |
-| **Database** | PostgreSQL | 15+ | Primary relational database | JSON support for BMad v6 metadata, ACID compliance, excellent performance |
-| **Cache** | Redis | 7+ | In-memory data store | Agent definition caching, session management, performance optimization |
-| **Authentication** | OAuth 2.0 + JWT | Latest | Authentication & authorization | GitHub integration, enterprise SSO support, stateless authentication |
-| **ORM/Query Builder** | Prisma or TypeORM | Latest | Database abstraction layer | Type-safe database operations, migrations, excellent TypeScript support |
-| **BMad v6 Integration** | Direct Framework Access | Latest | Agent orchestration & templates | Context-aware agent loading, template system access, methodology preservation |
-| **Document Processing** | Markdown processors + converters | Latest | Artifact generation engine | BMad v6 template processing, multi-format support, content fidelity |
-| **Message Queue** | Redis Pub/Sub or cloud queues | Latest | Async processing | Background jobs, agent orchestration, integration synchronization |
-| **API Documentation** | OpenAPI/Swagger | Latest | Interactive API documentation | Auto-generated docs, testing interface, developer experience |
-| **Testing Framework** | Jest + Testing Library | Latest | Unit and integration testing | Comprehensive testing for React and Node.js, BMad v6 workflow validation |
-| **Code Quality** | ESLint + Prettier + TypeScript | Latest | Code quality and type safety | Consistent code style, static type checking, better developer experience |
-| **Package Management** | npm/yarn workspaces | Latest | Monorepo management | Workspace organization, dependency management, build optimization |
-| **Container Runtime** | Docker | Latest | Containerization | Consistent deployment, development environment parity |
-| **Container Orchestration** | Kubernetes (Full Platform) | Latest | Container management | Auto-scaling, service discovery, rolling deployments, high availability |
-| **CI/CD** | GitHub Actions or cloud pipelines | Latest | Automated testing and deployment | Integrated workflows, multi-environment deployments, BMad v6 validation |
-| **Monitoring** | Application Performance Monitoring | Latest | Performance and error tracking | Real-time monitoring, distributed tracing, BMad v6 workflow metrics |
-| **Logging** | Structured logging solution | Latest | Centralized logging | Log aggregation, search capabilities, troubleshooting support |
+| **Frontend Framework** | React | 18.2.0 | Modern UI framework | Component-based architecture, excellent ecosystem, BMad v6 agent interface support |
+| **Frontend Meta-Framework** | Next.js | 14.2.5 | Full-stack React framework | Server-side rendering, API routes, optimized performance, production-ready |
+| **Frontend Styling** | TailwindCSS | 3.4.4 | Utility-first CSS framework | Rapid UI development, consistent design system, matches existing POC design |
+| **Backend Language** | Node.js | 20.17.0 LTS | JavaScript runtime | Unified language stack, excellent ecosystem, rapid development for BMad v6 integration |
+| **Backend Framework** | Fastify | 4.28.1 | High-performance web framework | Faster than Express.js with parallel request processing, better TypeScript support, performance optimization for BMad v6 workflows |
+| **Database** | PostgreSQL | 15.8 | Primary relational database | JSON support for BMad v6 metadata, ACID compliance, excellent performance |
+| **Cache** | Redis | 7.2.5 | In-memory data store | Agent definition caching, session management, performance optimization |
+| **Authentication** | EntraID/Azure AD + JWT | OAuth 2.0 | Enterprise authentication | Session-less JWT architecture, enterprise SSO support, secure token-based access |
+| **ORM/Query Builder** | Prisma | 5.18.0 | Database abstraction layer | Type-safe database operations, migrations, excellent TypeScript support, superior developer experience |
+| **BMad v6 Integration** | Direct Framework Access | 6.0.0-alpha.12 | Agent orchestration & templates | Context-aware agent loading, template system access, methodology preservation |
+| **Document Processing** | Marked + Turndown | 12.0.2 + 7.2.0 | Artifact generation engine | BMad v6 template processing, multi-format support, content fidelity |
+| **Message Queue** | Redis Pub/Sub | 7.2.5 | Async processing | Background jobs, agent orchestration, integration synchronization |
+| **API Documentation** | Swagger/OpenAPI | 3.1.0 | Interactive API documentation | Auto-generated docs, testing interface, developer experience |
+| **Testing Framework** | Jest + React Testing Library | 29.7.0 + 15.0.7 | Unit and integration testing | Comprehensive testing for React and Node.js, BMad v6 workflow validation |
+| **Code Quality** | ESLint + Prettier + TypeScript | 8.57.0 + 3.3.2 + 5.5.4 | Code quality and type safety | Consistent code style, static type checking, better developer experience |
+| **Package Management** | pnpm workspaces | 9.9.0 | Monorepo management | Faster than npm/yarn, workspace organization, dependency management, build optimization |
+| **Container Runtime** | Docker | 27.2.0 | Containerization | Consistent deployment, development environment parity |
+| **Container Orchestration** | Kubernetes | 1.31.0 | Container management | Auto-scaling, service discovery, rolling deployments, high availability |
+| **CI/CD** | GitHub Actions | Latest | Automated testing and deployment | Integrated workflows, multi-environment deployments, BMad v6 validation |
+| **Monitoring** | OpenTelemetry Protocol (OTLP) | 1.25.1 | Performance and error tracking | Real-time monitoring, distributed tracing, BMad v6 workflow metrics, configurable destinations |
+| **Logging** | Winston + Pino | 3.14.2 + 9.3.2 | Centralized logging | Structured logging, log aggregation, search capabilities, troubleshooting support |
 | **Telemetry Integration** | Ignis Platform SDK | Latest | Analytics and telemetry | Real-time data transmission, user behavior analytics, ecosystem connectivity |
 
 ## Data Models
@@ -1048,22 +1061,30 @@ interface IgnisIntegration extends IntegrationConfig {
 
 ## API Specification
 
-Based on Node.js/Express.js framework selected in the Tech Stack, here's the comprehensive REST API specification for the BMad v6-powered platform:
+Based on Node.js/Fastify framework selected in the Tech Stack, here's the comprehensive REST API specification for the BMad v6-powered platform:
 
-### Express.js Application Structure
+### Fastify Application Structure
 
 ```typescript
-import express from 'express';
-import { authenticate, authorize } from '../middleware/auth';
-import { validateRequest } from '../middleware/validation';
+import Fastify from 'fastify';
+import { authenticate, authorize } from '../plugins/auth';
+import { validateRequest } from '../plugins/validation';
 import { BMadTrack, BMadPhase, AgentSpecialization } from '../types';
 
-const app = express();
+const fastify = Fastify({
+  logger: true,
+  trustProxy: true,
+});
 
-// Middleware
-app.use(express.json());
-app.use(authenticate); // JWT/OAuth authentication
-app.use('/api/v1', router);
+// Register plugins
+await fastify.register(import('@fastify/jwt'), {
+  secret: process.env.JWT_SECRET!
+});
+await fastify.register(authenticate);
+await fastify.register(import('./routes/projects'), { prefix: '/api/v1' });
+await fastify.register(import('./routes/agents'), { prefix: '/api/v1' });
+await fastify.register(import('./routes/artifacts'), { prefix: '/api/v1' });
+await fastify.register(import('./routes/workflows'), { prefix: '/api/v1' });
 
 // OpenAPI/Swagger documentation
 const swaggerOptions = {
@@ -1451,7 +1472,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** PostgreSQL for project data, Redis for caching, BMad v6 Framework components
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, machine learning libraries for complexity analysis
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, machine learning libraries for complexity analysis
 
 ### Intelligent Agent Orchestration Service (Node.js Microservice)
 
@@ -1465,7 +1486,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** Redis for agent definition caching, PostgreSQL for engagement history, BMad v6 agent definitions
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, Redis for caching, agent-specific prompt management
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, Redis for caching, agent-specific prompt management
 
 ### 4-Phase Workflow Management Service (Node.js Microservice)
 
@@ -1479,7 +1500,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** PostgreSQL for workflow state, Message Queue for async processing, Artifact Generation Service
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, workflow orchestration libraries
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, workflow orchestration libraries
 
 ### Comprehensive Artifact Generation Service (Node.js Microservice)
 
@@ -1493,7 +1514,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** Object Storage for artifacts, PostgreSQL for metadata, BMad v6 template system
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, markdown processing libraries, template engines
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, markdown processing libraries, template engines
 
 ### BMad v6 IDE Integration Service (Node.js Microservice)
 
@@ -1507,7 +1528,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** GitHub Integration Service, PostgreSQL for sync state, BMad v6 Framework components
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, Git libraries, BMad v6 integration components
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, Git libraries, BMad v6 integration components
 
 ### GitHub Integration Service (Node.js Microservice)
 
@@ -1521,7 +1542,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** GitHub API, BMad v6 IDE Integration Service, Artifact Generation Service, Secrets Management
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, Octokit (GitHub API client), Git libraries
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, Octokit (GitHub API client), Git libraries
 
 ### SharePoint Integration Service (Node.js Microservice)
 
@@ -1535,7 +1556,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** Microsoft Graph API, Artifact Generation Service, Authentication Service
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, Microsoft Graph SDK, OAuth 2.0 client
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, Microsoft Graph SDK, OAuth 2.0 client
 
 ### Ignis Platform Telemetry Service (Node.js Microservice)
 
@@ -1549,7 +1570,7 @@ Based on the BMad v6-powered architectural patterns, tech stack, and data models
 
 **Dependencies:** Ignis Platform API, Analytics Database, Message Queue for batching
 
-**Technology Stack:** Node.js 20+, Express.js, TypeScript, analytics libraries, time-series data processing
+**Technology Stack:** Node.js 20+, Fastify, TypeScript, analytics libraries, time-series data processing
 
 ## BMad v6 Real-Time Architecture
 
@@ -2810,6 +2831,842 @@ bmad-web-platform/
 ├── .env.example                    # Environment variables template
 ├── .gitignore                      # Git ignore rules
 └── README.md                       # Project documentation
+```
+
+## Data Flow Documentation
+
+### BMad v6 Agent Orchestration Flow
+
+This section details the complex data flows for intelligent agent orchestration, ensuring consistent implementation across all AI development agents.
+
+#### Agent Selection and Engagement Flow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant UI as React Frontend
+    participant API as Fastify API
+    participant AOS as Agent Orchestration Service
+    participant SAIS as Scale-Adaptive Intelligence Service
+    participant Redis as Redis Cache
+    participant DB as PostgreSQL
+
+    Note over U,DB: Context-Aware Agent Selection Process
+
+    U->>UI: Request agent assistance
+    UI->>API: POST /api/v1/projects/:id/agents/recommend
+    API->>SAIS: Analyze project complexity & phase
+    SAIS->>DB: Query project context & history
+    DB-->>SAIS: Return project metadata
+    SAIS->>AOS: Request optimal agent selection
+
+    Note over AOS,Redis: Intelligence Selection Algorithm
+
+    AOS->>Redis: Check cached agent definitions
+    Redis-->>AOS: Return agent capabilities
+    AOS->>AOS: Apply 60-70% token reduction logic
+    AOS->>AOS: Select 2-3 contextually relevant agents
+
+    AOS-->>API: Return recommended agents
+    API-->>UI: Agent recommendations with rationale
+    UI-->>U: Display agent options
+
+    Note over U,DB: Agent Engagement Process
+
+    U->>UI: Select specific agent
+    UI->>API: POST /api/v1/projects/:id/agents/engage
+    API->>AOS: Engage selected agent
+    AOS->>Redis: Load agent prompt & context
+    AOS->>DB: Log agent engagement
+    AOS-->>API: Agent engagement confirmation
+    API-->>UI: Ready for agent interaction
+```
+
+#### 4-Phase Workflow Progression Flow
+
+```mermaid
+sequenceDiagram
+    participant Agent as BMad v6 Agent
+    participant WMS as Workflow Management Service
+    participant ArtSvc as Artifact Service
+    participant GitSvc as GitHub Service
+    participant ShareSvc as SharePoint Service
+    participant DB as PostgreSQL
+
+    Note over Agent,DB: Phase Progression Management
+
+    Agent->>WMS: Request phase transition
+    WMS->>DB: Validate current phase completion
+    DB-->>WMS: Phase validation results
+
+    alt Phase Requirements Met
+        WMS->>WMS: Update phase status
+        WMS->>ArtSvc: Generate phase artifacts
+
+        Note over ArtSvc,ShareSvc: Artifact Generation & Sync
+
+        ArtSvc->>ArtSvc: Process BMad v6 templates
+        ArtSvc->>GitSvc: Sync to GitHub repository
+        ArtSvc->>ShareSvc: Sync to SharePoint
+
+        par GitHub Sync
+            GitSvc->>GitSvc: Create/update files
+            GitSvc-->>ArtSvc: Sync confirmation
+        and SharePoint Sync
+            ShareSvc->>ShareSvc: Upload documents
+            ShareSvc-->>ArtSvc: Sync confirmation
+        end
+
+        ArtSvc-->>WMS: Artifact generation complete
+        WMS->>DB: Update phase status & artifacts
+        WMS-->>Agent: Phase transition approved
+
+    else Requirements Not Met
+        WMS-->>Agent: Phase transition blocked
+        WMS-->>Agent: Return missing requirements
+    end
+```
+
+#### Multi-Epic Workflow Coordination
+
+```mermaid
+sequenceDiagram
+    participant PM as Project Manager Agent
+    participant Arch as Architect Agent
+    participant Dev as Developer Agent
+    participant WMS as Workflow Management Service
+    participant ES as Event System
+    participant DB as PostgreSQL
+
+    Note over PM,DB: Cross-Epic Dependencies Management
+
+    PM->>WMS: Initiate multi-epic workflow
+    WMS->>DB: Query epic dependencies
+    DB-->>WMS: Return dependency graph
+    WMS->>WMS: Calculate execution order
+
+    Note over WMS,ES: Parallel Epic Processing
+
+    WMS->>ES: Publish epic_ready events
+
+    par Epic A Processing
+        ES->>Arch: Epic A ready notification
+        Arch->>WMS: Start Epic A architecture
+        WMS->>DB: Track Epic A progress
+    and Epic B Processing (depends on Epic A)
+        ES->>ES: Wait for Epic A milestone
+        Note right of ES: Dependency blocking
+    and Epic C Processing (independent)
+        ES->>Dev: Epic C ready notification
+        Dev->>WMS: Start Epic C development
+        WMS->>DB: Track Epic C progress
+    end
+
+    Arch->>WMS: Epic A architecture complete
+    WMS->>ES: Publish epic_a_architecture_done
+    ES->>Dev: Epic B unblocked notification
+    Dev->>WMS: Start Epic B development
+
+    Note over PM,DB: Workflow Completion Validation
+
+    WMS->>DB: Query all epic statuses
+    DB-->>WMS: Epic completion status
+    WMS->>PM: Multi-epic workflow complete
+```
+
+#### Token Consumption Optimization Flow
+
+```mermaid
+sequenceDiagram
+    participant UI as React Frontend
+    participant API as Fastify API
+    participant AOS as Agent Orchestration Service
+    participant SAIS as Scale-Adaptive Intelligence Service
+    participant Cache as Redis Cache
+    participant Telemetry as Ignis Platform
+
+    Note over UI,Telemetry: Progressive Agent Loading Strategy
+
+    UI->>API: Request project agents
+    API->>SAIS: Analyze project complexity
+    SAIS->>SAIS: Determine required agent subset
+
+    Note over SAIS,Cache: Token Optimization Logic
+
+    SAIS->>Cache: Check agent definition cache
+    alt Cache Hit (Optimized Loading)
+        Cache-->>SAIS: Return cached agent subset
+        SAIS->>AOS: Load minimal agent set (30-40% tokens)
+    else Cache Miss (Full Analysis)
+        SAIS->>SAIS: Analyze full agent ecosystem
+        SAIS->>Cache: Cache optimized subset
+        SAIS->>AOS: Load contextual agents
+    end
+
+    AOS-->>API: Agent loading complete
+    API->>Telemetry: Report token consumption metrics
+    API-->>UI: Ready for agent interaction
+
+    Note over UI,Telemetry: Validation: 60-70% Token Reduction
+
+    Telemetry->>Telemetry: Calculate baseline vs optimized
+    Telemetry->>Telemetry: Validate reduction target met
+```
+
+### Integration Data Flows
+
+#### GitHub Repository Synchronization
+
+```mermaid
+flowchart TD
+    A[Artifact Generated] --> B{Sync Configuration}
+    B -->|Bidirectional| C[GitHub Service]
+    B -->|One-way| D[SharePoint Service]
+
+    C --> E[Create/Update Files]
+    C --> F[Handle Conflicts]
+    C --> G[Commit & Push]
+
+    F --> H{Conflict Resolution}
+    H -->|Auto-merge| I[Apply Merge Strategy]
+    H -->|Manual| J[Flag for Review]
+
+    D --> K[Upload Documents]
+    D --> L[Update Metadata]
+    D --> M[Notify Stakeholders]
+
+    G --> N[Update Project Status]
+    K --> N
+    N --> O[Trigger Ignis Telemetry]
+```
+
+#### Enterprise Integration Pattern
+
+```mermaid
+flowchart LR
+    subgraph "BMad v6 Platform"
+        WF[Workflow Engine]
+        AG[Agent Orchestrator]
+        AS[Artifact Service]
+    end
+
+    subgraph "Enterprise Systems"
+        AD[Azure AD/EntraID]
+        GH[GitHub Enterprise]
+        SP[SharePoint]
+        CO[Confluence]
+    end
+
+    subgraph "Ignis Ecosystem"
+        TE[Telemetry Engine]
+        AN[Analytics Dashboard]
+        AL[Alert System]
+    end
+
+    WF -->|JWT Auth| AD
+    AG -->|Repository Access| GH
+    AS -->|Document Sync| SP
+    AS -->|Knowledge Base| CO
+
+    WF -->|Usage Metrics| TE
+    AG -->|Performance Data| TE
+    AS -->|Sync Status| TE
+
+    TE --> AN
+    TE --> AL
+```
+
+## Implementation Patterns
+
+This section provides comprehensive patterns and conventions to ensure consistent implementation across all AI agents working on the BMad v6-Powered SDLC Platform.
+
+### Naming Patterns
+
+#### API Routes
+```typescript
+// RESTful API route naming convention
+GET    /api/v1/projects                    // List projects
+GET    /api/v1/projects/:id               // Get specific project
+POST   /api/v1/projects                   // Create project
+PUT    /api/v1/projects/:id               // Update project
+DELETE /api/v1/projects/:id               // Delete project
+
+// BMad v6 specific routes
+GET    /api/v1/projects/:id/agents        // List available agents for project
+POST   /api/v1/projects/:id/agents/engage // Engage specific agent
+GET    /api/v1/projects/:id/phases        // Get project phases
+POST   /api/v1/projects/:id/phases/:phase/complete // Mark phase complete
+
+// Artifact routes
+GET    /api/v1/projects/:id/artifacts     // List project artifacts
+POST   /api/v1/artifacts/generate         // Generate new artifact
+GET    /api/v1/artifacts/:id/download     // Download artifact
+PUT    /api/v1/artifacts/:id/sync         // Sync with GitHub/SharePoint
+```
+
+#### Database Tables
+```sql
+-- Table naming: snake_case, plural nouns
+users, projects, agents, artifacts, project_phases, agent_engagements
+
+-- Junction tables: alphabetical order
+project_users, agent_capabilities, artifact_tags
+
+-- Columns: snake_case
+user_id, created_at, updated_at, github_id, bmad_track, phase_status
+```
+
+#### React Components
+```typescript
+// Component files: PascalCase with descriptive names
+ProjectDashboard.tsx, AgentOrchestrator.tsx, PhaseProgressIndicator.tsx
+
+// Component props interfaces: Component name + Props
+interface ProjectDashboardProps {
+  project: Project;
+  onPhaseChange: (phase: BMadPhase) => void;
+}
+
+// Custom hooks: camelCase starting with 'use'
+useProjectPhases(), useAgentOrchestration(), useBMadWorkflow()
+```
+
+#### Service Classes
+```typescript
+// Service naming: PascalCase + Service suffix
+class ProjectService, class AgentOrchestrationService, class ArtifactGenerationService
+
+// Service methods: camelCase, action-oriented
+createProject(), engageAgent(), generateArtifact(), syncWithGitHub()
+```
+
+### Structure Patterns
+
+#### Component Organization
+```typescript
+// React component structure template
+import React from 'react';
+import { useProjectPhases } from '@/hooks/useProjectPhases';
+import { ProjectService } from '@/services/ProjectService';
+import type { Project, BMadPhase } from '@/types';
+
+interface ComponentNameProps {
+  // Props interface
+}
+
+export function ComponentName({ prop1, prop2 }: ComponentNameProps) {
+  // 1. Hooks (state, effects, custom hooks)
+  const { phases, loading, error } = useProjectPhases(projectId);
+
+  // 2. Event handlers
+  const handlePhaseChange = useCallback((phase: BMadPhase) => {
+    // Handler logic
+  }, []);
+
+  // 3. Effects
+  useEffect(() => {
+    // Side effects
+  }, []);
+
+  // 4. Early returns (loading, error states)
+  if (loading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage error={error} />;
+
+  // 5. Render
+  return (
+    <div className="component-root">
+      {/* JSX content */}
+    </div>
+  );
+}
+```
+
+#### Service Organization
+```typescript
+// Service class structure template
+export class ServiceName {
+  private repository: Repository;
+  private logger: Logger;
+
+  constructor(
+    repository: Repository,
+    logger: Logger = createLogger('ServiceName')
+  ) {
+    this.repository = repository;
+    this.logger = logger;
+  }
+
+  // Public methods (main functionality)
+  async publicMethod(params: Type): Promise<ReturnType> {
+    this.logger.info('Method called', { params });
+
+    try {
+      // Validation
+      this.validateInput(params);
+
+      // Business logic
+      const result = await this.processBusinessLogic(params);
+
+      // Return result
+      this.logger.info('Method completed successfully');
+      return result;
+    } catch (error) {
+      this.logger.error('Method failed', { error, params });
+      throw this.handleError(error);
+    }
+  }
+
+  // Private methods (internal logic)
+  private validateInput(params: Type): void {
+    // Validation logic
+  }
+
+  private async processBusinessLogic(params: Type): Promise<ReturnType> {
+    // Core business logic
+  }
+
+  private handleError(error: unknown): Error {
+    // Error transformation
+  }
+}
+```
+
+#### Test Organization
+```typescript
+// Test file naming: ComponentName.test.tsx, ServiceName.test.ts
+// Test structure template
+describe('ComponentName', () => {
+  // Setup
+  const defaultProps = {
+    project: mockProject,
+    onPhaseChange: jest.fn(),
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // Happy path tests
+  describe('when rendering with valid props', () => {
+    it('should display project phases', () => {
+      // Test implementation
+    });
+
+    it('should handle phase transitions', () => {
+      // Test implementation
+    });
+  });
+
+  // Edge cases
+  describe('when handling errors', () => {
+    it('should display error message when project fails to load', () => {
+      // Error test
+    });
+  });
+
+  // Integration tests
+  describe('when integrating with services', () => {
+    it('should call ProjectService with correct parameters', () => {
+      // Integration test
+    });
+  });
+});
+```
+
+### Format Patterns
+
+#### API Response Format
+```typescript
+// Success response template
+interface ApiResponse<T> {
+  success: true;
+  data: T;
+  metadata?: {
+    pagination?: PaginationMetadata;
+    timing?: TimingMetadata;
+    version?: string;
+  };
+}
+
+// Error response template
+interface ApiErrorResponse {
+  success: false;
+  error: {
+    code: string;           // VALIDATION_ERROR, UNAUTHORIZED, etc.
+    message: string;        // User-friendly message
+    details?: unknown;      // Technical details for debugging
+    timestamp: string;      // ISO timestamp
+    requestId: string;      // Trace ID for debugging
+  };
+}
+
+// Pagination format
+interface PaginationMetadata {
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+```
+
+#### Date Handling
+```typescript
+// All dates in ISO 8601 format
+const createdAt = new Date().toISOString(); // "2025-11-21T10:30:00.000Z"
+
+// Date formatting for UI
+const formatDate = (date: string) => new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+}).format(new Date(date));
+```
+
+#### Logging Format
+```typescript
+// Structured logging format
+logger.info('Action completed', {
+  action: 'project_created',
+  projectId: project.id,
+  userId: user.id,
+  duration: 150,
+  metadata: {
+    bmadTrack: project.selectedTrack,
+    complexity: project.complexityScore,
+  },
+});
+```
+
+### Communication Patterns
+
+#### Event Names
+```typescript
+// Event naming convention: ENTITY_ACTION or WORKFLOW_STATE_CHANGE
+const EVENT_NAMES = {
+  // Project events
+  PROJECT_CREATED: 'project.created',
+  PROJECT_UPDATED: 'project.updated',
+  PROJECT_DELETED: 'project.deleted',
+
+  // Phase events
+  PHASE_STARTED: 'phase.started',
+  PHASE_COMPLETED: 'phase.completed',
+  PHASE_FAILED: 'phase.failed',
+
+  // Agent events
+  AGENT_ENGAGED: 'agent.engaged',
+  AGENT_DISENGAGED: 'agent.disengaged',
+
+  // Artifact events
+  ARTIFACT_GENERATED: 'artifact.generated',
+  ARTIFACT_SYNCED: 'artifact.synced',
+} as const;
+```
+
+#### State Updates
+```typescript
+// Redux/Zustand state update patterns
+interface ProjectState {
+  projects: Record<string, Project>;
+  loading: Record<string, boolean>;
+  errors: Record<string, Error | null>;
+}
+
+// Action creators (if using Redux)
+const projectActions = {
+  setProject: (project: Project) => ({
+    type: 'project/set' as const,
+    payload: project,
+  }),
+
+  setLoading: (projectId: string, loading: boolean) => ({
+    type: 'project/setLoading' as const,
+    payload: { projectId, loading },
+  }),
+};
+
+// Zustand store patterns
+interface ProjectStore extends ProjectState {
+  // Actions
+  createProject: (data: CreateProjectData) => Promise<void>;
+  updateProject: (id: string, updates: Partial<Project>) => Promise<void>;
+  deleteProject: (id: string) => Promise<void>;
+
+  // Selectors
+  getProject: (id: string) => Project | undefined;
+  getProjectsByUser: (userId: string) => Project[];
+  isProjectLoading: (id: string) => boolean;
+}
+```
+
+#### Inter-Service Communication
+```typescript
+// Service-to-service messaging pattern
+interface ServiceMessage<T = unknown> {
+  type: string;
+  payload: T;
+  metadata: {
+    timestamp: string;
+    source: string;
+    correlationId: string;
+    version: string;
+  };
+}
+
+// Message handler pattern
+class MessageHandler {
+  async handleMessage(message: ServiceMessage): Promise<void> {
+    const { type, payload, metadata } = message;
+
+    switch (type) {
+      case 'project.created':
+        await this.handleProjectCreated(payload as Project);
+        break;
+      case 'agent.engaged':
+        await this.handleAgentEngaged(payload as AgentEngagement);
+        break;
+      default:
+        this.logger.warn('Unknown message type', { type, metadata });
+    }
+  }
+}
+```
+
+### Lifecycle Patterns
+
+#### Loading States
+```typescript
+// Loading state management pattern
+interface LoadingState {
+  idle: 'idle';
+  loading: 'loading';
+  success: 'success';
+  error: 'error';
+}
+
+// Hook for async operations
+function useAsyncOperation<T>() {
+  const [state, setState] = useState<LoadingState>('idle');
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<Error | null>(null);
+
+  const execute = useCallback(async (operation: () => Promise<T>) => {
+    setState('loading');
+    setError(null);
+
+    try {
+      const result = await operation();
+      setData(result);
+      setState('success');
+      return result;
+    } catch (err) {
+      const error = err instanceof Error ? err : new Error('Unknown error');
+      setError(error);
+      setState('error');
+      throw error;
+    }
+  }, []);
+
+  return {
+    state,
+    data,
+    error,
+    execute,
+    isLoading: state === 'loading',
+    isError: state === 'error',
+    isSuccess: state === 'success',
+  };
+}
+```
+
+#### Error Recovery
+```typescript
+// Error boundary pattern for React
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback?: React.ComponentType<{ error: Error }> },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    logger.error('Component error boundary triggered', { error, errorInfo });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      const Fallback = this.props.fallback || DefaultErrorFallback;
+      return <Fallback error={this.state.error!} />;
+    }
+
+    return this.props.children;
+  }
+}
+
+// Retry mechanism pattern
+async function withRetry<T>(
+  operation: () => Promise<T>,
+  maxRetries: number = 3,
+  delay: number = 1000
+): Promise<T> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (attempt === maxRetries) {
+        throw error;
+      }
+
+      logger.warn(`Operation failed, retrying (${attempt}/${maxRetries})`, { error });
+      await new Promise(resolve => setTimeout(resolve, delay * attempt));
+    }
+  }
+
+  throw new Error('This should never be reached');
+}
+```
+
+### Location Patterns
+
+#### URL Structure
+```typescript
+// URL routing patterns
+const ROUTES = {
+  // Main application routes
+  HOME: '/',
+  DASHBOARD: '/dashboard',
+
+  // Project routes
+  PROJECTS: '/projects',
+  PROJECT_DETAIL: '/projects/:id',
+  PROJECT_PHASES: '/projects/:id/phases',
+  PROJECT_AGENTS: '/projects/:id/agents',
+
+  // Agent routes
+  AGENT_ORCHESTRATOR: '/projects/:id/agents/:agentId',
+  AGENT_WORKFLOWS: '/projects/:id/workflows',
+
+  // Artifact routes
+  ARTIFACTS: '/projects/:id/artifacts',
+  ARTIFACT_EDITOR: '/projects/:id/artifacts/:artifactId/edit',
+
+  // Settings
+  SETTINGS: '/settings',
+  PROFILE: '/settings/profile',
+} as const;
+```
+
+#### Asset Organization
+```typescript
+// Asset file organization
+public/
+├── icons/
+│   ├── agents/          # Agent-specific icons
+│   ├── phases/          # Phase status icons
+│   └── ui/              # General UI icons
+├── images/
+│   ├── logos/           # Brand assets
+│   ├── illustrations/   # Feature illustrations
+│   └── avatars/         # Default avatars
+└── fonts/              # Custom fonts
+
+// Asset import patterns
+import AgentIcon from '@/assets/icons/agents/analyst.svg';
+import PhaseIcon from '@/assets/icons/phases/planning.svg';
+```
+
+#### Configuration Placement
+```typescript
+// Configuration file locations
+config/
+├── app.config.ts        # Main application configuration
+├── database.config.ts   # Database connection settings
+├── auth.config.ts       # Authentication configuration
+├── integrations/
+│   ├── github.config.ts
+│   ├── sharepoint.config.ts
+│   └── ignis.config.ts
+└── environments/
+    ├── development.ts
+    ├── staging.ts
+    └── production.ts
+```
+
+### Consistency Patterns
+
+#### UI Date Formats
+```typescript
+// Consistent date formatting across UI
+const DATE_FORMATS = {
+  SHORT: 'MMM d, yyyy',           // Nov 21, 2025
+  LONG: 'MMMM d, yyyy',          // November 21, 2025
+  WITH_TIME: 'MMM d, yyyy h:mm a', // Nov 21, 2025 2:30 PM
+  RELATIVE: 'relative',           // 2 hours ago, yesterday, etc.
+} as const;
+
+// Usage in components
+function formatProjectDate(date: string, format: keyof typeof DATE_FORMATS) {
+  if (format === 'RELATIVE') {
+    return formatDistanceToNow(new Date(date), { addSuffix: true });
+  }
+  return format(new Date(date), DATE_FORMATS[format]);
+}
+```
+
+#### Logging Consistency
+```typescript
+// Standard logging interface across all services
+interface Logger {
+  info(message: string, metadata?: Record<string, unknown>): void;
+  warn(message: string, metadata?: Record<string, unknown>): void;
+  error(message: string, metadata?: Record<string, unknown>): void;
+  debug(message: string, metadata?: Record<string, unknown>): void;
+}
+
+// Consistent log metadata structure
+interface LogMetadata {
+  userId?: string;
+  projectId?: string;
+  agentId?: string;
+  requestId?: string;
+  duration?: number;
+  [key: string]: unknown;
+}
+```
+
+#### User-Facing Error Messages
+```typescript
+// Error message consistency
+const ERROR_MESSAGES = {
+  // Generic errors
+  NETWORK_ERROR: 'Unable to connect to the server. Please check your connection and try again.',
+  UNAUTHORIZED: 'You are not authorized to perform this action. Please log in and try again.',
+  FORBIDDEN: 'You do not have permission to access this resource.',
+  NOT_FOUND: 'The requested resource was not found.',
+
+  // Project-specific errors
+  PROJECT_CREATE_FAILED: 'Failed to create project. Please try again.',
+  PROJECT_UPDATE_FAILED: 'Failed to update project. Your changes were not saved.',
+  PROJECT_DELETE_FAILED: 'Failed to delete project. Please try again.',
+
+  // Agent-specific errors
+  AGENT_ENGAGEMENT_FAILED: 'Failed to engage agent. Please try again.',
+  AGENT_NOT_AVAILABLE: 'The selected agent is not available for this project type.',
+
+  // Artifact errors
+  ARTIFACT_GENERATION_FAILED: 'Failed to generate artifact. Please try again.',
+  ARTIFACT_SYNC_FAILED: 'Failed to sync with external service. Please check your connection.',
+} as const;
 ```
 
 ## Development Workflow

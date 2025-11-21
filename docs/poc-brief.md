@@ -22,6 +22,8 @@
 
 **SDLC IDE over Web - POC Implementation:** The proof-of-concept demonstrates a web-based IDE that brings BMad v6's complete methodology to non-technical stakeholders through familiar interfaces while maintaining full integration with existing BMad v6 IDE workflows. The POC validates the core concept through a functional demonstration of the complete SDLC workflow from project ideation through planning phases.
 
+**Meta-Development Validation:** The POC web UI will be generated using the BMad framework itself, providing concrete validation of the framework's capability to handle complex web application development while demonstrating methodology consistency.
+
 **Core POC Components:**
 
 **1. Intelligent Agent Orchestration Engine:** Web-based implementation of BMad v6's context-aware agent selection, presenting only relevant agents (Analyst, PM, Architect, UX Expert, etc.) based on project context rather than overwhelming users with all 12 agents simultaneously.
@@ -34,9 +36,9 @@
 
 **3. Document Generation & Management:** AI-powered creation of complete project artifacts with comprehensive viewing and editing capabilities, maintaining BMad v6 methodology integrity and enabling seamless synchronization with connected repositories.
 
-**4. Strategic Integration Validation:** POC demonstrates platform extensibility through GitHub (code repository) and SharePoint (document management) integrations, proving bidirectional synchronization capabilities and workflow continuity.
+**4. Strategic Integration Validation:** POC demonstrates platform extensibility through GitHub integration for code repository management and document storage in Git repositories. Future SharePoint integration planned through Model Context Protocol (MCPs) for simplified enterprise document management, proving bidirectional synchronization capabilities and workflow continuity.
 
-**5. Ignis Platform Telemetry Integration:** Comprehensive telemetry capture and real-time data transmission to the main Ignis Platform for user behavior analytics, workflow performance monitoring, and platform optimization, validating seamless integration with the broader Ignis ecosystem.
+**5. Enterprise Observability Integration:** Comprehensive telemetry capture using OpenTelemetry Protocol (OTLP) with configurable destinations for enterprise observability tools. Token utilization tracking and performance reporting integrated with the Ignis Platform ecosystem - Ignis being the broader enterprise platform that encompasses BMad v6 methodology, agent orchestration, and enterprise SDLC capabilities.
 
 **Key POC Differentiators:**
 - **First SDLC IDE over Web:** Demonstrates bringing IDE-level power to web interfaces for complete project lifecycle management
@@ -87,13 +89,13 @@
 - **Concept Validation:** Prove that "SDLC IDE over Web" concept resonates with target users and delivers expected value
 - **Technical Feasibility:** Demonstrate seamless integration between web platform and existing BMad v6 IDE workflows
 - **User Experience Validation:** Confirm that non-technical stakeholders can effectively use BMad v6 methodology through web interfaces
-- **Integration Proof:** Validate bidirectional synchronization with GitHub and SharePoint maintains data integrity and workflow continuity
+- **Integration Proof:** Validate bidirectional synchronization with GitHub maintains data integrity and workflow continuity, with document storage in Git repositories and future SharePoint integration through MCPs
 - **Methodology Preservation:** Ensure BMad v6's proven 4-phase structure and agent orchestration remain intact through web implementation
 
 ### POC Success Metrics
 - **User Comprehension:** 90% of test users understand the complete workflow from ideation through planning within 30 minutes
 - **Task Completion:** 85% of users successfully complete end-to-end project setup and artifact generation without technical assistance
-- **Integration Validation:** 100% successful bidirectional synchronization between web platform, GitHub, and SharePoint with zero data loss
+- **Integration Validation:** 100% successful bidirectional synchronization between web platform and GitHub repositories with zero data loss, demonstrating foundation for future SharePoint integration via MCPs
 - **Agent Loading Performance:** 60-70% reduction in token consumption through selective agent loading with response times under 3 seconds
 - **Phase Progress Accuracy:** 95% accuracy in automatic phase completion detection and real-time progress updates
 - **Methodology Integrity:** Generated artifacts match BMad v6 template standards and maintain framework completeness criteria
@@ -181,8 +183,8 @@ The POC will be considered successful when a non-technical product manager can: 
 
 ### Technology Preferences
 - **Frontend:** React 18+ with Next.js 14 framework, TailwindCSS for styling (matching POC design system), TypeScript for type safety
-- **Backend:** Node.js 20+ with Express.js for API services, supporting BMad v6 agent orchestration and document processing workflows
-- **Database:** PostgreSQL 15 for structured data (projects, users, agent configurations), with Redis 7 for session management and caching
+- **Backend:** Node.js 20+ with Fastify Web Server for high-performance parallel request processing, supporting BMad v6 agent orchestration and document processing workflows with dockerized deployment
+- **Database:** PostgreSQL 15 for structured data (projects, users, agent configurations), with Redis 7 for caching and session-less JWT token-based architecture
 - **Document Processing:** Rich text editing capabilities with markdown support, document versioning, and BMad v6 template structure preservation
 - **AI Integration:** Multi-LLM support (OpenAI GPT-4, Anthropic Claude, Google Gemini) with agent-specific prompt management
 - **Ignis Platform Integration:** Real-time telemetry transmission, analytics data pipeline, user behavior tracking, and performance monitoring integration with main Ignis Platform
@@ -191,7 +193,7 @@ The POC will be considered successful when a non-technical product manager can: 
 - **Repository Structure:** Hybrid approach where web platform manages metadata and BMad v6 workflow state while maintaining BMad v6 markdown artifacts in GitHub repositories, organized by BMad v6's 4-phase methodology
 - **Service Architecture:** Microservices architecture with separate services for BMad v6 agent orchestration, GitHub/SharePoint integration, document processing, Ignis Platform telemetry service, and user management
 - **Integration Requirements:** RESTful APIs for GitHub, SharePoint, and Ignis Platform integration, webhook support for real-time synchronization, BMad v6 workflow orchestration engine, real-time telemetry data transmission to Ignis Platform, and secure credential management
-- **Security/Compliance:** OAuth-based authentication with GitHub, SharePoint, and Ignis Platform, role-based access control, encrypted artifact storage, secure telemetry data transmission to Ignis Platform, and comprehensive audit logging for enterprise compliance
+- **Security/Compliance:** EntraID/Azure AD Single Sign-On (SSO) authentication for enterprise integration, GitHub token-based repository integration, JWT-based session-less architecture, role-based access control, encrypted artifact storage, OpenTelemetry Protocol (OTLP) for secure telemetry transmission, and comprehensive audit logging for enterprise compliance
 
 ### Agent-as-Code Dynamic Loading Architecture (POC Validation)
 
