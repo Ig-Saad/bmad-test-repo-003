@@ -2,7 +2,7 @@
 
 ## Epic Overview
 
-**Epic Goal:** Establish the foundational POC infrastructure with proper project structure, EntraID/Azure AD authentication with JWT session-less architecture, external service configuration, and BMad v6 framework integration. This epic delivers the essential platform foundation using Node.js Fastify backend and React frontend with EntraID SSO, enabling users to securely access the system using organizational credentials and begin leveraging BMad v6 methodology through web interfaces.
+**Epic Goal:** Establish the foundational POC infrastructure with proper workspace structure, EntraID/Azure AD authentication with JWT session-less architecture, external service configuration, and BMad v6 framework integration with dynamic file-level agent loading capabilities. This epic delivers the essential platform foundation for the **Upstream SDLC Orchestration Platform** using Node.js Fastify backend and React frontend with EntraID SSO, enabling users to securely access the system using organizational credentials and begin leveraging BMad v6 methodology for upstream activities (ideation, planning, solutioning) through web interfaces.
 
 ## Story Breakdown
 
@@ -54,13 +54,15 @@
 - **Complexity:** High (5-7 days)
 - **Dependencies:** Story 1.1 (Project Structure), Story 1.2 (MSAL Authentication), Story 1.3 (External Service Configuration)
 
-**Summary:** Integrates the POC with BMad v6 framework components, agent definitions, and workflow orchestration capabilities, ensuring methodology integrity while enabling web-based access to proven BMad v6 templates and agent orchestration.
+**Summary:** Integrates the POC with BMad v6 framework components, agent definitions, and workflow orchestration capabilities with **dynamic file-level agent loading** through MCP tool calling or function calling, ensuring methodology integrity while enabling web-based access to proven BMad v6 templates and agent orchestration with 60-70% token consumption reduction.
 
 **Key Deliverables:**
-- BMad v6 agent definition loading (all 12 agents)
+- BMad v6 agent definition loading with dynamic file-level loading (specific workflows, tasks, agent definitions)
+- MCP tool calling or function calling implementation (createFile, editFile, createDirectory, getDiff)
 - Template system access with BMad v6 artifact templates
-- Workflow orchestration engine with 4-phase management
-- Context-aware agent selection preparation and methodology integrity validation
+- Workflow orchestration engine with 4-phase management for upstream activities
+- Context-aware agent selection with file-level component caching (60-70% token reduction)
+- Methodology integrity validation for upstream SDLC orchestration
 
 ## Epic Dependencies & Integration
 

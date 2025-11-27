@@ -2,34 +2,40 @@
 
 ## Epic Overview
 
-**Epic Goal:** Implement BMad v6's intelligent agent orchestration system with context-aware agent selection and complete 4-phase methodology demonstration. This epic validates the core value proposition by proving that non-technical stakeholders can effectively leverage BMad v6's scale-adaptive intelligence and specialized agent expertise through intuitive web interfaces, demonstrating the complete workflow from project ideation through planning phases.
+**Epic Goal:** Implement BMad v6's intelligent agent orchestration system with context-aware agent selection and complete 4-phase methodology demonstration for **upstream SDLC activities** (configuration, ideation, planning, solutioning). This epic validates the core value proposition by proving that non-technical stakeholders can effectively leverage BMad v6's scale-adaptive intelligence and specialized agent expertise through intuitive web interfaces with **dynamic file-level agent loading** (60-70% token reduction), demonstrating the complete workflow from workspace creation through planning phases with clear handoff to BMad v6 IDE for downstream development.
 
 ## Story Breakdown
 
-### Story 2.1: Context-Aware Agent Selection Engine
+### Story 2.1: Context-Aware Agent Selection Engine with Dynamic File-Level Loading
 - **File:** `epic-2-story-2-1-agent-selection.md`
 - **Priority:** P0 (Critical - Core value proposition)
 - **Complexity:** High (5-7 days)
 - **Dependencies:** Story 1.4 (BMad v6 Framework Integration Foundation)
 
-**Summary:** Implements intelligent agent orchestration with context-aware selection from BMad v6's 12-agent ecosystem, providing 2-3 relevant agents initially with progressive engagement capabilities, achieving 60-70% token consumption reduction.
+**Summary:** Implements intelligent agent orchestration with context-aware selection from BMad v6's 12-agent ecosystem, providing 2-3 relevant agents initially with progressive engagement capabilities. Implements **dynamic file-level loading** of specific workflows, tasks, and agent definitions through MCP tool calling or function calling, achieving 60-70% token consumption reduction compared to loading complete agent bundles.
 
 **Key Deliverables:**
 - Context analysis and intelligent agent recommendation engine
+- Dynamic file-level agent loading (specific workflows, tasks, definitions instead of complete bundles)
+- MCP tool calling or function calling implementation for file operations
+- File-level component caching for loaded workflows and tasks
 - Progressive agent engagement with complexity-based scaling
 - Agent role switching with context preservation
-- Performance optimization with token consumption tracking
+- Performance optimization with token consumption tracking (60-70% reduction target)
 
-### Story 2.2: Configuration Phase Implementation
+### Story 2.2: Configuration Phase with Workspace Creation Workflows
 - **File:** `epic-2-story-2-2-configuration-phase.md`
 - **Priority:** P0 (Critical - First workflow phase)
 - **Complexity:** Medium (4-5 days)
 - **Dependencies:** Story 1.3 (External Service Configuration), Story 2.1 (Agent Selection Engine)
 
-**Summary:** Implements the first phase of BMad v6's 4-phase methodology with guided project setup, integration configuration, and automatic phase progression detection.
+**Summary:** Implements the first phase of BMad v6's 4-phase methodology with guided workspace setup (project = workspace), **Greenfield and Brownfield workflow support**, integration configuration, and automatic phase progression detection.
 
 **Key Deliverables:**
-- Guided project setup workflow with GitHub token-based access and Ignis Platform OTLP integration
+- Guided workspace setup with terminology clarification (project = workspace)
+- **Greenfield Workflow:** GitHub repository creation, user configuration, BMad framework installation, workflow initialization, working branch creation, metadata updates
+- **Brownfield Workflow:** Existing repository configuration, BMad framework setup, workflow configuration, working branch creation
+- GitHub dual-action sync configuration (Save to working branch, Publish with merge to main)
 - Model Context Protocol (MCP) foundation for SharePoint integration
 - Configuration persistence with Redis caching and secure credential management
 - Automatic progression to Ideation phase upon completion

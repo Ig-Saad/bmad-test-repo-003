@@ -2,24 +2,28 @@
 
 ## Epic Overview
 
-**Epic Goal:** Implement GitHub and SharePoint integrations with bidirectional synchronization to prove platform extensibility and enterprise workflow capabilities. This epic validates the critical integration requirements that enable seamless handoff to development teams and enterprise document management, demonstrating the platform's ability to bridge business and technical workflows.
+**Epic Goal:** Implement **dual-action GitHub synchronization** (Save to working branch, Publish with merge to main) and SharePoint integrations with bidirectional synchronization to prove platform extensibility and enterprise workflow capabilities for the **Upstream SDLC Orchestration Platform**. This epic validates the critical integration requirements that enable seamless handoff to development teams for downstream activities in BMad v6 IDE and enterprise document management, demonstrating the platform's ability to bridge business and technical workflows across upstream (ideation, planning, solutioning) and downstream (implementation) phases.
 
 ## Story Breakdown
 
-### Story 4.1: GitHub Repository Synchronization
+### Story 4.1: Dual-Action GitHub Synchronization (Save & Publish Workflows)
 - **File:** `epic-4-story-4-1-github-sync.md`
 - **Priority:** P0 (Critical - Development workflow integration)
 - **Complexity:** High (7-9 days)
 - **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation)
 
-**Summary:** Implements comprehensive bidirectional GitHub synchronization with automatic commit/push capabilities, intelligent merge conflict resolution, and seamless BMad v6 IDE workflow integration for development team handoff.
+**Summary:** Implements **dual-action GitHub synchronization** with distinct Save and Publish workflows, intelligent merge conflict resolution, and seamless BMad v6 IDE workflow integration for development team handoff to downstream activities.
 
 **Key Deliverables:**
-- Bidirectional GitHub synchronization using token-based authentication with secure credential storage
-- Repository structure management following BMad v6 methodology standards with automated commit/push
+- **Save Action:** Persist changes to working branch (<5 second SLA) for iterative work
+- **Publish Action:** Persist to working branch + merge to main branch with diff visualization (<15 second SLA)
+- Diff visualization showing files added/modified/deleted (future: accept/reject individual diffs)
+- Working branch management and tracking (separate from main branch)
+- Workspace terminology throughout (project = workspace)
+- Repository structure management following BMad v6 methodology standards
 - Intelligent merge conflict resolution with development workflow support
-- Branch management with configurable target branches and workflow integration
 - Comprehensive synchronization monitoring with real-time status tracking via OTLP telemetry
+- Handoff validation for downstream development in BMad v6 IDE
 
 ### Story 4.2: SharePoint Document Management Integration
 - **File:** `epic-4-story-4-2-sharepoint-integration.md`

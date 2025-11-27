@@ -1,62 +1,98 @@
-# Story 4.1: GitHub Repository Synchronization
+# Story 4.1: Dual-Action GitHub Synchronization (Save & Publish Workflows)
 
 ## Story Classification
-- **Epic:** Epic 4 - Strategic Integration Validation  
+- **Epic:** Epic 4 - Strategic Integration Validation
 - **Priority:** P0 (Critical - Development workflow integration)
 - **Complexity:** High (7-9 days)
 - **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation)
 
 ## User Story
 
-**As a** developer, technical lead, or development team member,  
-**I want** automatic synchronization of generated documents with GitHub repositories,  
-**So that** I can access specifications through existing BMad v6 IDE workflows and maintain development workflow continuity without manual document transfer or format conversion.
+**As a** product manager or developer working in the **Upstream SDLC Orchestration Platform**,
+**I want** **dual-action GitHub synchronization** with separate Save and Publish workflows,
+**So that** I can iteratively save my work to a working branch without affecting the main branch, and then publish completed work with diff review to merge changes to main, enabling seamless handoff to development teams for downstream implementation in BMad v6 IDE workflows.
 
 ## Story Context & Business Value
 
 **POC Validation Goals:**
-- Demonstrate seamless integration between web platform and existing BMad v6 IDE workflows
-- Validate bidirectional synchronization capabilities for development team handoff
-- Prove platform extensibility and enterprise workflow integration capabilities
-- Establish foundation for complete development lifecycle integration
+- Demonstrate **dual-action synchronization** model (Save: working branch only, Publish: merge to main)
+- Validate diff visualization before merging to main branch (future: accept/reject individual diffs)
+- Prove seamless integration between upstream web platform and downstream BMad v6 IDE workflows
+- Establish clear boundary between upstream orchestration (web) and downstream development (IDE)
+- Validate workspace terminology throughout synchronization workflows (workspace = project)
 
 **User Personas:**
-- **Primary:** Development teams receiving project specifications for implementation
-- **Secondary:** Technical leads managing development workflow and artifact handoff
-- **Tertiary:** DevOps engineers maintaining repository structure and integration workflows
+- **Primary:** Non-technical stakeholders working on upstream artifacts who need iterative saves
+- **Secondary:** Development teams receiving specifications for downstream implementation in BMad v6 IDE
+- **Tertiary:** Technical leads managing workflow handoff from upstream planning to downstream development
 
 ## Detailed Acceptance Criteria
 
-### 🔄 Bidirectional GitHub Synchronization
+### � Save Action - Working Branch Persistence
 
-**AC1: Bidirectional GitHub Synchronization with Automatic Commit and Push**
-- **GIVEN** a document is generated or modified in the web platform
-- **WHEN** synchronization is triggered (automatically or manually)
-- **THEN** the system commits and pushes the document to the configured GitHub repository
-- **AND** synchronization preserves document format, structure, and BMad v6 methodology compliance
-- **AND** automatic commit includes proper commit messages with document metadata and change descriptions
-- **AND** bidirectional sync detects and handles external repository changes from BMad v6 IDE workflows
+**AC1: Save Action to Working Branch (Iterative Work)**
+- **GIVEN** a user modifies workspace artifacts in the web platform
+- **WHEN** they trigger the **Save action**
+- **THEN** the system commits and pushes changes to the **working branch only** (not main)
+- **AND** Save action completes within **5 seconds** (SLA target)
+- **AND** working branch commit includes proper commit message with artifact metadata
+- **AND** save tracking updates last_save_commit SHA and pending_changes_count
+- **AND** user receives confirmation with commit SHA and files changed count
+- **AND** workspace state reflects "saved but not published" status
 
-**AC2: Repository Change Detection and Conflict Resolution**
-- **GIVEN** documents are modified both in the web platform and directly in GitHub repository
-- **WHEN** synchronization detects conflicts
-- **THEN** the system provides intelligent conflict resolution with merge capabilities
-- **AND** conflict resolution preserves document integrity and BMad v6 template structure
-- **AND** change detection identifies modifications, additions, and deletions from both sources
-- **AND** resolution workflow provides clear options for handling conflicting changes
+**AC2: Working Branch Management and Tracking**
+- **GIVEN** a workspace has been configured with GitHub integration
+- **WHEN** Save actions are performed
+- **THEN** the system maintains a dedicated working branch separate from main
+- **AND** working branch name follows convention (e.g., "workspace/{workspace-id}" or user-configured)
+- **AND** all Save actions accumulate in working branch without affecting main
+- **AND** workspace metadata tracks working branch name, last save commit, and pending changes count
+- **AND** users can view working branch status and pending changes list
+
+### 📤 Publish Action - Merge to Main with Diff Visualization
+
+**AC3: Publish Action with Diff Visualization**
+- **GIVEN** a user has saved changes to working branch and wants to publish
+- **WHEN** they trigger the **Publish action**
+- **THEN** the system generates **diff visualization** showing all changes (files added, modified, deleted)
+- **AND** diff summary displays total changes count and detailed file list
+- **AND** user can review diff before confirming publish
+- **AND** Publish action commits any unsaved changes to working branch first
+- **AND** Publish action then **merges working branch to main branch**
+- **AND** Publish action completes within **15 seconds** (SLA target)
+- **AND** workspace metadata updates last_publish_commit SHA and resets pending_changes_count to 0
+
+**AC4: Future Enhancement - Accept/Reject Individual Diffs**
+- **GIVEN** this is a POC with future enhancement noted
+- **WHEN** diff visualization is displayed
+- **THEN** the current POC shows complete diff for review (no selective accept/reject)
+- **AND** architecture supports future enhancement to accept/reject individual file diffs
+- **AND** documentation notes this planned capability for post-POC development
+- **AND** data model supports tracking partial publishes in future iterations
+
+### 🔄 Workspace Terminology Throughout
+
+**AC5: Workspace Terminology in Synchronization APIs and UI**
+- **GIVEN** the platform clarifies project = workspace
+- **WHEN** displaying synchronization UI and API responses
+- **THEN** all references use "workspace" terminology consistently
+- **AND** API endpoints use `/workspaces/{workspaceId}/save` and `/workspaces/{workspaceId}/publish`
+- **AND** GitHub commit messages reference "workspace" not "project"
+- **AND** repository folder structure uses "workspaces/" or configurable naming
+- **AND** user-facing messages clarify "workspace (project)" where helpful for transition
 
 ### 📁 Repository Structure Management & Organization
 
-**AC3: Repository Structure Management with BMad v6 Methodology Compliance**
-- **GIVEN** documents need to be organized in the GitHub repository
+**AC6: Repository Structure Management with BMad v6 Methodology Compliance**
+- **GIVEN** workspace artifacts need to be organized in the GitHub repository
 - **WHEN** synchronization creates or updates repository structure
 - **THEN** the system maintains proper folder organization following BMad v6 methodology standards
-- **AND** repository structure includes appropriate folders for different document types (PRD, architecture, stories, etc.)
-- **AND** folder organization supports both web platform and BMad v6 IDE workflow requirements
-- **AND** structure management maintains consistency across different project types and phases
+- **AND** repository structure includes appropriate folders for different artifact types (PRD, architecture, stories, etc.)
+- **AND** folder organization supports both web platform upstream work and BMad v6 IDE downstream workflows
+- **AND** structure management maintains consistency across different workspace types and phases
 
-**AC4: Document Path Management with Configurable Organization**
-- **GIVEN** different projects may require different repository organization approaches
+**AC7: Document Path Management with Configurable Organization**
+- **GIVEN** different workspaces may require different repository organization approaches
 - **WHEN** configuring document synchronization
 - **THEN** the system allows configurable path management and folder structure customization
 - **AND** path management supports enterprise repository standards and team preferences
@@ -65,104 +101,118 @@
 
 ### 📝 Commit Management & Metadata Integration
 
-**AC5: Commit Message Generation with Document Metadata and Change Descriptions**
-- **GIVEN** a document is synchronized to GitHub
+**AC8: Commit Message Generation for Save and Publish Actions**
+- **GIVEN** Save or Publish actions are executed
 - **WHEN** the system creates commit messages
-- **THEN** it generates informative commit messages with document metadata, phase information, and change descriptions
-- **AND** commit messages include document type, project phase, modification summary, and author information
-- **AND** message generation follows conventional commit standards and provides clear change context
-- **AND** metadata integration ensures commit history is meaningful and searchable
+- **THEN** Save action generates messages like "Save: Updated PRD for workspace {name}"
+- **AND** Publish action generates messages like "Publish: Merge workspace {name} changes to main"
+- **AND** commit messages include workspace metadata, artifact types, and change summaries
+- **AND** message generation follows conventional commit standards for searchability
+- **AND** metadata integration includes workspace ID, phase information, and author details
 
-**AC6: Change Attribution and Audit Trail Maintenance**
-- **GIVEN** multiple users contribute to document changes
-- **WHEN** synchronizing changes to GitHub
-- **THEN** the system maintains proper change attribution and comprehensive audit trails
-- **AND** change attribution includes original author, modification timestamp, and change rationale
-- **AND** audit trail maintenance preserves complete change history for compliance and tracking
-- **AND** attribution accuracy ensures proper credit and responsibility tracking
+**AC9: Change Attribution and Audit Trail Maintenance**
+- **GIVEN** multiple users contribute to workspace changes
+- **WHEN** synchronizing changes via Save or Publish actions
+- **THEN** the system maintains proper change attribution with original author information
+- **AND** audit trails track all Save and Publish actions with timestamps
+- **AND** comprehensive change history preserved for compliance and tracking
+- **AND** attribution accuracy ensures proper credit and responsibility across working branch and main
 
 ### 🌿 Branch Management & Workflow Integration
 
 **AC7: Branch Management with Configurable Target Branches**
 - **GIVEN** development teams use different branching strategies
+**AC10: Working Branch and Main Branch Strategy**
+- **GIVEN** workspace uses dual-action synchronization model
 - **WHEN** configuring GitHub synchronization
-- **THEN** the system supports configurable target branches and branch management strategies
-- **AND** branch management includes main branch, development branch, and feature branch synchronization
-- **AND** configurable targets allow teams to maintain their existing branching workflows
-- **AND** branch strategy integration supports GitFlow, GitHub Flow, and custom branching approaches
+- **THEN** the system maintains clear separation between working branch and main branch
+- **AND** working branch is dedicated to Save actions (iterative work)
+- **AND** main branch only receives changes via Publish action (merge from working branch)
+- **AND** branch configuration allows custom working branch naming or default convention
+- **AND** branch strategy supports team collaboration on working branch before publishing to main
 
-**AC8: Merge Conflict Resolution with Development Workflow Support**
-- **GIVEN** synchronization encounters merge conflicts with existing repository content
-- **WHEN** conflicts need resolution
-- **THEN** the system provides comprehensive merge conflict resolution with development workflow support
-- **AND** conflict resolution includes three-way merge capabilities and manual resolution options
-- **AND** development workflow support maintains branch integrity and merge history
-- **AND** resolution process integrates with existing development team practices and tools
+**AC11: Merge Conflict Resolution During Publish**
+- **GIVEN** Publish action encounters merge conflicts when merging working branch to main
+- **WHEN** conflicts are detected
+- **THEN** the system provides intelligent conflict resolution workflow
+- **AND** conflict detection shows exactly which files conflict and why
+- **AND** resolution options include manual merge, accept working branch, or accept main branch
+- **AND** conflict resolution preserves BMad v6 template structure and methodology integrity
+- **AND** successful resolution completes Publish action and updates main branch
 
 ### 📊 Synchronization Status & Monitoring
 
-**AC9: Synchronization Status Tracking with Real-Time Updates**
-- **GIVEN** documents are being synchronized with GitHub
-- **WHEN** users need to monitor synchronization progress
-- **THEN** the system provides real-time synchronization status tracking and progress updates
-- **AND** status tracking includes sync progress, completion status, and any errors or warnings
-- **AND** real-time updates keep users informed of synchronization state without requiring manual checking
-- **AND** status information includes last sync time, next scheduled sync, and sync health indicators
+**AC12: Real-Time Save and Publish Status Tracking**
+- **GIVEN** users perform Save or Publish actions
+- **WHEN** monitoring synchronization progress
+- **THEN** the system provides real-time status updates for both action types
+- **AND** Save action status shows commit to working branch progress (<5s)
+- **AND** Publish action status shows diff generation, merge, and completion progress (<15s)
+- **AND** status displays last_save_commit SHA, last_publish_commit SHA, and pending_changes_count
+- **AND** workspace UI clearly shows "saved but not published" vs "published" states
 
-**AC10: Error Handling and Recovery for Integration Failures**
-- **GIVEN** GitHub synchronization encounters errors or failures
+**AC13: Error Handling for Save and Publish Actions**
+- **GIVEN** Save or Publish actions encounter errors
 - **WHEN** integration issues occur
-- **THEN** the system provides comprehensive error handling and recovery mechanisms
-- **AND** error handling includes network failures, authentication issues, and repository access problems
-- **AND** recovery mechanisms include automatic retry, manual retry options, and fallback procedures
-- **AND** integration failure handling maintains document integrity and provides clear resolution guidance
+- **THEN** the system provides action-specific error handling and recovery
+- **AND** Save action errors (network, auth, push failures) provide retry options without data loss
+- **AND** Publish action errors (merge conflicts, push failures) rollback gracefully
+- **AND** error messages clearly distinguish between Save failures and Publish failures
+- **AND** recovery guidance specific to each action type
 
-### ✅ Workflow Handoff & BMad v6 IDE Integration
+### ✅ Upstream to Downstream Workflow Handoff
 
-**AC11: Workflow Handoff Validation with BMad v6 IDE Environment Integration**
-- **GIVEN** documents are synchronized and ready for development team access
-- **WHEN** validating workflow handoff
-- **THEN** the system ensures seamless transition to existing BMad v6 IDE environments
-- **AND** handoff validation includes document accessibility, format compatibility, and workflow continuity
-- **AND** BMad v6 IDE integration maintains methodology compliance and framework compatibility
-- **AND** validation confirms development teams can access and use synchronized documents effectively
+**AC14: Downstream Handoff Validation for BMad v6 IDE**
+- **GIVEN** workspace artifacts have been published to main branch
+- **WHEN** validating handoff to downstream development in BMad v6 IDE
+- **THEN** the system ensures seamless transition for implementation phase
+- **AND** published artifacts in main branch are immediately accessible to BMad v6 IDE workflows
+- **AND** artifact format, structure, and BMad v6 methodology compliance maintained
+- **AND** development teams receive notification of published changes available for downstream work
+- **AND** handoff includes clear indication: "Upstream planning complete, ready for downstream development"
 
-**AC12: Development Team Access Verification and Workflow Continuity**
-- **GIVEN** synchronized documents are available in GitHub repository
-- **WHEN** development teams access documents through BMad v6 IDE workflows
-- **THEN** the system verifies proper access and maintains complete workflow continuity
-- **AND** access verification includes permission validation, document availability, and format integrity
-- **AND** workflow continuity ensures development teams can proceed with implementation without disruption
-- **AND** verification process confirms successful integration between web platform and existing development workflows
+**AC15: Development Team Access Verification**
+- **GIVEN** published artifacts are in main branch
+- **WHEN** development teams access through BMad v6 IDE workflows for downstream implementation
+- **THEN** the system verifies proper access and workflow continuity
+- **AND** access verification includes permission validation and artifact availability
+- **AND** workflow continuity confirmed: upstream orchestration → downstream implementation handoff successful
+- **AND** development teams can immediately begin implementation phase in BMad v6 IDE
 
 ## 🛠️ Technical Implementation Details
 
 ### Technology Stack
-- **GitHub Integration:** GitHub API v4 (GraphQL), PyGithub SDK
-- **Version Control:** Git operations, merge conflict resolution algorithms
-- **Backend:** Python FastAPI with async/await, GitHub integration services
+- **GitHub Integration:** GitHub API v4 (GraphQL), Octokit/PyGithub SDK
+- **Version Control:** Git operations with dual-branch management, merge algorithms
+- **Backend:** Node.js Fastify with async/await, GitHub integration services
 - **Database:** PostgreSQL 15 with SQLAlchemy for sync state, Redis 7 for sync queue management
 
 ### API Endpoints Required
 ```typescript
-POST   /api/v1/github/sync/{projectId}        // Trigger project synchronization
-GET    /api/v1/github/sync/{projectId}/status // Get synchronization status
-PUT    /api/v1/github/sync/{projectId}/config // Update sync configuration
-POST   /api/v1/github/sync/{projectId}/resolve // Resolve merge conflicts
-GET    /api/v1/github/repositories            // Get available repositories
-POST   /api/v1/github/repositories/validate   // Validate repository access
-GET    /api/v1/github/branches/{repoId}       // Get repository branches
-POST   /api/v1/github/webhook                 // Handle GitHub webhooks
-GET    /api/v1/github/sync/history/{projectId} // Get synchronization history
-POST   /api/v1/github/sync/manual/{projectId} // Manual synchronization trigger
+// Dual-Action GitHub Synchronization
+POST   /api/v1/workspaces/{workspaceId}/save           // Save action: commit to working branch (<5s SLA)
+POST   /api/v1/workspaces/{workspaceId}/publish        // Publish action: merge to main with diff (<15s SLA)
+GET    /api/v1/workspaces/{workspaceId}/pending-changes // Get pending changes (working vs main)
+GET    /api/v1/workspaces/{workspaceId}/sync-history   // Get Save/Publish action history
+
+// GitHub Configuration & Validation
+PUT    /api/v1/workspaces/{workspaceId}/github/config  // Update GitHub sync configuration
+POST   /api/v1/workspaces/{workspaceId}/github/validate // Validate repository access
+GET    /api/v1/github/repositories                     // Get available repositories
+GET    /api/v1/github/branches/{repoId}                // Get repository branches
+
+// Conflict Resolution & Monitoring
+POST   /api/v1/workspaces/{workspaceId}/publish/resolve // Resolve merge conflicts during Publish
+GET    /api/v1/workspaces/{workspaceId}/sync/status    // Get real-time sync status
+POST   /api/v1/github/webhook                          // Handle GitHub webhooks
 ```
 
 ### Database Schema Requirements
 ```sql
--- GitHub synchronization configuration
+-- GitHub synchronization configuration with dual-action support
 CREATE TABLE github_sync_configs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID REFERENCES projects(id),
+  workspace_id UUID REFERENCES workspaces(id),
   repository_url VARCHAR(500) NOT NULL,
   repository_id VARCHAR(100) NOT NULL,
   target_branch VARCHAR(100) DEFAULT 'main',

@@ -3,13 +3,13 @@
 ## Goals and Background Context
 
 ### Goals
-- Democratize BMad v6's revolutionary AI-driven agile workflows and scale-adaptive intelligence for non-technical stakeholders through intuitive web interfaces
-- Enable complete project lifecycle orchestration using BMad v6's proven 4-phase methodology (Analysis → Planning → Solutioning → Implementation) with intelligent agent orchestration
-- Reduce specification creation time by 50% and downstream development rework by 40% through BMad v6's scale-adaptive intelligence and specialized agent expertise
+- Democratize BMad v6's revolutionary AI-driven agile workflows and scale-adaptive intelligence for non-technical stakeholders through intuitive web interfaces for upstream SDLC activities (ideation, planning, solutioning)
+- Enable complete upstream project lifecycle orchestration using BMad v6's proven 4-phase methodology (Analysis → Planning → Solutioning) with intelligent agent orchestration and clear handoff to BMad v6 IDE workflows for Implementation phase
+- Reduce specification creation time by 50% and downstream development rework by 40% through BMad v6's scale-adaptive intelligence and specialized agent expertise with dynamic file-level loading
 - Achieve 80% adoption rate among non-technical stakeholders within 6 months while maintaining seamless integration with existing BMad v6 IDE workflows
-- Transform non-technical stakeholders from requirement creators into complete project orchestrators powered by BMad v6's 12-agent ecosystem and 3-track system (Quick Flow, BMad Method, Brownfield)
-- Establish comprehensive artifact generation capabilities across SDLC, business, compliance, and training documentation using BMad v6's proven templates
-- Enable seamless bidirectional synchronization with GitHub repositories and existing BMad v6 IDE workflows, with document storage primarily in Git repositories and future SharePoint integration planned through Model Context Protocol (MCPs)
+- Transform non-technical stakeholders from requirement creators into complete upstream project orchestrators powered by BMad v6's 12-agent ecosystem and 3-track system (Quick Flow, BMad Method, Brownfield) with dynamic file-level component loading
+- Establish comprehensive artifact generation capabilities for upstream activities across SDLC, business, compliance, and training documentation using BMad v6's proven templates
+- Enable dual-action GitHub synchronization workflows (Save to working branch, Publish to merge with main including diff visualization) with document storage primarily in Git repositories and future SharePoint integration planned through Model Context Protocol (MCPs)
 
 ### Background Context
 
@@ -28,43 +28,55 @@ This PRD addresses the critical market opportunity to democratize BMad v6's prov
 
 ### Functional
 
-**FR1:** The system shall implement BMad v6's scale-adaptive intelligence engine with automatic complexity detection and workflow selection across three tracks (Quick Flow, BMad Method, Brownfield) with seamless track transitions based on project evolution.
+**FR1:** The system shall implement BMad v6's scale-adaptive intelligence engine with automatic complexity detection and workflow selection across three tracks (Quick Flow, BMad Method, Brownfield) with seamless track transitions based on project evolution for upstream SDLC activities.
 
-**FR2:** The system shall provide intelligent agent orchestration from BMad v6's 12-agent ecosystem with context-aware agent selection, presenting only relevant agents (2-3 initially) with progressive engagement as project complexity evolves, eliminating cognitive overload while maintaining access to specialized expertise.
+**FR2:** The system shall provide intelligent agent orchestration from BMad v6's 12-agent ecosystem with context-aware agent selection, presenting only relevant agents (2-3 initially) with progressive engagement as project complexity evolves and dynamic file-level loading (specific workflows, tasks, agent definitions) through MCP tool calling or function calling capabilities to reduce token consumption by 60-70% while maintaining access to specialized expertise.
 
-**FR3:** The system shall implement complete 4-phase BMad v6 methodology execution through web interface: Analysis (optional brainstorming, research), Planning (required PRD/tech-spec creation), Solutioning (architecture, security, DevOps), and Implementation (story-centric development) with phase-appropriate artifact generation.
+**FR3:** The system shall implement complete 4-phase BMad v6 methodology execution through web interface for upstream activities: Analysis (optional brainstorming, research), Planning (required PRD/tech-spec creation), Solutioning (architecture, security, DevOps) with clear handoff to BMad v6 IDE workflows for Implementation (story-centric development), including phase-appropriate artifact generation.
 
-**FR4:** The system shall provide comprehensive artifact generation engine creating complete project artifact suites following BMad v6 templates including SDLC documents (requirements, architecture, user stories, test plans), business documents (market research, business cases, presentations), compliance documentation, and training materials with comprehensive editing and version control.
+**FR4:** The system shall implement workspace creation workflows with clear distinction between workspace-level (project-level) and account-level operations:
+   - **Greenfield:** GitHub repository creation, user configuration, BMad framework installation, workflow initialization, BMad working branch creation, application metadata updates
+   - **Brownfield:** Existing code repository configuration, BMad framework setup, workflow configuration, BMad working branch creation
 
-**FR5:** The system shall enable comprehensive document viewing and editing capabilities for BMad v6's markdown-based artifacts, maintaining content structure, formatting, and embedded media while preserving BMad methodology integrity and enabling seamless collaboration.
+**FR5:** The system shall implement dual-action GitHub synchronization:
+   - **Save Action:** Persist artifacts to BMad working branch for iterative work via GitHub API
+   - **Publish Action:** Persist to working branch + merge to main branch via GitHub API with diff visualization (future phase: accept/reject individual diffs)
 
-**FR6:** The system shall implement Figma integration core with design import, specification extraction, and technical documentation generation from design artifacts with automatic updates when designs change, integrated with BMad v6's UX Designer agent workflows.
+**FR6:** The system shall implement MCP tools or function calling capabilities equivalent to desktop environment tools (createFile, editFile, createDirectory, changes/diff) to support dynamic file-level loading of agent components (specific workflows, tasks, agent definitions) from workspace repositories.
 
-**FR7:** The system shall provide seamless BMad v6 IDE integration with bidirectional synchronization of all project artifacts between web platform and existing BMad v6 IDE workflows, supporting markdown-based artifacts while maintaining workflow continuity.
+**FR7:** The system shall provide comprehensive artifact generation engine creating complete upstream project artifact suites following BMad v6 templates including SDLC documents (requirements, architecture, user stories, test plans), business documents (market research, business cases, presentations), compliance documentation, and training materials with comprehensive editing and version control.
 
-**FR8:** The system shall implement project workspace management with complete project orchestration, artifact organization, team member access control, and format-aware collaboration features across BMad v6's entire 4-phase project lifecycle.
+**FR8:** The system shall enable comprehensive document viewing and editing capabilities for BMad v6's markdown-based artifacts, maintaining content structure, formatting, and embedded media while preserving BMad methodology integrity and enabling seamless collaboration.
 
-**FR9:** The system shall provide BMad v6 template library with complete artifact template suite covering all project phases, tracks, and document types, with comprehensive editing capabilities and guided workflow execution.
+**FR9:** The system shall implement Figma integration core with design import, specification extraction, and technical documentation generation from design artifacts with automatic updates when designs change, integrated with BMad v6's UX Designer agent workflows.
 
-**FR10:** The system shall implement comprehensive enterprise observability integration using OpenTelemetry Protocol (OTLP) with configurable destinations for enterprise observability tools, including user interactions, workflow performance, agent utilization, token consumption tracking and reporting, document generation metrics, and system performance data for analytics and optimization with seamless Ignis Platform ecosystem integration.
+**FR10:** The system shall implement workspace management with complete workspace orchestration, artifact organization, team member access control, and format-aware collaboration features across BMad v6's upstream SDLC phases.
+
+**FR11:** The system shall provide BMad v6 template library with complete artifact template suite covering all project phases, tracks, and document types, with comprehensive editing capabilities and guided workflow execution.
+
+**FR12:** The system shall implement comprehensive enterprise observability integration using OpenTelemetry Protocol (OTLP) with configurable destinations for enterprise observability tools, including user interactions, workflow performance, agent utilization (including dynamic file-level loading metrics), token consumption tracking and reporting, document generation metrics, and system performance data for analytics and optimization with seamless Ignis Platform ecosystem integration.
 
 ### Non Functional
 
-**NFR1:** Scale-adaptive intelligence shall enable Quick Flow track completion in under 4 hours, BMad Method track Phase 1-2 completion in under 8 hours, with 90% appropriate track selection accuracy and seamless transitions between tracks when project complexity changes.
+**NFR1:** Dynamic file-level agent loading (specific workflows, tasks, agent definitions) through MCP tool calling or function calling shall achieve sub-2-second response times with 60-70% token consumption reduction compared to loading complete agent bundles, with seamless track transitions between Quick Flow, BMad Method, and Brownfield workflows.
 
-**NFR2:** The system shall maintain 99.5% uptime for critical integrations (GitHub, existing BMad v6 IDE workflows, Figma, Ignis Platform ecosystem) and core BMad v6 workflow orchestration services with fully dockerized cloud-native deployment.
+**NFR2:** Workspace creation workflows shall complete within 30 minutes for both Greenfield (repository creation, BMad installation, working branch setup) and Brownfield (existing repository configuration, BMad setup, working branch creation) scenarios.
 
-**NFR3:** Web application shall achieve sub-2 second page load times, document editing response within 500ms, and support concurrent editing by up to 50 users per project workspace with real-time BMad v6 workflow synchronization.
+**NFR3:** Dual-action GitHub synchronization shall maintain 99.5% uptime with Save action completing within 5 seconds (persist to working branch) and Publish action completing within 15 seconds (merge to main with diff visualization), with zero data loss.
 
-**NFR4:** The system shall support modern browsers (Chrome, Firefox, Safari, Edge) released within the last 2 years with responsive design for desktop and tablet usage, optimized for specification work environments.
+**NFR4:** The system shall maintain 99.5% uptime for critical integrations (GitHub, existing BMad v6 IDE workflows, Figma, Ignis Platform ecosystem) and core BMad v6 workflow orchestration services with fully dockerized cloud-native deployment.
 
-**NFR5:** Document storage and processing shall comply with enterprise security requirements including encrypted storage, comprehensive audit logging, OpenTelemetry Protocol (OTLP) for secure observability data transmission, session-less JWT-based architecture, and data privacy regulations with artifact-level access controls.
+**NFR5:** Web application shall achieve sub-2 second page load times, document editing response within 500ms, and support concurrent editing by up to 50 users per workspace with real-time BMad v6 workflow synchronization for upstream activities.
 
-**NFR6:** The system shall scale to support 500+ monthly active users with BMad v6 workflow orchestration queue management, agent definition caching, and cloud-native deployment architecture supporting variable processing loads.
+**NFR6:** The system shall support modern browsers (Chrome, Firefox, Safari, Edge) released within the last 2 years with responsive design for desktop and tablet usage, optimized for specification work environments.
 
-**NFR7:** BMad v6 methodology integrity shall be maintained with 95% of generated specifications meeting BMad framework completeness criteria across all three tracks, with comprehensive artifact quality validation and cross-document consistency checking.
+**NFR7:** Document storage and processing shall comply with enterprise security requirements including encrypted storage, comprehensive audit logging, OpenTelemetry Protocol (OTLP) for secure observability data transmission, session-less JWT-based architecture, and data privacy regulations with artifact-level access controls.
 
-**NFR8:** The system shall provide comprehensive error handling and recovery for BMad v6 workflow execution failures, agent orchestration issues, API service disruptions, and integration synchronization problems with detailed diagnostic information.
+**NFR8:** The system shall scale to support 500+ monthly active users with BMad v6 workflow orchestration queue management, dynamic file-level agent component caching, and cloud-native deployment architecture supporting variable processing loads.
+
+**NFR9:** BMad v6 methodology integrity shall be maintained with 95% of generated specifications meeting BMad framework completeness criteria across all three tracks for upstream activities, with comprehensive artifact quality validation and cross-document consistency checking.
+
+**NFR10:** The system shall provide comprehensive error handling and recovery for BMad v6 workflow execution failures, dynamic agent loading issues, API service disruptions, dual-action GitHub synchronization problems, and integration failures with detailed diagnostic information.
 
 ## User Interface Design Goals
 

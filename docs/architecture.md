@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document outlines the comprehensive architecture for **BMad v6-Powered SDLC Platform Web UI**, including both POC validation and full platform implementations. The architecture bridges BMad v6's revolutionary AI-driven agile methodology with web-based accessibility, enabling non-technical stakeholders to leverage scale-adaptive intelligence, intelligent agent orchestration, and proven 4-phase workflows through intuitive interfaces while maintaining seamless integration with existing BMad v6 IDE workflows.
+This document outlines the comprehensive architecture for **BMad v6-Powered SDLC Platform Web UI** - an **Upstream SDLC Orchestration Platform** for ideation, planning, and solutioning activities - including both POC validation and full platform implementations. The architecture bridges BMad v6's revolutionary AI-driven agile methodology with web-based accessibility for upstream SDLC phases, enabling non-technical stakeholders to leverage scale-adaptive intelligence, intelligent agent orchestration with dynamic file-level loading, and proven 4-phase workflows through intuitive interfaces, with seamless handoff to existing BMad v6 IDE workflows for downstream development (Implementation phase).
 
 ## Related Documentation
 
@@ -21,14 +21,15 @@ This document presents both POC validation architecture (4-6 week timeline) and 
 ### Project Classification
 
 Based on the PRD analysis, this is a **greenfield project** requiring custom architecture due to its unique requirements for:
-- BMad v6 scale-adaptive intelligence integration (Quick Flow, BMad Method, Brownfield tracks)
-- Intelligent agent orchestration from 12-agent ecosystem with context-aware selection
-- Complete 4-phase methodology execution (Analysis → Planning → Solutioning → Implementation)
-- Comprehensive artifact generation across SDLC, business, compliance, and training documentation
-- Seamless BMad v6 IDE workflow integration with bidirectional synchronization
+- BMad v6 scale-adaptive intelligence integration (Quick Flow, BMad Method, Brownfield tracks) for upstream SDLC activities
+- Intelligent agent orchestration from 12-agent ecosystem with context-aware selection and dynamic file-level loading (specific workflows, tasks, agent definitions)
+- Complete 4-phase methodology execution for upstream activities (Analysis → Planning → Solutioning) with clear handoff to BMad v6 IDE for Implementation phase
+- Comprehensive artifact generation across SDLC, business, compliance, and training documentation for upstream phases
+- Dual-action GitHub synchronization (Save to working branch, Publish with merge to main including diff visualization)
+- Workspace creation workflows (Greenfield and Brownfield) with BMad framework installation and working branch setup
 - Ignis Platform telemetry integration for ecosystem connectivity
 
-**Decision:** Greenfield project requiring custom Node.js/React architecture optimized for cloud-native deployment, BMad v6 methodology preservation, and intelligent agent orchestration.
+**Decision:** Greenfield project requiring custom Node.js/React architecture optimized for cloud-native deployment, BMad v6 methodology preservation for upstream activities, intelligent agent orchestration with dynamic file-level loading, and seamless handoff to existing BMad v6 IDE workflows for downstream development.
 
 ### Change Log
 
@@ -42,7 +43,7 @@ Based on the PRD analysis, this is a **greenfield project** requiring custom arc
 
 ### POC Technical Summary
 
-The BMad v6-Powered SDLC Platform POC employs a **simplified cloud-native architecture** designed for rapid validation of core concepts within a 4-6 week timeline. The POC focuses on demonstrating intelligent agent orchestration from BMad v6's ecosystem, complete 4-phase methodology execution through web interfaces, and seamless integration with existing BMad v6 IDE workflows. Key validation points include context-aware agent selection (presenting 2-3 relevant agents initially), GitHub and SharePoint integration for bidirectional synchronization, and comprehensive Ignis Platform telemetry integration. The architecture leverages **React 18+ with Next.js 14, Node.js 20+ backend, and PostgreSQL 15** for streamlined development while maintaining BMad v6 methodology integrity and proving 60-70% token consumption reduction through selective agent loading.
+The BMad v6-Powered SDLC Platform POC employs a **simplified cloud-native architecture** designed for rapid validation of core concepts within a 4-6 week timeline. The POC focuses on demonstrating intelligent agent orchestration from BMad v6's ecosystem with dynamic file-level loading (specific workflows, tasks, agent definitions), complete 4-phase methodology execution through web interfaces for upstream SDLC activities (ideation, planning, solutioning), and seamless handoff to existing BMad v6 IDE workflows for downstream development (Implementation phase). Key validation points include context-aware agent selection (presenting 2-3 relevant agents initially), dual-action GitHub synchronization (Save to working branch, Publish with merge to main including diff visualization), workspace creation workflows (Greenfield and Brownfield), and comprehensive Ignis Platform telemetry integration. The architecture leverages **React 18+ with Next.js 14, Node.js 20+ backend, and PostgreSQL 15** for streamlined development while maintaining BMad v6 methodology integrity and proving 60-70% token consumption reduction through dynamic file-level agent loading.
 
 ### POC Cloud Infrastructure
 
@@ -80,7 +81,7 @@ graph TB
     end
 
     subgraph "POC Data Layer"
-        POCDB[(PostgreSQL 15<br/>Project & User Data)]
+        POCDB[(PostgreSQL 15<br/>Workspace & User Data)]
         POCREDIS[Redis 7<br/>Session & Cache]
         POCSTORAGE[Object Storage<br/>Documents & Artifacts]
     end
@@ -107,51 +108,56 @@ graph TB
 **POC Frontend (React/Next.js):**
 - **React 18+ Web Application:** Modern React with hooks and context for state management
 - **Next.js 14 Framework:** Server-side rendering, API routes, and optimized performance
-- **Agent Selection Interface:** Context-aware UI presenting 2-3 relevant BMad v6 agents initially
-- **4-Phase Workflow Navigator:** Visual progress through Configuration, Ideation, Product Definition, Planning
+- **Agent Selection Interface:** Context-aware UI presenting 2-3 relevant BMad v6 agents initially with dynamic file-level loading indicators
+- **4-Phase Workflow Navigator:** Visual progress through Configuration, Ideation, Product Definition, Planning for upstream activities
+- **Dual-Action GitHub UI:** Distinct Save (to working branch) and Publish (merge to main with diff) buttons
 
 **POC Backend Services (Node.js):**
 - **Fastify API Server:** High-performance RESTful API with plugins for authentication and validation
-- **BMad v6 Agent Orchestration:** Context-aware agent selection and progressive engagement logic
+- **BMad v6 Agent Orchestration:** Context-aware agent selection with dynamic file-level loading (specific workflows, tasks, agent definitions) through MCP tool calling or function calling
 - **Document Generation Engine:** BMad v6 template processing with artifact creation capabilities
-- **Ignis Platform Telemetry:** Comprehensive data capture and real-time transmission service
+- **Workspace Management Service:** Greenfield and Brownfield workspace creation workflows with BMad framework installation
+- **Dual-Action GitHub Service:** Save to working branch and Publish with merge to main including diff generation
+- **Ignis Platform Telemetry:** Comprehensive data capture including dynamic file-level loading metrics and real-time transmission service
 
 **POC Integration Layer:**
-- **GitHub Integration:** Repository synchronization with basic commit and branch management
+- **GitHub Integration:** Dual-action synchronization (Save to working branch, Publish with merge) with basic commit and branch management
 - **SharePoint Integration:** Document upload and metadata management via Microsoft Graph API
-- **BMad v6 Framework Access:** Direct integration with agent definitions and template system
+- **BMad v6 Framework Access:** Dynamic file-level loading of agent definitions, workflows, and tasks from workspace repositories
+- **MCP Tools:** File access tools equivalent to desktop environment (createFile, editFile, createDirectory, changes/diff)
 - **Ignis Platform Connectivity:** Real-time telemetry data transmission and validation
 
 **POC Data Management:**
-- **PostgreSQL 15:** Primary database for users, projects, agents, workflows, and artifacts
-- **Redis 7:** Session management, agent definition caching, and performance optimization
+- **PostgreSQL 15:** Primary database for users, workspaces, agents, workflows, and artifacts with working branch state tracking
+- **Redis 7:** Session management, file-level agent component caching, and performance optimization
 - **Object Storage:** Document storage with version control and access management
 
 ### POC Success Validation Points
 
 **Technical Validation:**
-- 60-70% token consumption reduction through selective agent loading
-- Sub-3-second response times for agent loading and workflow execution
-- 100% successful bidirectional synchronization with GitHub and SharePoint
-- Real-time telemetry data transmission to Ignis Platform with zero data loss
+- 60-70% token consumption reduction through dynamic file-level agent loading (specific workflows, tasks, agent definitions)
+- Sub-3-second response times for dynamic file-level loading and workflow execution
+- 100% successful dual-action GitHub synchronization (Save to working branch within 5 seconds, Publish with merge to main within 15 seconds) with zero data loss
+- 95% successful workspace creation for both Greenfield and Brownfield workflows
+- Real-time telemetry data transmission to Ignis Platform with zero data loss including dynamic loading metrics
 
 **User Experience Validation:**
-- 90% user comprehension of complete workflow within 30 minutes
-- 85% task completion rate for end-to-end project setup and artifact generation
-- 95% accuracy in automatic phase completion detection and progress updates
-- 75% user preference for web interface over traditional tools
+- 90% user comprehension of complete workflow from workspace creation through upstream phases within 30 minutes
+- 85% task completion rate for end-to-end workspace setup, artifact generation, and dual-action GitHub workflows
+- 95% accuracy in automatic phase completion detection and progress updates for upstream activities
+- 75% user preference for web interface over traditional tools for upstream SDLC activities
 
 ## Full Platform Architecture (Production Implementation)
 
 ### Full Platform Technical Summary
 
-The comprehensive BMad v6-Powered SDLC Platform employs an **enterprise-grade cloud-native microservices architecture** designed for 500+ monthly active users with complete project lifecycle orchestration capabilities. The platform implements BMad v6's full scale-adaptive intelligence engine with automatic complexity detection across three tracks (Quick Flow, BMad Method, Brownfield), intelligent agent orchestration from the complete 12-agent ecosystem, and comprehensive artifact generation spanning SDLC, business, compliance, and training documentation. The architecture leverages **React 18+ frontend, Node.js 20+ microservices, PostgreSQL 15 with Redis 7 caching, and cloud-native deployment** with advanced features including real-time collaborative editing, enterprise security, comprehensive analytics, and seamless integration with existing BMad v6 IDE workflows, GitHub repositories, Figma designs, and business tools (SharePoint, Confluence, Teams).
+The comprehensive BMad v6-Powered SDLC Platform employs an **enterprise-grade cloud-native microservices architecture** designed for 500+ monthly active users with complete upstream SDLC lifecycle orchestration capabilities (ideation, planning, solutioning) and seamless handoff to BMad v6 IDE workflows for downstream development (Implementation phase). The platform implements BMad v6's full scale-adaptive intelligence engine with automatic complexity detection across three tracks (Quick Flow, BMad Method, Brownfield), intelligent agent orchestration from the complete 12-agent ecosystem with dynamic file-level loading (specific workflows, tasks, agent definitions), and comprehensive artifact generation spanning SDLC, business, compliance, and training documentation for upstream activities. The architecture leverages **React 18+ frontend, Node.js 20+ microservices, PostgreSQL 15 with Redis 7 caching, and cloud-native deployment** with advanced features including real-time collaborative editing, enterprise security, comprehensive analytics, dual-action GitHub synchronization (Save to working branch, Publish with merge to main), workspace creation workflows (Greenfield and Brownfield), and seamless integration with existing BMad v6 IDE workflows, GitHub repositories, Figma designs, and business tools (SharePoint, Confluence, Teams).
 
 ## High Level Architecture
 
 ### Full Platform Technical Summary
 
-The comprehensive BMad v6-Powered SDLC Platform employs an **enterprise-grade cloud-native microservices architecture** supporting complete project lifecycle orchestration for 500+ monthly active users. The platform implements BMad v6's revolutionary scale-adaptive intelligence engine with automatic complexity detection and workflow selection across three tracks (Quick Flow, BMad Method, Brownfield), intelligent agent orchestration from the complete 12-agent ecosystem with context-aware selection and progressive engagement, and comprehensive artifact generation spanning SDLC documents, business artifacts, compliance documentation, and training materials. The architecture leverages **React 18+ frontend with Next.js 14, Node.js 20+ microservices, PostgreSQL 15 with Redis 7 caching** for enterprise-grade deployment with advanced features including real-time collaborative editing, enterprise security and compliance, comprehensive analytics and reporting, and seamless integration with existing BMad v6 IDE workflows, GitHub repositories, Figma designs, and business tools (SharePoint, Confluence, Teams) while maintaining BMad v6 methodology integrity throughout the complete 4-phase workflow execution.
+The comprehensive BMad v6-Powered SDLC Platform employs an **enterprise-grade cloud-native microservices architecture** supporting complete upstream SDLC lifecycle orchestration (ideation, planning, solutioning) for 500+ monthly active users with seamless handoff to BMad v6 IDE workflows for downstream development (Implementation phase). The platform implements BMad v6's revolutionary scale-adaptive intelligence engine with automatic complexity detection and workflow selection across three tracks (Quick Flow, BMad Method, Brownfield), intelligent agent orchestration from the complete 12-agent ecosystem with context-aware selection, progressive engagement, and dynamic file-level loading (specific workflows, tasks, agent definitions), and comprehensive artifact generation spanning SDLC documents, business artifacts, compliance documentation, and training materials for upstream activities. The architecture leverages **React 18+ frontend with Next.js 14, Node.js 20+ microservices, PostgreSQL 15 with Redis 7 caching** for enterprise-grade deployment with advanced features including real-time collaborative editing, enterprise security and compliance, comprehensive analytics and reporting, dual-action GitHub synchronization (Save to working branch, Publish with merge to main), workspace creation workflows (Greenfield and Brownfield), and seamless integration with existing BMad v6 IDE workflows, GitHub repositories, Figma designs, and business tools (SharePoint, Confluence, Teams) while maintaining BMad v6 methodology integrity throughout upstream workflow execution.
 
 ### Full Platform Cloud Infrastructure
 
@@ -285,8 +291,8 @@ This comprehensive architecture diagram illustrates the complete BMad v6-powered
 - **BMad v6 Framework:** Direct access to agent definitions, template system, and methodology components
 
 **Data & Storage Layer:**
-- **PostgreSQL 15:** Primary database for users, projects, agents, workflows, phases, tracks, artifacts, and comprehensive metadata management
-- **Redis 7:** High-performance caching for agent definitions, session management, and performance optimization
+- **PostgreSQL 15:** Primary database for users, workspaces, agents, workflows, phases, tracks, artifacts, working branch state, and comprehensive metadata management
+- **Redis 7:** High-performance caching for file-level agent component definitions, session management, and performance optimization
 - **Object Storage:** Scalable document storage with version control, access management, and CDN integration
 - **Analytics Database:** Dedicated storage for telemetry data, user behavior analytics, and performance metrics
 
@@ -296,23 +302,26 @@ This comprehensive architecture diagram illustrates the complete BMad v6-powered
 - **Backup & Recovery:** Data protection, disaster recovery, and business continuity planning
 
 **Intelligent Data Flow Patterns:**
-1. **Context-Aware User Experience:** Users access scale-adaptive intelligence through intuitive interfaces that present appropriate complexity levels
-2. **Intelligent Agent Orchestration:** System analyzes project context and presents relevant agents with progressive engagement as complexity evolves
-3. **Methodology-Driven Workflow:** BMad v6's 4-phase structure guides users through proven project execution with automatic completion detection
-4. **Seamless Integration:** Bidirectional synchronization maintains workflow continuity between web platform and existing BMad v6 IDE environments
-5. **Comprehensive Telemetry:** Real-time data capture and transmission to Ignis Platform for analytics, optimization, and ecosystem connectivity
+1. **Context-Aware User Experience:** Users access scale-adaptive intelligence through intuitive interfaces that present appropriate complexity levels for upstream SDLC activities
+2. **Intelligent Agent Orchestration:** System analyzes workspace context and presents relevant agents with progressive engagement and dynamic file-level loading as complexity evolves
+3. **Methodology-Driven Workflow:** BMad v6's 4-phase structure guides users through proven upstream project execution (Analysis → Planning → Solutioning) with automatic completion detection and clear handoff to BMad v6 IDE for Implementation phase
+4. **Dual-Action GitHub Workflow:** Save action persists artifacts to working branch for iterative work; Publish action merges to main branch with diff visualization maintaining workflow continuity
+5. **Seamless IDE Handoff:** Bidirectional synchronization maintains workflow continuity between web platform (upstream activities) and existing BMad v6 IDE environments (downstream development)
+6. **Comprehensive Telemetry:** Real-time data capture including dynamic file-level loading metrics and transmission to Ignis Platform for analytics, optimization, and ecosystem connectivity
 
 ### Architectural Patterns
 
-- **Microservices Architecture:** Domain-driven service separation optimized for BMad v6 integration - _Rationale:_ Independent deployment and scaling of scale-adaptive intelligence, agent orchestration, 4-phase workflow management, and comprehensive artifact generation services
-- **Intelligent Agent Orchestration Pattern:** Context-aware agent selection and progressive engagement - _Rationale:_ Optimize token consumption and user experience by presenting only relevant agents from BMad v6's 12-agent ecosystem based on project context and complexity evolution
-- **Scale-Adaptive Intelligence Pattern:** Automatic complexity detection and track selection - _Rationale:_ Provide appropriate workflow depth (Quick Flow, BMad Method, Brownfield) based on project requirements while maintaining BMad v6 methodology integrity
-- **4-Phase Workflow Pattern:** Structured methodology execution with automatic progression - _Rationale:_ Ensure comprehensive project coverage through BMad v6's proven Analysis → Planning → Solutioning → Implementation phases with completion detection
-- **Repository Pattern:** Abstract data access logic with Node.js ORMs - _Rationale:_ Enables testing and future database migration flexibility for complex BMad v6 metadata, agent configurations, and workflow state management
+- **Microservices Architecture:** Domain-driven service separation optimized for BMad v6 integration - _Rationale:_ Independent deployment and scaling of scale-adaptive intelligence, agent orchestration with dynamic file-level loading, 4-phase workflow management for upstream activities, and comprehensive artifact generation services
+- **Intelligent Agent Orchestration Pattern:** Context-aware agent selection with dynamic file-level loading and progressive engagement - _Rationale:_ Optimize token consumption and user experience by loading only specific agent files (workflows, tasks, definitions) from BMad v6's 12-agent ecosystem based on workspace context and complexity evolution, achieving 60-70% token reduction
+- **Dual-Action GitHub Synchronization Pattern:** Separate Save and Publish operations with working branch management - _Rationale:_ Enable iterative work on working branch (Save) while maintaining controlled merges to main branch (Publish) with diff visualization and future accept/reject capabilities
+- **Workspace Creation Pattern:** Distinct Greenfield and Brownfield workflows - _Rationale:_ Support both new repository creation with BMad framework installation and existing repository configuration with working branch setup
+- **Scale-Adaptive Intelligence Pattern:** Automatic complexity detection and track selection - _Rationale:_ Provide appropriate workflow depth (Quick Flow, BMad Method, Brownfield) based on project requirements while maintaining BMad v6 methodology integrity for upstream activities
+- **4-Phase Workflow Pattern:** Structured methodology execution for upstream activities with clear handoff - _Rationale:_ Ensure comprehensive coverage through BMad v6's proven Analysis → Planning → Solutioning phases with automatic completion detection and seamless handoff to BMad v6 IDE for Implementation phase
+- **Repository Pattern:** Abstract data access logic with Node.js ORMs - _Rationale:_ Enables testing and future database migration flexibility for complex BMad v6 metadata, agent configurations, workspace state, and working branch management
 - **API Gateway Pattern:** Centralized routing and load balancing - _Rationale:_ Centralized auth, rate limiting, monitoring, and versioning for multiple Node.js microservices with multi-region distribution
-- **Event-Driven Architecture:** Message queues for async processing - _Rationale:_ Handle long-running artifact generation, agent orchestration, and integration synchronization without blocking user interface
-- **CQRS Pattern:** Separate read/write models for complex operations - _Rationale:_ Optimize for complex agent queries, workflow state management, and artifact retrieval while maintaining write performance
-- **Saga Pattern:** Orchestrate multi-step BMad v6 workflows - _Rationale:_ Ensure consistency across phase transitions, agent handoffs, artifact generation, and external integrations (GitHub, SharePoint, Ignis Platform)
+- **Event-Driven Architecture:** Message queues for async processing - _Rationale:_ Handle long-running artifact generation, agent orchestration with dynamic file loading, and integration synchronization without blocking user interface
+- **CQRS Pattern:** Separate read/write models for complex operations - _Rationale:_ Optimize for complex agent queries with file-level loading, workflow state management, and artifact retrieval while maintaining write performance
+- **Saga Pattern:** Orchestrate multi-step BMad v6 workflows - _Rationale:_ Ensure consistency across phase transitions, agent handoffs with dynamic loading, artifact generation, dual-action GitHub operations, and external integrations (SharePoint, Ignis Platform)
 
 ## Technology Stack Comparison
 
@@ -341,10 +350,13 @@ This comprehensive architecture diagram illustrates the complete BMad v6-powered
 - **TypeScript:** Type safety across frontend and backend for better development experience and code quality
 
 **BMad v6 Integration Technologies:**
-- **Agent Definition Loading:** Dynamic loading of BMad v6 agent configurations with context-aware selection
+- **Dynamic File-Level Agent Loading:** MCP tool calling or function calling for loading specific workflows, tasks, and agent definitions (not complete bundles)
+- **File Access Tools:** Equivalent to desktop environment capabilities (createFile, editFile, createDirectory, changes/diff)
+- **Agent Component Repository:** Per-workspace caching of .bmad and .github directories for dynamic file-level access
 - **Template System Access:** Direct integration with BMad v6 template library for comprehensive artifact generation
-- **Workflow Orchestration:** Implementation of BMad v6's 4-phase methodology with automatic progression and completion detection
+- **Workflow Orchestration:** Implementation of BMad v6's 4-phase methodology for upstream activities with automatic progression and completion detection for Analysis, Planning, Solutioning phases
 - **Scale-Adaptive Intelligence:** Complexity detection and track selection (Quick Flow, BMad Method, Brownfield) algorithms
+- **Workspace Management:** Greenfield and Brownfield creation workflows with BMad framework installation and working branch setup
 
 ## Cloud Deployment Architecture
 
@@ -705,17 +717,23 @@ interface UserPreferences {
   uiPreferences: UIPreferences;
 }
 
-### Project Model
+### Workspace Model
 
-**Purpose:** BMad v6 project container with scale-adaptive intelligence and 4-phase workflow management
+**Purpose:** BMad v6 workspace container (project = workspace) with scale-adaptive intelligence, 4-phase workflow management, and dual-action GitHub synchronization
+
+**Note:** "Project" and "Workspace" are synonymous - a workspace represents a complete project environment with GitHub repo integration, BMad v6 configuration, and workflow state.
 
 ```typescript
-interface Project {
+interface Workspace {
   id: string;                           // UUID primary key
-  name: string;                         // Project name
-  description?: string;                 // Project description
-  ownerId: string;                      // User ID of project owner
-  status: ProjectStatus;                // Current project status
+  name: string;                         // Workspace name
+  description?: string;                 // Workspace description
+  ownerId: string;                      // User ID of workspace owner
+  status: WorkspaceStatus;              // Current workspace status
+
+  // Workspace Creation Flow
+  creationType: WorkspaceCreationType;  // Greenfield or Brownfield
+  creationMetadata: CreationMetadata;   // Creation workflow tracking
 
   // BMad v6 Scale-Adaptive Intelligence
   selectedTrack: BMadTrack;             // Current track (Quick Flow, BMad Method, Brownfield)
@@ -727,16 +745,27 @@ interface Project {
   phaseProgress: PhaseProgress[];       // Progress tracking for each phase
   completedPhases: BMadPhase[];         // Successfully completed phases
 
-  // Integration Configuration
+  // Dual-Action GitHub Synchronization
   githubConfig?: GitHubIntegration;     // GitHub repository configuration
+  workingBranch?: string;               // Current working branch for Save action
+  mainBranch: string;                   // Main branch for Publish action
+  lastSaveCommit?: string;              // Last Save action commit SHA
+  lastPublishCommit?: string;           // Last Publish action commit SHA (merged to main)
+  pendingChangesCount: number;          // Changes in working branch not yet published
+
+  // Other Integrations
   sharepointConfig?: SharePointIntegration; // SharePoint document management
   figmaConfig?: FigmaIntegration;       // Figma design integration
   ignisConfig: IgnisIntegration;        // Ignis Platform telemetry
 
+  // Dynamic File-Level Agent Loading (60-70% token reduction)
+  agentLoadingStrategy: AgentLoadingStrategy; // MCP tool calling or function calling
+  cachedAgentComponents: CachedComponent[]; // File-level cached components
+
   // Agent Orchestration
   activeAgents: string[];               // Currently engaged agent IDs
   agentHistory: AgentEngagement[];      // Agent interaction history
-  contextData: ProjectContext;          // Context for agent selection
+  contextData: WorkspaceContext;        // Context for agent selection
 
   // Metadata
   createdAt: Date;
@@ -744,12 +773,26 @@ interface Project {
   lastActivityAt: Date;
 }
 
-enum ProjectStatus {
-  DRAFT = "draft",                      // Initial project setup
+enum WorkspaceStatus {
+  DRAFT = "draft",                      // Initial workspace setup
   ACTIVE = "active",                    // Active development
   ON_HOLD = "on_hold",                  // Temporarily paused
-  COMPLETED = "completed",              // Project finished
-  ARCHIVED = "archived"                 // Archived project
+  COMPLETED = "completed",              // Workspace finished
+  ARCHIVED = "archived"                 // Archived workspace
+}
+
+enum WorkspaceCreationType {
+  GREENFIELD = "greenfield",            // New GitHub repo creation + BMad setup
+  BROWNFIELD = "brownfield"             // Existing repo + BMad installation
+}
+
+interface CreationMetadata {
+  type: WorkspaceCreationType;
+  steps: CreationStep[];                // Greenfield: repo creation, config, BMad install, workflow init, branch creation
+                                         // Brownfield: repo config, BMad setup, workflow config, branch creation
+  completedSteps: string[];
+  currentStep?: string;
+  errors?: string[];
 }
 
 enum BMadTrack {
@@ -1105,56 +1148,81 @@ const swaggerOptions = {
 **BMad v6 Scale-Adaptive Intelligence Endpoints:**
 
 ```typescript
-// Project and Track Management
-interface CreateProjectRequest {
+// Workspace and Track Management (project = workspace)
+interface CreateWorkspaceRequest {
   name: string;
   description?: string;
-  githubRepoUrl?: string;
+  creationType: 'greenfield' | 'brownfield'; // Workspace creation flow
+  githubRepoUrl?: string; // Required for brownfield, created for greenfield
   initialComplexity?: number;
   preferredTrack?: BMadTrack;
 }
 
-interface ProjectResponse {
+interface WorkspaceResponse {
   id: string;
   name: string;
+  creationType: 'greenfield' | 'brownfield';
   selectedTrack: BMadTrack;
   currentPhase: BMadPhase;
   complexityScore: number;
   phaseProgress: PhaseProgress[];
   activeAgents: string[];
+
+  // Dual-action GitHub sync state
+  workingBranch?: string;
+  mainBranch: string;
+  pendingChangesCount: number;
+  lastSaveCommit?: string;
+  lastPublishCommit?: string;
+
   createdAt: Date;
   updatedAt: Date;
 }
 
-// POST /api/v1/projects
-router.post('/projects', validateRequest(CreateProjectRequest), async (req, res) => {
+// POST /api/v1/workspaces
+router.post('/workspaces', validateRequest(CreateWorkspaceRequest), async (req, res) => {
   /**
-   * Create new BMad v6 project with scale-adaptive intelligence
+   * Create new BMad v6 workspace (project = workspace) with scale-adaptive intelligence
+   *
+   * GREENFIELD workflow:
+   * - Create new GitHub repository
+   * - Initialize user configuration
+   * - Install BMad v6 framework
+   * - Initialize workflow structure
+   * - Create working branch for Save action
+   * - Update metadata
+   *
+   * BROWNFIELD workflow:
+   * - Configure existing GitHub repository
+   * - Install BMad v6 setup
+   * - Configure workflow parameters
+   * - Create working branch for Save action
+   *
    * - Analyze initial complexity
    * - Select appropriate track (Quick Flow, BMad Method, Brownfield)
    * - Initialize 4-phase workflow
    * - Recommend initial agents
    */
-  const project = await projectService.createProject(req.body, req.user);
-  res.status(201).json(project);
+  const workspace = await workspaceService.createWorkspace(req.body, req.user);
+  res.status(201).json(workspace);
 });
 
-// GET /api/v1/projects/{projectId}/track-analysis
-router.get('/projects/:projectId/track-analysis', async (req, res) => {
+// GET /api/v1/workspaces/{workspaceId}/track-analysis
+router.get('/workspaces/:workspaceId/track-analysis', async (req, res) => {
   /**
    * Get scale-adaptive intelligence analysis
    * - Current complexity assessment
    * - Track recommendation rationale
    * - Potential track transitions
    */
-  const analysis = await scaleAdaptiveService.analyzeProject(req.params.projectId);
+  const analysis = await scaleAdaptiveService.analyzeWorkspace(req.params.workspaceId);
   res.json(analysis);
 });
 
-// PUT /api/v1/projects/{projectId}/track
-router.put('/projects/:projectId/track', async (req, res) => {
+// PUT /api/v1/workspaces/{workspaceId}/track
+router.put('/workspaces/:workspaceId/track', async (req, res) => {
   /**
-   * Transition project track based on complexity evolution
+   * Transition workspace track based on complexity evolution
    * - Validate transition criteria
    * - Update workflow requirements
    * - Adjust agent recommendations
@@ -1173,9 +1241,9 @@ router.put('/projects/:projectId/track', async (req, res) => {
 
 ```typescript
 interface AgentSelectionRequest {
-  projectId: string;
+  workspaceId: string;
   phase: BMadPhase;
-  context?: ProjectContext;
+  context?: WorkspaceContext;
   maxAgents?: number;
 }
 
@@ -1186,31 +1254,31 @@ interface AgentRecommendationResponse {
   progressiveEngagementPlan: EngagementPlan;
 }
 
-// GET /api/v1/projects/{projectId}/agent-recommendations
-router.get('/projects/:projectId/agent-recommendations', async (req, res) => {
+// GET /api/v1/workspaces/{workspaceId}/agent-recommendations
+router.get('/workspaces/:workspaceId/agent-recommendations', async (req, res) => {
   /**
    * Get context-aware agent recommendations
-   * - Analyze project context and current phase
+   * - Analyze workspace context and current phase
    * - Recommend 2-3 most relevant agents initially
    * - Provide progressive engagement plan
    */
   const recommendations = await agentOrchestrationService.getRecommendations(
-    req.params.projectId,
+    req.params.workspaceId,
     req.query
   );
   res.json(recommendations);
 });
 
-// POST /api/v1/projects/{projectId}/agents/{agentId}/engage
-router.post('/projects/:projectId/agents/:agentId/engage', async (req, res) => {
+// POST /api/v1/workspaces/{workspaceId}/agents/{agentId}/engage
+router.post('/workspaces/:workspaceId/agents/:agentId/engage', async (req, res) => {
   /**
-   * Engage specific agent for project phase
+   * Engage specific agent for workspace phase
    * - Load agent context and capabilities
    * - Initialize agent-specific workflow
    * - Track engagement metrics
    */
   const engagement = await agentOrchestrationService.engageAgent(
-    req.params.projectId,
+    req.params.workspaceId,
     req.params.agentId,
     req.body.context
   );
@@ -1230,19 +1298,115 @@ router.get('/agents/:agentId/performance', async (req, res) => {
 });
 ```
 
+**Dynamic File-Level Agent Loading Endpoints:**
+
+```typescript
+interface FileLoadRequest {
+  agentId: string;
+  files: string[]; // Specific agent files to load (workflows, tasks, definitions)
+  loadStrategy: 'mcp' | 'function_calling'; // MCP tool calling or function calling
+}
+
+interface FileLoadResponse {
+  agentId: string;
+  filesLoaded: string[];
+  tokenReduction: number; // Percentage reduction vs full bundle
+  cacheKeys: string[];
+  loadTime: number; // milliseconds
+}
+
+interface MCPToolCallRequest {
+  tool: 'createFile' | 'editFile' | 'createDirectory' | 'getDiff';
+  parameters: Record<string, any>;
+  workspaceId: string;
+  agentId: string;
+}
+
+// POST /api/v1/agents/{agentId}/load-files
+router.post('/agents/:agentId/load-files', async (req, res) => {
+  /**
+   * Dynamically load specific agent files instead of full bundle
+   *
+   * - Load only required workflows, tasks, agent definitions
+   * - Achieve 60-70% token reduction vs complete agent bundles
+   * - Support MCP tool calling (createFile, editFile, createDirectory, changes/diff)
+   * - Support function calling patterns
+   * - Cache loaded components at file level
+   * - Track token consumption metrics
+   *
+   * Example: Load only PM agent's "create-prd" workflow instead of all PM workflows
+   */
+  const result = await agentLoadingService.loadAgentFiles(
+    req.params.agentId,
+    req.body.files,
+    req.body.loadStrategy
+  );
+  res.json(result);
+});
+
+// POST /api/v1/agents/{agentId}/mcp-tool-call
+router.post('/agents/:agentId/mcp-tool-call', async (req, res) => {
+  /**
+   * Execute MCP tool calling for file operations
+   *
+   * Supported tools:
+   * - createFile: Create new file in workspace
+   * - editFile: Modify existing file
+   * - createDirectory: Create directory structure
+   * - getDiff: Get changes/diff for review
+   *
+   * Enables file-level agent operations without full context loading
+   */
+  const result = await mcpService.executeToolCall(
+    req.params.agentId,
+    req.body.tool,
+    req.body.parameters,
+    req.body.workspaceId
+  );
+  res.json(result);
+});
+
+// GET /api/v1/agents/{agentId}/cached-components
+router.get('/agents/:agentId/cached-components', async (req, res) => {
+  /**
+   * Get file-level cached agent components
+   *
+   * - List cached workflow files
+   * - List cached task files
+   * - List cached agent definition files
+   * - Show cache hit rates
+   * - Display token savings
+   */
+  const cache = await agentCacheService.getCachedComponents(req.params.agentId);
+  res.json(cache);
+});
+
+// DELETE /api/v1/agents/{agentId}/cache
+router.delete('/agents/:agentId/cache', async (req, res) => {
+  /**
+   * Clear file-level agent cache
+   *
+   * - Force reload of agent components
+   * - Reset token consumption metrics
+   */
+  const result = await agentCacheService.clearCache(req.params.agentId);
+  res.json(result);
+});
+```
+
 **4-Phase Workflow Management Endpoints:**
 
 ```typescript
 interface PhaseTransitionRequest {
-  projectId: string;
+  workspaceId: string;
   fromPhase?: BMadPhase;
   toPhase: BMadPhase;
   completionCriteria: CompletionCriteria[];
   artifacts: string[];
 }
 
-// GET /api/v1/projects/{projectId}/workflow
-router.get('/projects/:projectId/workflow', async (req, res) => {
+// GET /api/v1/workspaces/{workspaceId}/workflow
+router.get('/workspaces/:workspaceId/workflow', async (req, res) => {
   /**
    * Get complete workflow state
    * - Current phase and progress
@@ -1372,6 +1536,123 @@ router.get('/templates', async (req, res) => {
 });
 ```
 
+**Dual-Action GitHub Synchronization Endpoints:**
+
+```typescript
+interface SaveActionRequest {
+  workspaceId: string;
+  files: FileChange[]; // Changed files to persist
+  commitMessage?: string;
+}
+
+interface SaveActionResponse {
+  success: boolean;
+  workingBranch: string;
+  commitSha: string;
+  filesChanged: number;
+  timestamp: Date;
+}
+
+interface PublishActionRequest {
+  workspaceId: string;
+  commitMessage?: string;
+  reviewRequired?: boolean;
+}
+
+interface PublishActionResponse {
+  success: boolean;
+  mainBranch: string;
+  mergeCommitSha: string;
+  diffSummary: DiffSummary;
+  filesPublished: number;
+  timestamp: Date;
+}
+
+interface DiffSummary {
+  filesAdded: string[];
+  filesModified: string[];
+  filesDeleted: string[];
+  totalChanges: number;
+  diffVisualization: string; // Future: accept/reject individual diffs
+}
+
+// POST /api/v1/workspaces/{workspaceId}/save
+router.post('/workspaces/:workspaceId/save', async (req, res) => {
+  /**
+   * Save Action: Persist changes to working branch
+   *
+   * - Commit changes to working branch (not main)
+   * - Track save commit SHA
+   * - Update pending changes count
+   * - Maintain workspace state
+   * - SLA: <5 seconds
+   *
+   * This allows incremental saves without affecting the main branch
+   */
+  const result = await githubSyncService.saveToWorkingBranch(
+    req.params.workspaceId,
+    req.body.files,
+    req.body.commitMessage || 'Auto-save changes',
+    req.user
+  );
+  res.json(result);
+});
+
+// POST /api/v1/workspaces/{workspaceId}/publish
+router.post('/workspaces/:workspaceId/publish', async (req, res) => {
+  /**
+   * Publish Action: Persist changes AND merge to main branch
+   *
+   * - Commit any pending changes to working branch
+   * - Generate diff visualization (files added/modified/deleted)
+   * - Merge working branch to main branch
+   * - Track publish commit SHA
+   * - Reset pending changes count
+   * - SLA: <15 seconds
+   *
+   * Future enhancement: Support accept/reject individual diffs before merge
+   */
+  const result = await githubSyncService.publishToMainBranch(
+    req.params.workspaceId,
+    req.body.commitMessage || 'Publish workspace changes',
+    req.body.reviewRequired || false,
+    req.user
+  );
+  res.json(result);
+});
+
+// GET /api/v1/workspaces/{workspaceId}/pending-changes
+router.get('/workspaces/:workspaceId/pending-changes', async (req, res) => {
+  /**
+   * Get pending changes between working branch and main branch
+   *
+   * - Show diff summary
+   * - List changed files
+   * - Display pending changes count
+   * - Preview changes before publish
+   */
+  const changes = await githubSyncService.getPendingChanges(req.params.workspaceId);
+  res.json(changes);
+});
+
+// GET /api/v1/workspaces/{workspaceId}/sync-history
+router.get('/workspaces/:workspaceId/sync-history', async (req, res) => {
+  /**
+   * Get synchronization history
+   *
+   * - List all Save actions with timestamps
+   * - List all Publish actions with diff summaries
+   * - Track commit SHAs
+   * - Support pagination
+   */
+  const history = await githubSyncService.getSyncHistory(
+    req.params.workspaceId,
+    req.query
+  );
+  res.json(history);
+});
+```
+
 **Strategic Integration Endpoints:**
 
 ```typescript
@@ -1381,11 +1662,11 @@ interface IntegrationConfigRequest {
   syncFrequency: SyncFrequency;
 }
 
-// POST /api/v1/projects/{projectId}/integrations
-router.post('/projects/:projectId/integrations', async (req, res) => {
+// POST /api/v1/workspaces/{workspaceId}/integrations
+router.post('/workspaces/:workspaceId/integrations', async (req, res) => {
   /**
-   * Configure project integrations
-   * - GitHub repository synchronization
+   * Configure workspace integrations
+   * - GitHub repository synchronization (dual-action Save/Publish)
    * - SharePoint document management
    * - Figma design workflows
    * - Ignis Platform telemetry
@@ -2332,39 +2613,54 @@ CREATE TABLE users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Projects table for workspace management
-CREATE TABLE projects (
+-- Workspaces table for workspace management (project = workspace)
+-- Supports Greenfield (new repo creation) and Brownfield (existing repo) workflows
+CREATE TABLE workspaces (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
     description TEXT,
     owner_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+
+    -- GitHub Configuration with dual-action sync support
     github_repo_url TEXT,
-    github_branch VARCHAR(255) DEFAULT 'main',
+    github_main_branch VARCHAR(255) DEFAULT 'main',
+    github_working_branch VARCHAR(255), -- Current working branch for Save action
+
+    -- Workspace Creation Type
+    creation_type VARCHAR(20) NOT NULL DEFAULT 'greenfield' CHECK (creation_type IN ('greenfield', 'brownfield')),
+
+    -- Dual-Action GitHub Synchronization State
+    last_save_commit VARCHAR(40), -- Last Save action commit SHA
+    last_publish_commit VARCHAR(40), -- Last Publish action commit SHA (merged to main)
+    pending_changes_count INTEGER DEFAULT 0, -- Changes in working branch not yet published
+
     status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'archived', 'draft')),
     settings JSONB NOT NULL DEFAULT '{
         "auto_sync": true,
         "default_format": "markdown",
-        "collaboration_mode": "open"
+        "collaboration_mode": "open",
+        "save_auto_commit": true,
+        "publish_require_review": false
     }',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Project members for collaboration
-CREATE TABLE project_members (
+-- Workspace members for collaboration
+CREATE TABLE workspace_members (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     role VARCHAR(20) NOT NULL DEFAULT 'viewer' CHECK (role IN ('owner', 'editor', 'viewer')),
     invited_by UUID REFERENCES users(id),
     joined_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    UNIQUE(project_id, user_id)
+    UNIQUE(workspace_id, user_id)
 );
 
 -- Documents table for multi-format document management
 CREATE TABLE documents (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+    workspace_id UUID NOT NULL REFERENCES workspaces(id) ON DELETE CASCADE,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(50) NOT NULL CHECK (type IN (
         'prd', 'architecture', 'user_story', 'test_plan',
@@ -2375,10 +2671,16 @@ CREATE TABLE documents (
     )),
     content_hash VARCHAR(64), -- SHA-256 hash for integrity
     metadata JSONB NOT NULL DEFAULT '{}',
+
+    -- Dual-Action GitHub Synchronization
     sync_status VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (sync_status IN (
         'synced', 'pending', 'conflict', 'error'
     )),
     github_path TEXT, -- Path in GitHub repository
+    is_published BOOLEAN DEFAULT false, -- Merged to main branch
+    last_saved_at TIMESTAMP WITH TIME ZONE, -- Last Save action timestamp
+    last_published_at TIMESTAMP WITH TIME ZONE, -- Last Publish action timestamp
+
     figma_file_id VARCHAR(255), -- Figma file identifier
     created_by UUID NOT NULL REFERENCES users(id),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -2423,16 +2725,19 @@ CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_users_azure_ad_object_id ON users(azure_ad_object_id);
 CREATE INDEX idx_users_active ON users(is_active) WHERE is_active = true;
 
-CREATE INDEX idx_projects_owner_id ON projects(owner_id);
-CREATE INDEX idx_projects_status ON projects(status);
+CREATE INDEX idx_workspaces_owner_id ON workspaces(owner_id);
+CREATE INDEX idx_workspaces_status ON workspaces(status);
+CREATE INDEX idx_workspaces_creation_type ON workspaces(creation_type);
+CREATE INDEX idx_workspaces_working_branch ON workspaces(github_working_branch);
 
-CREATE INDEX idx_project_members_user_id ON project_members(user_id);
-CREATE INDEX idx_project_members_project_id ON project_members(project_id);
+CREATE INDEX idx_workspace_members_user_id ON workspace_members(user_id);
+CREATE INDEX idx_workspace_members_workspace_id ON workspace_members(workspace_id);
 
-CREATE INDEX idx_documents_project_id ON documents(project_id);
+CREATE INDEX idx_documents_workspace_id ON documents(workspace_id);
 CREATE INDEX idx_documents_type ON documents(type);
 CREATE INDEX idx_documents_sync_status ON documents(sync_status);
 CREATE INDEX idx_documents_created_by ON documents(created_by);
+CREATE INDEX idx_documents_published ON documents(is_published);
 
 CREATE INDEX idx_document_versions_document_id ON document_versions(document_id);
 CREATE INDEX idx_document_versions_format ON document_versions(format);

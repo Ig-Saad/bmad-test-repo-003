@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-**The BMad v6-Powered SDLC Platform Web UI POC** validates the core concept of an intelligent web-based IDE that democratizes BMad v6's proven AI-driven agile methodology for complete SDLC lifecycle management. This proof-of-concept demonstrates how non-technical stakeholders can leverage BMad v6's scale-adaptive intelligence and specialized agent orchestration through familiar web interfaces and document formats (.doc, .xlsx, PDF), while maintaining seamless integration with existing BMad v6 IDE workflows. The POC specifically validates the "SDLC IDE over Web" concept through a functional demonstration of the complete user journey from project ideation through planning phases, with GitHub and SharePoint integrations proving platform extensibility and document synchronization capabilities.
+**The BMad v6-Powered SDLC Platform Web UI POC** validates the core concept of an intelligent web-based platform that democratizes BMad v6's proven AI-driven agile methodology for upstream SDLC activities (ideation, planning, solutioning). This proof-of-concept demonstrates how non-technical stakeholders can leverage BMad v6's scale-adaptive intelligence and specialized agent orchestration through familiar web interfaces and document formats (.doc, .xlsx, PDF), while maintaining seamless integration with existing BMad v6 IDE workflows for downstream development. The POC specifically validates the "Upstream SDLC Orchestration Platform" concept through a functional demonstration of the complete user journey from workspace creation and project ideation through planning phases, with GitHub working branch workflows and SharePoint integrations proving platform extensibility and document synchronization capabilities.
 
 ## Problem Statement
 
@@ -20,31 +20,32 @@
 
 ## Proposed Solution
 
-**SDLC IDE over Web - POC Implementation:** The proof-of-concept demonstrates a web-based IDE that brings BMad v6's complete methodology to non-technical stakeholders through familiar interfaces while maintaining full integration with existing BMad v6 IDE workflows. The POC validates the core concept through a functional demonstration of the complete SDLC workflow from project ideation through planning phases.
+**Upstream SDLC Orchestration Platform - POC Implementation:** The proof-of-concept demonstrates a web-based platform that brings BMad v6's complete methodology to non-technical stakeholders for upstream SDLC activities (configuration, ideation, product definition, planning) through familiar interfaces while maintaining full integration with existing BMad v6 IDE workflows for downstream development. The POC validates the core concept through a functional demonstration of the complete SDLC workflow from workspace creation and project ideation through planning phases, with downstream implementation activities continuing in BMad v6 IDE environments.
 
 **Meta-Development Validation:** The POC web UI will be generated using the BMad framework itself, providing concrete validation of the framework's capability to handle complex web application development while demonstrating methodology consistency.
 
 **Core POC Components:**
 
-**1. Intelligent Agent Orchestration Engine:** Web-based implementation of BMad v6's context-aware agent selection, presenting only relevant agents (Analyst, PM, Architect, UX Expert, etc.) based on project context rather than overwhelming users with all 12 agents simultaneously.
+**1. Intelligent Agent Orchestration Engine:** Web-based implementation of BMad v6's context-aware agent selection, presenting only relevant agents (Analyst, PM, Architect, UX Expert, etc.) based on project context rather than overwhelming users with all 12 agents simultaneously. Agent loading implements dynamic file-level loading (specific workflows, tasks, agent definitions) through MCP tool calling or function calling capabilities, reducing token consumption by 60-70% compared to loading complete agent bundles.
 
-**2. 4-Phase Methodology Demonstration:** Complete web-based execution of BMad v6's proven workflow structure:
-- **Configuration:** Project setup with integration configuration
+**2. 4-Phase Methodology Demonstration:** Complete web-based execution of BMad v6's proven workflow structure for upstream activities:
+- **Configuration:** Workspace creation with integration configuration (Greenfield: GitHub repository creation, user configuration, BMad framework installation, workflow initialization, working branch creation, application metadata updates; Brownfield: existing repository configuration, BMad framework setup, workflow configuration, working branch creation)
 - **Ideation:** AI-assisted brainstorming, market research, competitive analysis
 - **Product Definition:** PRD and technical architecture generation
 - **Planning:** Epic, feature, and user story creation with story point estimation
 
-**3. Document Generation & Management:** AI-powered creation of complete project artifacts with comprehensive viewing and editing capabilities, maintaining BMad v6 methodology integrity and enabling seamless synchronization with connected repositories.
+**3. Document Generation & Management:** AI-powered creation of complete project artifacts with comprehensive viewing and editing capabilities, maintaining BMad v6 methodology integrity and enabling dual-action GitHub synchronization (Save: persist to working branch; Publish: persist to working branch + merge to main branch with diff review).
 
-**4. Strategic Integration Validation:** POC demonstrates platform extensibility through GitHub integration for code repository management and document storage in Git repositories. Future SharePoint integration planned through Model Context Protocol (MCPs) for simplified enterprise document management, proving bidirectional synchronization capabilities and workflow continuity.
+**4. Strategic Integration Validation:** POC demonstrates platform extensibility through GitHub integration for code repository management with working branch workflows (Save action persists to working branch, Publish action merges to main with diff visualization) and document storage in Git repositories. Future SharePoint integration planned through Model Context Protocol (MCPs) for simplified enterprise document management, proving bidirectional synchronization capabilities and workflow continuity.
 
 **5. Enterprise Observability Integration:** Comprehensive telemetry capture using OpenTelemetry Protocol (OTLP) with configurable destinations for enterprise observability tools. Token utilization tracking and performance reporting integrated with the Ignis Platform ecosystem - Ignis being the broader enterprise platform that encompasses BMad v6 methodology, agent orchestration, and enterprise SDLC capabilities.
 
 **Key POC Differentiators:**
-- **First SDLC IDE over Web:** Demonstrates bringing IDE-level power to web interfaces for complete project lifecycle management
+- **Upstream SDLC Orchestration Focus:** Demonstrates bringing AI-driven methodology to web interfaces for upstream activities (ideation, planning, solutioning) while maintaining seamless handoff to BMad v6 IDE for downstream development
 - **BMad v6 Methodology Preservation:** Maintains proven framework integrity while democratizing access
 - **Intelligent Simplicity:** Complex AI-driven capabilities presented through intuitive, context-aware interfaces
 - **Seamless Integration:** Proves compatibility with existing BMad v6 IDE workflows and business tool ecosystems
+- **Dynamic Agent Loading:** File-level loading of workflows, tasks, and agent definitions through MCP/function calling reduces token consumption while maintaining full agent capabilities
 
 ## Target Users
 
@@ -86,49 +87,60 @@
 ## Goals & Success Metrics
 
 ### POC Validation Objectives
-- **Concept Validation:** Prove that "SDLC IDE over Web" concept resonates with target users and delivers expected value
-- **Technical Feasibility:** Demonstrate seamless integration between web platform and existing BMad v6 IDE workflows
-- **User Experience Validation:** Confirm that non-technical stakeholders can effectively use BMad v6 methodology through web interfaces
-- **Integration Proof:** Validate bidirectional synchronization with GitHub maintains data integrity and workflow continuity, with document storage in Git repositories and future SharePoint integration through MCPs
+- **Concept Validation:** Prove that "Upstream SDLC Orchestration Platform" concept resonates with target users and delivers expected value for ideation, planning, and solutioning phases
+- **Technical Feasibility:** Demonstrate seamless integration between web platform and existing BMad v6 IDE workflows with clear handoff points for downstream development activities
+- **User Experience Validation:** Confirm that non-technical stakeholders can effectively use BMad v6 methodology through web interfaces for upstream SDLC activities
+- **Integration Proof:** Validate dual-action GitHub workflow (Save to working branch, Publish to merge with main) maintains data integrity and workflow continuity, with document storage in Git repositories and future SharePoint integration through MCPs
 - **Methodology Preservation:** Ensure BMad v6's proven 4-phase structure and agent orchestration remain intact through web implementation
+- **Dynamic Agent Loading:** Prove that file-level loading of workflows, tasks, and agent definitions through MCP/function calling reduces token consumption by 60-70% while maintaining full agent capabilities
 
 ### POC Success Metrics
-- **User Comprehension:** 90% of test users understand the complete workflow from ideation through planning within 30 minutes
-- **Task Completion:** 85% of users successfully complete end-to-end project setup and artifact generation without technical assistance
-- **Integration Validation:** 100% successful bidirectional synchronization between web platform and GitHub repositories with zero data loss, demonstrating foundation for future SharePoint integration via MCPs
-- **Agent Loading Performance:** 60-70% reduction in token consumption through selective agent loading with response times under 3 seconds
+- **User Comprehension:** 90% of test users understand the complete workflow from workspace creation and ideation through planning within 30 minutes
+- **Task Completion:** 85% of users successfully complete end-to-end workspace setup, artifact generation, and GitHub working branch workflows without technical assistance
+- **Integration Validation:** 100% successful dual-action GitHub synchronization (Save to working branch, Publish with merge to main and diff visualization) with zero data loss, demonstrating foundation for future SharePoint integration via MCPs
+- **Agent Loading Performance:** 60-70% reduction in token consumption through dynamic file-level loading (specific workflows, tasks, agent definitions) with response times under 3 seconds
 - **Phase Progress Accuracy:** 95% accuracy in automatic phase completion detection and real-time progress updates
 - **Methodology Integrity:** Generated artifacts match BMad v6 template standards and maintain framework completeness criteria
-- **User Preference:** 75% of test users prefer web interface over traditional tools for BMad v6 methodology execution
+- **User Preference:** 75% of test users prefer web interface over traditional tools for BMad v6 methodology execution for upstream SDLC activities
+- **Workspace Creation Success:** 95% successful completion of workspace creation workflows (Greenfield: repository creation, BMad installation, working branch setup; Brownfield: existing repository configuration, BMad setup, working branch creation)
 
 ### Key Performance Indicators (KPIs)
-- **Time-to-First-Value:** Users generate first complete artifact (project brief or PRD) within 45 minutes of POC access
-- **Workflow Completion Rate:** 80% of users complete full ideation-to-planning workflow in single session
-- **Integration Reliability:** 99% uptime for GitHub and SharePoint synchronization during testing period
+- **Time-to-First-Value:** Users complete workspace creation and generate first complete artifact (project brief or PRD) within 45 minutes of POC access
+- **Workflow Completion Rate:** 80% of users complete full workspace setup, ideation-to-planning workflow, and GitHub working branch synchronization in single session
+- **Integration Reliability:** 99% uptime for GitHub dual-action workflows (Save to working branch, Publish with merge) and SharePoint synchronization during testing period
 - **User Satisfaction Score:** Average rating of 4.2/5.0 or higher on usability and value perception
-- **Technical Validation:** Zero critical bugs in core workflow paths during structured testing
+- **Technical Validation:** Zero critical bugs in core workflow paths (workspace creation, agent loading, document generation, GitHub synchronization) during structured testing
+- **Dynamic Loading Efficiency:** Consistent 60-70% token reduction through file-level agent component loading with sub-3-second response times
 
 ## POC Scope
 
 ### Core Features (Must Have for POC)
 
-- **User Authentication & Codebase Configuration:** Secure login system with codebase configuration (not account-level project creation) and basic integration setup, demonstrating enterprise-ready security foundation with clear terminology distinction
+- **User Authentication & Workspace Configuration:** Secure login system with workspace (project) configuration including clear distinction between workspace-level configuration and account-level management, demonstrating enterprise-ready security foundation with proper terminology
 
-- **Intelligent Agent Orchestration Engine:** Context-aware agent selection from BMad v6's ecosystem (Analyst, PM, Architect, UX Expert) with progressive engagement based on project needs rather than overwhelming users with all 12 agents
+- **Workspace Creation Workflows:** Complete workspace setup processes:
+  * **Greenfield Workflow:** GitHub repository creation, user configuration, BMad framework installation, workflow initialization, BMad working branch creation, application metadata updates
+  * **Brownfield Workflow:** Existing code repository configuration, BMad framework setup, workflow configuration, BMad working branch creation
 
-- **4-Phase Workflow Implementation:** Complete demonstration of BMad v6's proven methodology:
-  * **Configuration Phase:** Project setup with GitHub and SharePoint integration configuration
+- **Intelligent Agent Orchestration Engine:** Context-aware agent selection from BMad v6's ecosystem (Analyst, PM, Architect, UX Expert) with progressive engagement based on project needs, implementing dynamic file-level loading (specific workflows, tasks, agent definitions) through MCP tool calling or function calling to reduce token consumption by 60-70%
+
+- **4-Phase Workflow Implementation:** Complete demonstration of BMad v6's proven methodology for upstream activities:
+  * **Configuration Phase:** Workspace setup with GitHub and SharePoint integration configuration
   * **Ideation Phase:** AI-assisted brainstorming, market research, and competitive analysis with document generation
   * **Product Definition Phase:** PRD and technical architecture creation with AI guidance
   * **Planning Phase:** Epic, feature, and user story generation with story point estimation
 
 - **Document Generation, Viewing & Editing:** AI-powered creation of complete project artifacts following BMad v6 templates with comprehensive in-platform viewing, editing capabilities, and version control
 
+- **Dual-Action GitHub Synchronization:** Functional GitHub integration with two distinct actions:
+  * **Save Action:** Persist artifacts to BMad working branch for iterative work
+  * **Publish Action:** Persist to working branch + merge to main branch with diff visualization (future phase: accept/reject individual diffs)
+
 - **Strategic Integration Validation:** Functional GitHub integration for code repository synchronization and SharePoint integration for document management, proving bidirectional data flow
 
 - **Chat Interface with Multi-LLM Support:** Conversational AI interface supporting multiple models (GPT-4, Claude, Gemini) with agent-specific context and workflow guidance
 
-- **Ignis Platform Telemetry Integration:** Comprehensive telemetry capture including user interactions, workflow progression, agent utilization, document generation metrics, and performance data with real-time transmission to main Ignis Platform for analytics and optimization
+- **Ignis Platform Telemetry Integration:** Comprehensive telemetry capture including user interactions, workflow progression, agent utilization (including dynamic file-level loading metrics), document generation metrics, and performance data with real-time transmission to main Ignis Platform for analytics and optimization
 
 ### Out of Scope for POC
 
@@ -144,7 +156,7 @@
 
 ### POC Success Criteria
 
-The POC will be considered successful when a non-technical product manager can: (1) Complete project setup including GitHub, SharePoint, and Ignis Platform integration within 20 minutes, (2) Navigate through all four phases of BMad v6 methodology using intelligent agent guidance with optimized agent loading, (3) Generate comprehensive project artifacts (project brief, PRD, architecture document, epic/story breakdown) that meet BMad v6 framework standards, (4) Successfully synchronize all generated documents with connected GitHub repository and SharePoint site with 100% data integrity, (5) Validate that comprehensive telemetry data is captured and transmitted to Ignis Platform in real-time, (6) Demonstrate 60-70% token consumption reduction through selective agent loading with sub-3-second response times, (7) Validate automatic phase progress tracking with 95% accuracy, and (8) Demonstrate seamless handoff capability to development teams using existing BMad v6 IDE workflows. Success is measured by completing this end-to-end workflow validation within 2 hours with minimal technical support required.
+The POC will be considered successful when a non-technical product manager can: (1) Complete workspace creation for either Greenfield (GitHub repository creation, user configuration, BMad framework installation, workflow initialization, working branch setup, metadata updates) or Brownfield (existing repository configuration, BMad setup, workflow configuration, working branch creation) within 20 minutes, (2) Navigate through all four phases of BMad v6 methodology for upstream activities using intelligent agent guidance with optimized dynamic file-level loading, (3) Generate comprehensive project artifacts (project brief, PRD, architecture document, epic/story breakdown) that meet BMad v6 framework standards, (4) Successfully execute dual-action GitHub workflows (Save to working branch for iterative work, Publish to merge with main branch with diff visualization) with 100% data integrity, (5) Successfully synchronize all generated documents with connected GitHub repository and SharePoint site with 100% data integrity, (6) Validate that comprehensive telemetry data (including dynamic loading metrics) is captured and transmitted to Ignis Platform in real-time, (7) Demonstrate 60-70% token consumption reduction through dynamic file-level agent component loading with sub-3-second response times, (8) Validate automatic phase progress tracking with 95% accuracy, and (9) Demonstrate seamless handoff capability to development teams using existing BMad v6 IDE workflows for downstream development activities. Success is measured by completing this end-to-end workspace creation, artifact generation, and dual-action GitHub synchronization workflow within 2 hours with minimal technical support required.
 
 ## Post-POC Vision
 
@@ -160,7 +172,7 @@ The POC will be considered successful when a non-technical product manager can: 
 
 ### Long-term Vision (6-12 Months Post-POC)
 
-**Universal SDLC IDE over Web Platform:** Evolution into the definitive web-based IDE for complete software development lifecycle management, supporting seamless artifact generation, collaboration, and handoff across any combination of tools and formats used by different team members throughout the entire project delivery process.
+**Universal Upstream SDLC Orchestration Platform:** Evolution into the definitive web-based platform for upstream software development lifecycle management (ideation, planning, solutioning), supporting seamless artifact generation, collaboration, and handoff to BMad v6 IDE workflows for downstream development activities across any combination of tools and formats used by different team members.
 
 **BMad v6 Module Expansion:** Integration with BMad Builder (BMB) for custom agent creation and workflow modification, Creative Intelligence Suite (CIS) for innovation workflows, and specialized domain modules (game development, enterprise architecture, etc.).
 
@@ -197,14 +209,16 @@ The POC will be considered successful when a non-technical product manager can: 
 
 ### Agent-as-Code Dynamic Loading Architecture (POC Validation)
 
-**POC Challenge:** Validate that BMad v6's dynamic agent loading can be efficiently implemented in web environment without performance degradation or excessive token consumption.
+**POC Challenge:** Validate that BMad v6's dynamic agent loading can be efficiently implemented in web environment without performance degradation or excessive token consumption, implementing file-level loading of specific workflows, tasks, and agent definitions rather than loading complete agent bundles.
 
 **POC Implementation:**
-- **Simplified Agent Caching:** Basic caching of .bmad directory contents for POC user sessions with manual cache refresh
-- **Context-Aware Loading:** Demonstrate loading only relevant agents (Analyst, PM, Architect, UX Expert) based on current project phase
-- **Token Optimization Proof:** Validate that selective agent loading reduces token consumption by 60-70% compared to loading all 12 agents
-- **MCP Integration Demo:** Basic MCP tool integration for file access and agent definition loading
-- **Performance Benchmarking:** Measure response times for agent loading and workflow execution with 5-10 concurrent users
+- **Dynamic File-Level Loading:** Implementation of MCP tool calling or function calling capabilities to load only specific agent files (individual workflows, specific tasks, targeted agent definitions) as needed during workflow execution
+- **File Access Tools:** Development of MCP tools or functions equivalent to desktop environment capabilities (createFile, editFile, createDirectory, changes/diff) to support dynamic file operations
+- **Context-Aware Loading:** Demonstrate loading only relevant agents (Analyst, PM, Architect, UX Expert) and their specific required files based on current project phase
+- **Token Optimization Proof:** Validate that dynamic file-level loading reduces token consumption by 60-70% compared to loading complete agent bundles or all 12 agents
+- **MCP Integration Demo:** Basic MCP tool integration for file access, agent definition loading, and workflow/task retrieval from workspace repositories
+- **Performance Benchmarking:** Measure response times for dynamic file loading and workflow execution with 5-10 concurrent users
+- **Agent Component Repository:** Demonstration of storing agent definitions, workflows, and tasks in workspace-specific repositories (cloned .bmad and .github directories) for dynamic access
 
 ### Dynamic Phase Progress Tracking (POC Validation)
 

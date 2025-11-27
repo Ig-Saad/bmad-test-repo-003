@@ -3,19 +3,20 @@
 ## Goals and Background Context
 
 ### Goals
-- Validate the "SDLC IDE over Web" concept through functional demonstration of BMad v6 methodology accessibility via web interfaces
-- Prove non-technical stakeholders can effectively use BMad v6's scale-adaptive intelligence and specialized agent orchestration through familiar web interfaces
-- Demonstrate seamless integration between web platform and existing BMad v6 IDE workflows with bidirectional synchronization
+- Validate the "Upstream SDLC Orchestration Platform" concept through functional demonstration of BMad v6 methodology accessibility via web interfaces for upstream activities (ideation, planning, solutioning)
+- Prove non-technical stakeholders can effectively use BMad v6's scale-adaptive intelligence and specialized agent orchestration through familiar web interfaces for upstream SDLC activities
+- Demonstrate seamless integration between web platform and existing BMad v6 IDE workflows with clear handoff points for downstream development activities
 - Validate comprehensive telemetry capture and real-time data transmission to Ignis Platform for analytics and monitoring
-- Achieve 85% task completion rate for end-to-end workflow validation within 2 hours with minimal technical support
-- Prove 60-70% token consumption reduction through selective agent loading with sub-3-second response times
+- Achieve 85% task completion rate for end-to-end workspace creation, artifact generation, and dual-action GitHub synchronization within 2 hours with minimal technical support
+- Prove 60-70% token consumption reduction through dynamic file-level agent loading (specific workflows, tasks, agent definitions) with sub-3-second response times
+- Validate workspace creation workflows for both Greenfield and Brownfield projects with proper BMad framework setup and working branch configuration
 - Establish foundation for full MVP development with clear validation metrics and user feedback
 
 ### Background Context
 
-The BMad v6 framework provides revolutionary AI-driven agile workflows with scale-adaptive intelligence, 12 specialized agents, and proven 4-phase methodology, but accessibility barriers prevent non-technical stakeholders from leveraging these powerful capabilities. This POC addresses the critical gap by demonstrating how web-based interfaces can democratize BMad v6's sophisticated agent orchestration and methodology while maintaining full integration with existing IDE workflows.
+The BMad v6 framework provides revolutionary AI-driven agile workflows with scale-adaptive intelligence, 12 specialized agents, and proven 4-phase methodology, but accessibility barriers prevent non-technical stakeholders from leveraging these powerful capabilities for upstream SDLC activities (ideation, planning, solutioning). This POC addresses the critical gap by demonstrating how web-based interfaces can democratize BMad v6's sophisticated agent orchestration and methodology for upstream activities while maintaining full integration with existing IDE workflows for downstream development.
 
-The POC validates the core hypothesis that non-technical stakeholders (product managers, business analysts, GTM teams) will readily adopt BMad v6's proven methodology when provided with familiar web interfaces and document formats, eliminating the technical barriers that currently limit access to scale-adaptive intelligence and specialized agent expertise. The POC web UI itself will be generated using the BMad framework, providing concrete validation of the framework's capability for complex application development.
+The POC validates the core hypothesis that non-technical stakeholders (product managers, business analysts, GTM teams) will readily adopt BMad v6's proven methodology for upstream SDLC activities when provided with familiar web interfaces and document formats, eliminating the technical barriers that currently limit access to scale-adaptive intelligence and specialized agent expertise, with clear handoff points to BMad v6 IDE workflows for downstream development. The POC web UI itself will be generated using the BMad framework, providing concrete validation of the framework's capability for complex application development.
 
 ### Change Log
 
@@ -27,69 +28,79 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
 
 ### Functional
 
-**FR1:** The system shall provide user authentication via EntraID/Azure AD Single Sign-On (SSO) for enterprise integration with JWT-based session-less architecture and basic project workspace creation capabilities.
+**FR1:** The system shall provide user authentication via EntraID/Azure AD Single Sign-On (SSO) for enterprise integration with JWT-based session-less architecture and workspace creation capabilities with clear distinction between workspace-level (project-level) configuration and account-level management.
 
-**FR2:** The system shall implement intelligent agent orchestration from BMad v6's ecosystem, presenting only contextually relevant agents (Analyst, PM, Architect, UX Expert) based on project phase rather than overwhelming users with all 12 agents.
+**FR2:** The system shall implement workspace creation workflows for both Greenfield projects (GitHub repository creation, user configuration, BMad framework installation, workflow initialization, BMad working branch creation, application metadata updates) and Brownfield projects (existing code repository configuration, BMad framework setup, workflow configuration, BMad working branch creation).
 
-**FR3:** The system shall demonstrate complete 4-phase BMad v6 methodology execution through web interface: Configuration (project setup), Ideation (brainstorming, research), Product Definition (PRD, architecture), and Planning (epics, stories, estimation).
+**FR3:** The system shall implement intelligent agent orchestration from BMad v6's ecosystem, presenting only contextually relevant agents (Analyst, PM, Architect, UX Expert) based on project phase, with dynamic file-level loading of specific workflows, tasks, and agent definitions through MCP tool calling or function calling capabilities.
 
-**FR4:** The system shall provide AI-powered document generation following BMad v6 templates with comprehensive in-platform viewing, editing capabilities, and version control for all generated artifacts.
+**FR4:** The system shall demonstrate complete 4-phase BMad v6 methodology execution through web interface for upstream activities: Configuration (workspace setup), Ideation (brainstorming, research), Product Definition (PRD, architecture), and Planning (epics, stories, estimation).
 
-**FR5:** The system shall implement bidirectional GitHub integration for repository synchronization, automated commits, and seamless handoff to existing BMad v6 IDE workflows.
+**FR5:** The system shall provide AI-powered document generation following BMad v6 templates with comprehensive in-platform viewing, editing capabilities, and version control for all generated artifacts.
 
-**FR6:** The system shall demonstrate document storage in GitHub repositories with foundation for future SharePoint integration via Model Context Protocol (MCPs), proving platform extensibility and enterprise document workflow capabilities.
+**FR6:** The system shall implement dual-action GitHub integration:
+   - **Save Action:** Persist artifacts to BMad working branch for iterative work
+   - **Publish Action:** Persist artifacts to working branch, then merge to main branch with diff visualization (future phase: accept/reject individual diffs)
 
-**FR7:** The system shall implement comprehensive enterprise observability integration using OpenTelemetry Protocol (OTLP) with configurable destinations for user behavior analytics, workflow performance monitoring, token consumption tracking and reporting, and seamless Ignis Platform ecosystem integration.
+**FR7:** The system shall implement MCP tools or function calling capabilities equivalent to desktop environment tools (createFile, editFile, createDirectory, changes/diff) to support dynamic file-level loading of agent components (specific workflows, tasks, agent definitions).
 
-**FR8:** The system shall support multi-LLM integration (GPT-4, Claude, Gemini) with agent-specific context management and conversational AI interface for workflow guidance.
+**FR8:** The system shall demonstrate document storage in GitHub repositories with foundation for future SharePoint integration via Model Context Protocol (MCPs), proving platform extensibility and enterprise document workflow capabilities.
 
-**FR9:** The system shall implement dynamic phase progress tracking with automatic completion detection and real-time progress updates based on agent interactions and document generation.
+**FR9:** The system shall implement comprehensive enterprise observability integration using OpenTelemetry Protocol (OTLP) with configurable destinations for user behavior analytics, workflow performance monitoring, token consumption tracking and reporting (including dynamic file-level loading metrics), and seamless Ignis Platform ecosystem integration.
 
-**FR10:** The system shall provide codebase configuration setup (distinct from project creation) with clear terminology and integration configuration for GitHub token-based repository access and Ignis Platform ecosystem connections.
+**FR10:** The system shall support multi-LLM integration (GPT-4, Claude, Gemini) with agent-specific context management and conversational AI interface for workflow guidance.
+
+**FR11:** The system shall implement dynamic phase progress tracking with automatic completion detection and real-time progress updates based on agent interactions and document generation.
 
 ### Non Functional
 
-**NFR1:** Agent loading and response times shall be under 3 seconds with 60-70% token consumption reduction through selective agent loading compared to loading all 12 agents simultaneously.
+**NFR1:** Dynamic file-level agent loading (specific workflows, tasks, agent definitions) shall achieve sub-3-second response times with 60-70% token consumption reduction through MCP tool calling or function calling compared to loading complete agent bundles or all 12 agents simultaneously.
 
-**NFR2:** The system shall achieve 95% accuracy in automatic phase completion detection and real-time progress updates during workflow execution.
+**NFR2:** The system shall achieve 95% accuracy in automatic phase completion detection and real-time progress updates during workflow execution for upstream SDLC activities.
 
 **NFR3:** Document generation shall complete within 30 seconds for standard BMad v6 artifacts (project brief, PRD, architecture document) with proper template structure preservation.
 
-**NFR4:** The system shall maintain 99% uptime for GitHub synchronization during POC testing period with zero data loss in bidirectional synchronization, demonstrating foundation for future SharePoint integration via MCPs.
+**NFR4:** The system shall maintain 99% uptime for dual-action GitHub synchronization (Save to working branch, Publish with merge to main) during POC testing period with zero data loss, demonstrating foundation for future SharePoint integration via MCPs.
 
-**NFR5:** The system shall support 5-10 concurrent users during POC validation with responsive performance and stable workflow execution.
+**NFR5:** Workspace creation workflows shall complete within 20 minutes for both Greenfield (repository creation, BMad installation, working branch setup) and Brownfield (existing repository configuration, BMad setup, working branch creation) scenarios.
 
-**NFR6:** Web application shall achieve sub-2-second page load times and support modern browsers (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+) with responsive design.
+**NFR6:** The system shall support 5-10 concurrent users during POC validation with responsive performance and stable workflow execution.
 
-**NFR7:** The system shall provide comprehensive error handling and recovery for integration failures, document processing issues, and workflow interruptions with clear user feedback.
+**NFR7:** Web application shall achieve sub-2-second page load times and support modern browsers (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+) with responsive design.
 
-**NFR8:** All telemetry data transmission using OpenTelemetry Protocol (OTLP) shall be real-time with 100% successful data capture and transmission validation during testing period, including token utilization metrics and performance reporting.
+**NFR8:** The system shall provide comprehensive error handling and recovery for integration failures, document processing issues, and workflow interruptions with clear user feedback.
+
+**NFR9:** All telemetry data transmission using OpenTelemetry Protocol (OTLP) shall be real-time with 100% successful data capture and transmission validation during testing period, including token utilization metrics, dynamic loading performance, and performance reporting.
 
 ## User Interface Design Goals
 
 ### Overall UX Vision
 
-The POC interface shall demonstrate the "SDLC IDE over Web" concept through intuitive, context-aware interfaces that present BMad v6's sophisticated capabilities without overwhelming non-technical users. The design emphasizes intelligent simplicity - complex AI-driven agent orchestration presented through familiar web interfaces that guide users through proven methodology without requiring technical expertise.
+The POC interface shall demonstrate the "Upstream SDLC Orchestration Platform" concept through intuitive, context-aware interfaces that present BMad v6's sophisticated capabilities for upstream activities (ideation, planning, solutioning) without overwhelming non-technical users. The design emphasizes intelligent simplicity - complex AI-driven agent orchestration presented through familiar web interfaces that guide users through proven methodology without requiring technical expertise, with clear handoff points to BMad v6 IDE workflows for downstream development.
 
 ### Key Interaction Paradigms
 
-**Intelligent Agent Guidance:** Context-aware agent selection and progressive engagement that starts with 2-3 relevant agents and dynamically suggests additional expertise as project complexity evolves, eliminating cognitive overload while maintaining access to specialized capabilities.
+**Intelligent Agent Guidance:** Context-aware agent selection and progressive engagement that starts with 2-3 relevant agents and dynamically suggests additional expertise as project complexity evolves, with dynamic file-level loading of specific workflows, tasks, and agent definitions to eliminate cognitive overload and token consumption while maintaining access to specialized capabilities.
 
-**Phase-Based Navigation:** Clear visual progression through BMad v6's 4-phase methodology with automatic phase completion detection and seamless transitions between Configuration, Ideation, Product Definition, and Planning phases.
+**Workspace-Centric Navigation:** Clear distinction between workspace-level (project-level) operations and account-level management, with guided workspace creation workflows for Greenfield and Brownfield projects including BMad framework setup and working branch configuration.
+
+**Dual-Action GitHub Workflow:** Clear visual distinction between Save action (persist to working branch for iterative work) and Publish action (merge to main branch with diff visualization), supporting iterative development with final publication control.
+
+**Phase-Based Navigation:** Clear visual progression through BMad v6's 4-phase methodology for upstream activities with automatic phase completion detection and seamless transitions between Configuration, Ideation, Product Definition, and Planning phases.
 
 **Conversational Workflow:** Chat-based interface with multi-LLM support that provides natural language interaction with BMad v6 agents while maintaining structured workflow execution and artifact generation.
 
 ### Core Screens and Views
 
-**Authentication & Setup:** EntraID/Azure AD SSO login with codebase configuration setup, integration configuration for GitHub token-based access and Ignis Platform ecosystem, and clear distinction between codebase-level configuration and project management.
+**Authentication & Setup:** EntraID/Azure AD SSO login with workspace creation workflows (Greenfield: repository creation, BMad installation, working branch setup; Brownfield: existing repository configuration, BMad setup, working branch creation), integration configuration for GitHub token-based access and Ignis Platform ecosystem, and clear distinction between workspace-level configuration and account-level management.
 
-**Project Dashboard:** Phase progress visualization, active agent display, document generation status, and integration synchronization indicators with real-time updates.
+**Project Dashboard:** Phase progress visualization for upstream activities, active agent display, document generation status, dual-action GitHub workflow indicators (Save/Publish), and integration synchronization status with real-time updates.
 
-**Agent Chat Interface:** Conversational AI interface with agent-specific context, workflow guidance, and document generation capabilities integrated with BMad v6 methodology execution.
+**Agent Chat Interface:** Conversational AI interface with agent-specific context, workflow guidance, document generation capabilities, and dynamic file-level loading indicators integrated with BMad v6 methodology execution for upstream activities.
 
-**Document Viewer/Editor:** In-platform viewing and editing of generated artifacts with version control, BMad v6 template structure preservation, and synchronization status indicators.
+**Document Viewer/Editor:** In-platform viewing and editing of generated artifacts with version control, BMad v6 template structure preservation, dual-action workflow buttons (Save to working branch, Publish to main with diff), and synchronization status indicators.
 
-**Integration Status Dashboard:** Real-time monitoring of GitHub synchronization, document storage status, and OpenTelemetry Protocol (OTLP) telemetry transmission to Ignis Platform ecosystem with clear status indicators and troubleshooting guidance.
+**Integration Status Dashboard:** Real-time monitoring of dual-action GitHub synchronization (working branch and main branch status), document storage status, and OpenTelemetry Protocol (OTLP) telemetry transmission to Ignis Platform ecosystem with clear status indicators and troubleshooting guidance.
 
 ### Accessibility: WCAG AA
 

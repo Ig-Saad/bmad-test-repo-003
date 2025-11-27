@@ -1,79 +1,209 @@
-# Story 2.2: Configuration Phase Implementation
+# Story 2.2: Configuration Phase with Workspace Creation Workflows
 
 ## Story Classification
-- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow  
+- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow
 - **Priority:** P0 (Critical - First workflow phase)
 - **Complexity:** Medium (4-5 days)
 - **Dependencies:** Story 1.3 (External Service Configuration), Story 2.1 (Agent Selection Engine)
 
 ## User Story
 
-**As a** project manager or technical stakeholder,  
-**I want to** complete project setup with integration configuration through guided workflow,  
-**So that** I can establish the foundation for BMad v6 methodology execution with proper tool connections, enabling seamless workflow progression through all 4 phases.
+**As a** project manager or technical stakeholder,
+**I want to** complete **workspace setup** (workspace = project) with integration configuration through guided workflow, supporting both **Greenfield** (new repository) and **Brownfield** (existing repository) creation approaches,
+**So that** I can establish the foundation for BMad v6 methodology execution with proper tool connections and **dual-action GitHub synchronization** (Save/Publish), enabling seamless workflow progression through all 4 upstream phases.
 
 ## Story Context & Business Value
 
 **POC Validation Goals:**
 - Demonstrate complete BMad v6 4-phase methodology execution starting with Configuration
-- Validate guided workflow approach for non-technical stakeholders
-- Prove seamless integration setup within BMad v6 methodology framework
+- Validate **Greenfield and Brownfield workspace creation workflows**
+- Prove seamless integration setup with **dual-action GitHub synchronization** configuration
 - Establish foundation for automatic phase progression and completion detection
+- Clarify workspace terminology (workspace = project) throughout configuration
 
 **User Personas:**
-- **Primary:** Project managers initiating new BMad v6 projects
-- **Secondary:** Technical stakeholders setting up development workflows
-- **Tertiary:** Business analysts configuring collaboration tools
+- **Primary:** Project managers initiating new BMad v6 workspaces (Greenfield or Brownfield)
+- **Secondary:** Technical stakeholders setting up development workflows with GitHub integration
+- **Tertiary:** Business analysts configuring collaboration tools for upstream SDLC activities
 
 ## Detailed Acceptance Criteria
 
+### 🏗️ Workspace Creation Type Selection
+
+**AC1: Workspace Creation Type Selection (Greenfield vs Brownfield)**
+- **GIVEN** a user starts a new workspace in the Upstream SDLC Orchestration Platform
+- **WHEN** they enter the Configuration phase
+- **THEN** they see clear options to choose workspace creation type:
+  - **Greenfield:** Create new GitHub repository with BMad v6 framework installation
+  - **Brownfield:** Connect existing code repository and add BMad v6 framework
+- **AND** each option includes description of workflow steps and expected outcomes
+- **AND** UI clarifies "workspace = project" terminology for user understanding
+- **AND** selection determines subsequent configuration workflow steps
+
+### 🌱 Greenfield Workflow - New Repository Creation
+
+**AC2: Greenfield Workflow Step 1 - GitHub Repository Creation**
+- **GIVEN** user selects Greenfield workspace creation
+- **WHEN** they proceed with repository setup
+- **THEN** the system creates a new GitHub repository with user-specified name
+- **AND** repository is initialized with default README and .gitignore
+- **AND** user can configure repository visibility (public/private)
+- **AND** repository metadata (description, topics) can be set during creation
+
+**AC3: Greenfield Workflow Step 2 - User Configuration**
+- **GIVEN** GitHub repository is created
+- **WHEN** configuring workspace user settings
+- **THEN** the system sets up user permissions and access controls
+- **AND** workspace owner and initial team members can be configured
+- **AND** user roles (owner, editor, viewer) are assigned
+- **AND** notification preferences are configured
+
+**AC4: Greenfield Workflow Step 3 - BMad Framework Installation**
+- **GIVEN** repository and users are configured
+- **WHEN** installing BMad v6 framework
+- **THEN** the system clones/copies BMad v6 framework files to repository
+- **AND** .bmad directory structure is created with agent definitions, workflows, tasks
+- **AND** .github directory is created with workflow configurations
+- **AND** BMad v6 configuration files are initialized with workspace settings
+
+**AC5: Greenfield Workflow Step 4 - Workflow Initialization**
+- **GIVEN** BMad framework is installed
+- **WHEN** initializing BMad v6 workflows
+- **THEN** the system configures 4-phase workflow definitions for upstream activities
+- **AND** agent orchestration settings are initialized
+- **AND** template system is configured with artifact templates
+- **AND** phase progression rules are established
+
+**AC6: Greenfield Workflow Step 5 - Working Branch Creation**
+- **GIVEN** workflows are initialized
+- **WHEN** setting up dual-action GitHub synchronization
+- **THEN** the system creates a dedicated **working branch** (e.g., "workspace/{workspace-id}")
+- **AND** working branch is set as default for Save actions
+- **AND** main branch is preserved for Publish actions (merge target)
+- **AND** branch protection rules can be configured
+
+**AC7: Greenfield Workflow Step 6 - Application Metadata Updates**
+- **GIVEN** working branch is created
+- **WHEN** finalizing workspace setup
+- **THEN** the system updates workspace metadata in database
+- **AND** workspace record includes creation_type = 'greenfield'
+- **AND** GitHub configuration (repo URL, main branch, working branch) is saved
+- **AND** workspace status is set to 'active' and Configuration phase marked complete
+
+### 🏭 Brownfield Workflow - Existing Repository Configuration
+
+**AC8: Brownfield Workflow Step 1 - Existing Repository Configuration**
+- **GIVEN** user selects Brownfield workspace creation
+- **WHEN** they provide existing repository information
+- **THEN** the system validates repository access and permissions
+- **AND** repository metadata is fetched and displayed
+- **AND** existing branch structure is analyzed and displayed
+- **AND** user confirms repository selection before proceeding
+
+**AC9: Brownfield Workflow Step 2 - BMad Framework Setup**
+- **GIVEN** existing repository is validated
+- **WHEN** adding BMad v6 framework to existing repository
+- **THEN** the system checks for existing .bmad and .github directories
+- **AND** BMad v6 framework files are added without overwriting existing code
+- **AND** conflict detection identifies any naming collisions
+- **AND** user can review and approve framework file additions
+
+**AC10: Brownfield Workflow Step 3 - Workflow Configuration**
+- **GIVEN** BMad framework is added to repository
+- **WHEN** configuring workflows for existing codebase
+- **THEN** the system initializes 4-phase workflow for upstream activities
+- **AND** workflow configuration adapts to existing repository structure
+- **AND** existing documentation is analyzed for potential artifact migration
+- **AND** agent orchestration is configured for brownfield context
+
+**AC11: Brownfield Workflow Step 4 - Working Branch Creation**
+- **GIVEN** workflows are configured
+- **WHEN** setting up dual-action synchronization for existing repository
+- **THEN** the system creates a dedicated **working branch** for workspace activities
+- **AND** working branch is isolated from existing development branches
+- **AND** main branch (or user-selected default) is set as Publish target
+- **AND** branch strategy integrates with existing repository workflow
+
+**AC12: Brownfield Workflow Step 5 - Metadata Finalization**
+- **GIVEN** working branch is created
+- **WHEN** completing Brownfield workspace setup
+- **THEN** the system updates workspace metadata with creation_type = 'brownfield'
+- **AND** existing repository structure is preserved
+- **AND** BMad v6 configuration is saved alongside existing project settings
+- **AND** workspace is activated and ready for upstream SDLC activities
+
 ### 🔧 Configuration Phase Interface & Workflow
 
-**AC1: Guided Project Setup Workflow**
-- **GIVEN** a user starts a new project in the BMad v6 platform
-- **WHEN** they enter the Configuration phase
-- **THEN** they see a guided workflow interface with clear step-by-step progression
-- **AND** the interface explains the Configuration phase purpose and expected outcomes
-- **AND** progress indicators show current step and remaining configuration tasks
-- **AND** each step includes helpful guidance and examples for non-technical users
+**AC13: Guided Workspace Setup Workflow**
+- **GIVEN** a user proceeds through Greenfield or Brownfield configuration
+- **WHEN** they navigate the workflow
+- **THEN** they see a guided interface with clear step-by-step progression
+- **AND** progress indicators show completed steps and remaining configuration tasks
+- **AND** each step includes helpful guidance specific to Greenfield/Brownfield approach
+- **AND** users can save progress and resume configuration later
+- **AND** Configuration phase purpose and expected outcomes are clearly explained
 
-**AC2: Integration Configuration Orchestration**
-- **GIVEN** a user is in the Configuration phase workflow
-- **WHEN** they proceed through configuration steps
-- **THEN** the system guides them through GitHub, SharePoint, and Ignis Platform setup
+**AC14: Integration Configuration Orchestration**
+- **GIVEN** a user completes workspace creation (Greenfield or Brownfield)
+- **WHEN** they proceed to integration configuration
+- **THEN** the system guides them through GitHub dual-action sync, SharePoint, and Ignis Platform setup
 - **AND** configuration steps are presented in logical order with dependency awareness
 - **AND** each integration includes validation and testing before proceeding
-- **AND** users can save progress and resume configuration later
+- **AND** dual-action GitHub sync configuration (Save/Publish) is clearly explained
 
-### 🔗 GitHub Repository Connection & Setup
+### 🔗 GitHub Dual-Action Synchronization Configuration
 
-**AC3: GitHub Repository Connection with Branch Selection**
-- **GIVEN** a user needs to connect a GitHub repository
-- **WHEN** they provide repository information
-- **THEN** the system validates repository access and displays available branches
-- **AND** users can select default branch and configure additional working branches
-- **AND** repository metadata is displayed (description, last activity, contributor count)
-- **AND** branch selection includes guidance on BMad v6 workflow branch strategies
+### 🔗 GitHub Dual-Action Synchronization Configuration
 
-**AC4: Document Path Structure Definition**
-- **GIVEN** a GitHub repository is connected
+**AC15: Working Branch and Main Branch Configuration**
+- **GIVEN** workspace (Greenfield or Brownfield) has GitHub integration
+- **WHEN** configuring dual-action synchronization
+- **THEN** the system clearly identifies:
+  - **Working Branch:** Target for Save actions (iterative work)
+  - **Main Branch:** Target for Publish actions (merge from working branch)
+- **AND** users can customize working branch naming convention
+- **AND** branch configuration explains Save vs Publish workflow
+- **AND** branch strategy is validated for write permissions
+
+**AC16: Save Action Configuration**
+- **GIVEN** dual-action sync is being configured
+- **WHEN** setting up Save action behavior
+- **THEN** the system configures:
+  - Auto-commit to working branch on Save
+  - Commit message templates for Save actions
+  - Save action SLA target (<5 seconds)
+- **AND** users understand Save persists to working branch only (not main)
+- **AND** Save action can be triggered manually or auto-save configured
+
+**AC17: Publish Action Configuration**
+- **GIVEN** dual-action sync is being configured
+- **WHEN** setting up Publish action behavior
+- **THEN** the system configures:
+  - Merge from working branch to main branch on Publish
+  - Diff visualization before merge
+  - Publish action SLA target (<15 seconds)
+- **AND** users understand Publish merges accumulated changes from working branch to main
+- **AND** Publish action requires manual trigger with confirmation
+
+**AC18: Document Path Structure Definition**
+- **GIVEN** a GitHub repository is connected (Greenfield or Brownfield)
 - **WHEN** users configure document organization
 - **THEN** they can define path structures for different artifact types (PRD, architecture, stories)
 - **AND** the system suggests BMad v6-compliant folder structures and naming conventions
 - **AND** path configuration includes validation for write permissions and accessibility
-- **AND** document path setup prepares for seamless BMad v6 IDE workflow integration
+- **AND** document path setup prepares for dual-action synchronization workflow
 
 ### 📄 SharePoint Integration & Document Management
 
-**AC5: SharePoint Integration Setup with Document Library Configuration**
-- **GIVEN** a user configures SharePoint integration
+**AC19: SharePoint Integration Setup with Document Library Configuration**
+- **GIVEN** a workspace configures SharePoint integration
 - **WHEN** they provide SharePoint site and library information
 - **THEN** the system validates access and displays available document libraries
 - **AND** users can select target libraries for different document types
 - **AND** SharePoint permissions are validated for upload, modify, and manage operations
 - **AND** document library configuration includes metadata mapping for BMad v6 artifacts
 
-**AC6: SharePoint Authentication Validation**
+**AC20: SharePoint Authentication Validation**
 - **GIVEN** SharePoint credentials are provided
 - **WHEN** the system validates authentication
 - **THEN** it tests document operations (list, upload, download, modify)
@@ -83,15 +213,15 @@
 
 ### 📊 Ignis Platform Connection & Telemetry Setup
 
-**AC7: Ignis Platform Connection Configuration**
-- **GIVEN** a user configures Ignis Platform integration
+**AC21: Ignis Platform Connection Configuration**
+- **GIVEN** a workspace configures Ignis Platform integration
 - **WHEN** they provide endpoint and authentication information
 - **THEN** the system validates connection and tests telemetry transmission
 - **AND** telemetry configuration includes data type selection and transmission frequency
 - **AND** connection validation includes rate limit testing and error handling
 - **AND** Ignis Platform setup prepares for comprehensive analytics and monitoring
 
-**AC8: Data Transmission Testing & Validation**
+**AC22: Data Transmission Testing & Validation**
 - **GIVEN** Ignis Platform connection is configured
 - **WHEN** the system performs transmission testing
 - **THEN** it sends test telemetry data and validates successful receipt
@@ -101,50 +231,67 @@
 
 ### ✅ Configuration Validation & Phase Completion
 
-**AC9: Comprehensive Connectivity Testing**
-- **GIVEN** all integrations are configured
+**AC23: Comprehensive Connectivity Testing**
+- **GIVEN** all workspace integrations are configured (Greenfield or Brownfield)
 - **WHEN** the user initiates comprehensive validation
-- **THEN** the system tests all connections simultaneously
+- **THEN** the system tests all connections simultaneously (GitHub dual-action sync, SharePoint, Ignis Platform)
 - **AND** validation results are presented with clear success/failure indicators
 - **AND** any failed validations include specific troubleshooting guidance
 - **AND** partial configuration success allows users to proceed with warnings
 
-**AC10: Integration Verification & Health Monitoring**
+**AC24: Integration Verification & Health Monitoring**
 - **GIVEN** configuration validation is complete
 - **WHEN** the system verifies integration health
 - **THEN** it establishes ongoing monitoring for all configured integrations
 - **AND** integration status is displayed with real-time health indicators
 - **AND** any integration issues trigger alerts and resolution guidance
+- **AND** dual-action sync status shows working branch and main branch health
 - **AND** integration verification prepares for seamless workflow execution
 
-**AC11: Automatic Phase Progression Detection**
-- **GIVEN** all configuration requirements are met
+**AC25: Automatic Phase Progression Detection**
+- **GIVEN** all workspace configuration requirements are met (Greenfield or Brownfield complete)
 - **WHEN** the system detects completion criteria
 - **THEN** it automatically enables progression to the Ideation phase
-- **AND** phase completion includes validation of all required integrations
-- **AND** users receive clear confirmation of successful configuration
-- **AND** phase transition preserves all configuration data and settings
+- **AND** phase completion includes validation of all required integrations and dual-action sync setup
+- **AND** users receive clear confirmation of successful workspace configuration
+- **AND** phase transition preserves all configuration data, workspace metadata, and branch settings
 
 ## 🛠️ Technical Implementation Details
 
 ### Technology Stack
-- **Frontend:** React 18+ with guided workflow UI, progress indicators
-- **Backend:** Python FastAPI with async/await, integration validation services
-- **Database:** PostgreSQL 15 with SQLAlchemy for project configuration, Redis 7 for validation caching
-- **Integration:** GitHub API, SharePoint API, Ignis Platform API
+- **Frontend:** React 18+ with guided workflow UI, progress indicators, Greenfield/Brownfield selection
+- **Backend:** Node.js Fastify with async/await, integration validation services, GitHub API integration
+- **Database:** PostgreSQL 15 for workspace configuration, Redis 7 for validation caching
+- **Integration:** GitHub API v4, SharePoint API (Graph), Ignis Platform OTLP
 
 ### API Endpoints Required
-```python
-# FastAPI endpoint definitions
-POST   /api/v1/projects                      # Create new project
-GET    /api/v1/projects/{project_id}/config          # Get project configuration
-PUT    /api/v1/projects/{project_id}/config          # Update project configuration
-POST   /api/v1/projects/{project_id}/config/github   # Configure GitHub integration
-POST   /api/v1/projects/{project_id}/config/sharepoint # Configure SharePoint integration
-POST   /api/v1/projects/{project_id}/config/ignis    # Configure Ignis Platform integration
-POST   /api/v1/projects/{project_id}/config/validate # Validate all configurations
-GET    /api/v1/projects/{project_id}/config/status   # Get configuration status
-POST   /api/v1/projects/{project_id}/phases/complete # Complete current phase
+```typescript
+// Workspace creation and configuration
+POST   /api/v1/workspaces                           // Create new workspace (Greenfield or Brownfield)
+GET    /api/v1/workspaces/{workspaceId}/config      // Get workspace configuration
+PUT    /api/v1/workspaces/{workspaceId}/config      // Update workspace configuration
+
+// Greenfield workflow endpoints
+POST   /api/v1/workspaces/{workspaceId}/greenfield/repo-create  // Step 1: Create GitHub repo
+POST   /api/v1/workspaces/{workspaceId}/greenfield/users-config // Step 2: Configure users
+POST   /api/v1/workspaces/{workspaceId}/greenfield/bmad-install // Step 3: Install BMad framework
+POST   /api/v1/workspaces/{workspaceId}/greenfield/workflow-init // Step 4: Initialize workflows
+POST   /api/v1/workspaces/{workspaceId}/greenfield/branch-create // Step 5: Create working branch
+POST   /api/v1/workspaces/{workspaceId}/greenfield/metadata-update // Step 6: Update metadata
+
+// Brownfield workflow endpoints
+POST   /api/v1/workspaces/{workspaceId}/brownfield/repo-validate // Step 1: Validate existing repo
+POST   /api/v1/workspaces/{workspaceId}/brownfield/bmad-setup    // Step 2: Add BMad framework
+POST   /api/v1/workspaces/{workspaceId}/brownfield/workflow-config // Step 3: Configure workflows
+POST   /api/v1/workspaces/{workspaceId}/brownfield/branch-create // Step 4: Create working branch
+
+// Integration configuration
+POST   /api/v1/workspaces/{workspaceId}/config/github           // Configure GitHub dual-action sync
+POST   /api/v1/workspaces/{workspaceId}/config/sharepoint       // Configure SharePoint integration
+POST   /api/v1/workspaces/{workspaceId}/config/ignis           // Configure Ignis Platform integration
+POST   /api/v1/workspaces/{workspaceId}/config/validate        // Validate all configurations
+GET    /api/v1/workspaces/{workspaceId}/config/status          // Get configuration status
+POST   /api/v1/workspaces/{workspaceId}/phases/complete        // Complete current phase
 ```
 
 ### Database Schema Requirements
