@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideation Phase - SDLC Portal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'ignis-primary': '#3B82F6',
+                        'ignis-secondary': '#8B5CF6',
+                        'ignis-accent': '#EC4899',
+                        'ignis-gradient-start': '#3B82F6',
+                        'ignis-gradient-end': '#EC4899',
+                        'ignis-dark': '#1E293B',
+                        'ignis-light': '#F8FAFC',
+                        'ignis-gray': '#64748B',
+                        'ignis-success': '#10B981',
+                        'ignis-warning': '#F59E0B',
+                        'ignis-danger': '#EF4444',
+                        'brand-primary': '#3B82F6',
+                        'brand-secondary': '#F1F5F9',
+                        'brand-dark': '#1E293B',
+                        'brand-light': '#F8FAFC',
+                        'brand-accent': '#EC4899',
+                        'brand-warning': '#F59E0B',
+                        'brand-danger': '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        /* Completed Phase Styling - Light green background */
+        .phase-section.completed .phase-toggle,
+        .config-link.completed {
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .phase-section.completed .phase-toggle:hover,
+        .config-link.completed:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+        
+        /* Completed phase text color */
+        .phase-section.completed .phase-toggle span,
+        .config-link.completed span {
+            color: #16a34a;
+            font-weight: 500;
+        }
+        
+        /* Active Phase Styling */
+        .phase-section.active .phase-toggle {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3B82F6;
+            padding-left: 9px;
+        }
+        
+        .phase-section.active .phase-toggle:hover {
+            background: rgba(59, 130, 246, 0.15);
+        }
+        
+        .phase-section.active .phase-toggle span {
+            color: #1f2937;
+            font-weight: 500;
+        }
+        
+        /* Active phase icon color */
+        .phase-section.active .fas.fa-lightbulb {
+            color: #3B82F6 !important;
+        }
+        
+        /* Active phase pulse dot */
+        .phase-section.active .phase-active-dot {
+            display: inline-block !important;
+        }
+        
+        .phase-active-dot {
+            display: none;
+        }
+        
+        /* Submenu items */
+        .submenu-item.active span {
+            color: #3B82F6;
+            font-weight: 500;
+        }
+        
+        .submenu-item.active .submenu-active-dot {
+            display: inline-block !important;
+        }
+        
+        .submenu-active-dot {
+            display: none;
+        }
+
+        .ideation-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3B82F6;
+        }
+
+        .config-link.completed {
+            background: rgba(34, 197, 94, 0.05);
+        }
+    </style>
+</head>
+<body class="font-inter bg-brand-light">
+
+    <div id="project-layout" class="flex w-full h-screen min-h-screen overflow-hidden">
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="fixed top-4 left-4 z-50 lg:hidden bg-white p-2 rounded-lg shadow-lg border border-gray-200 transition-all duration-200 hover:shadow-xl">
+            <i class="fas fa-bars text-ignis-primary"></i>
+        </button>
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar-component fixed lg:relative bg-white border-r border-gray-200 flex flex-col z-40 lg:z-auto h-screen lg:h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto" style="width: 250px;" data-expanded="true">
+            <!-- Sidebar Header -->
+            <div class="p-4 py-2 flex items-center justify-between border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <img src="ignis-logo.svg" alt="Ignis Logo" style="height: 30px;">
+                        <p class="text-md text-ignis-gray mt-1 font-semibold">SDLC Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto min-h-0">
+                <!-- Project Selector -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-xs font-semibold text-gray-600 tracking-wider">Project</label>
+                        <button class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-brand-primary hover:bg-brand-primary/10 transition-all duration-200 rounded-md" title="Add New Project">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <button class="w-full px-3 py-3 text-left border-0 rounded-xl bg-gray-50 hover:bg-gray-100 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:shadow-sm outline-none transition-all duration-200 cursor-pointer" onclick="toggleProjectDropdown()">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div id="project-name-display" class="text-xs font-medium text-brand-dark">New Project</div>
+                                    <div id="project-desc-display" class="text-xs text-gray-500 mt-0.5">Getting started...</div>
+                                </div>
+                                <i class="fas fa-chevron-down text-xs text-gray-400" id="dropdown-arrow"></i>
+                            </div>
+                        </button>
+                        <div id="project-dropdown" class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 hidden">
+                            <div class="py-2 max-h-64 overflow-y-auto">
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('E-commerce Platform Revamp', 'Complete redesign of existing platform')">
+                                    <div class="text-xs font-medium text-brand-dark">E-commerce Platform Revamp</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Complete redesign of existing platform</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Mobile App for Healthcare', 'Patient management and telemedicine app')">
+                                    <div class="text-xs font-medium text-brand-dark">Mobile App for Healthcare</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Patient management and telemedicine app</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Internal CRM Tool', 'Customer relationship management system')">
+                                    <div class="text-xs font-medium text-brand-dark">Internal CRM Tool</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Customer relationship management system</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('AI-Powered Analytics Dashboard', 'Real-time data analytics and insights')">
+                                    <div class="text-xs font-medium text-brand-dark">AI-Powered Analytics Dashboard</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Real-time data analytics and insights</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Customer Support Portal', 'Self-service and ticketing system')">
+                                    <div class="text-xs font-medium text-brand-dark">Customer Support Portal</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Self-service and ticketing system</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Enterprise Resource Planning', 'Integrated business management suite')">
+                                    <div class="text-xs font-medium text-brand-dark">Enterprise Resource Planning</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Integrated business management suite</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="mb-6 pb-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-medium text-gray-600">Overall Progress</span>
+                        <span id="progress-percentage" class="text-xs font-semibold text-gray-600">17%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 17%"></div>
+                    </div>
+                </div>
+
+                <!-- Phase Menu -->
+                <div class="space-y-1">
+                    <p class="text-xs font-medium text-gray-600 tracking-wide mb-3">Project Phases</p>
+                    
+                    <!-- Config Phase - COMPLETED -->
+                    <a href="project-start.html" class="config-link completed text-xs flex items-center justify-between px-3 py-2 text-xs font-medium text-green-700 hover:text-brand-primary hover:bg-gray-50 rounded-lg transition-colors">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle w-4 h-4 mr-3 text-green-600"></i>
+                            <span>Config</span>
+                        </div>
+                    </a>
+
+                    <!-- Ideation Phase - ACTIVE -->
+                    <a href="project-ideation.html" class="ideation-link active text-xs flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-700 hover:text-brand-primary hover:bg-gray-50 rounded-lg transition-colors">
+                        <div class="flex items-center">
+                            <i class="fas fa-lightbulb w-4 h-4 mr-3 text-brand-primary"></i>
+                            <span>Ideation</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-circle text-blue-500 text-xs animate-pulse phase-active-dot"></i>
+                        </div>
+                    </a>
+
+                    <!-- Product Definition Phase - LOCKED -->
+                    <div class="phase-section" data-phase="product-definition">
+                        <button class="text-xs phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-400 rounded-lg transition-colors cursor-not-allowed">
+                            <div class="flex items-center">
+                                <i class="fas fa-file-alt w-4 h-4 mr-3 text-gray-400"></i>
+                                <span>Product Definition</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-lock text-xs text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Planning Phase -->
+                    <div class="phase-section" data-phase="planning">
+                        <button class="text-xs phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-400 rounded-lg transition-colors cursor-not-allowed">
+                            <div class="flex items-center">
+                                <i class="fas fa-tasks w-4 h-4 mr-3 text-gray-400"></i>
+                                <span>Planning</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-lock text-xs text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Implementation Phase -->
+                    <div class="phase-section" data-phase="implementation">
+                        <button class="text-xs phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-400 rounded-lg transition-colors cursor-not-allowed">
+                            <div class="flex items-center">
+                                <i class="fas fa-code w-4 h-4 mr-3 text-gray-400"></i>
+                                <span>Implementation</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-lock text-xs text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Deployment Phase -->
+                    <div class="phase-section" data-phase="deployment">
+                        <button class="text-xs phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-400 rounded-lg transition-colors cursor-not-allowed">
+                            <div class="flex items-center">
+                                <i class="fas fa-rocket w-4 h-4 mr-3 text-gray-400"></i>
+                                <span>Deployment</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-lock text-xs text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Docs & Artifacts Section -->
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <p class="text-xs font-medium text-gray-600 tracking-wide mb-3">Docs & Artifacts</p>
+                    
+                    <!-- Artifacts Menu -->
+                    <div class="phase-section" data-phase="artifacts">
+                        <button class="phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                            <div class="flex items-center space-x-2">
+                                <i class="far fa-folder"></i>
+                                <span>Artifacts</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                        </button>
+                        
+                        <!-- Artifacts Submenu - Documents -->
+                        <div class="phase-submenu mt-1 ml-3 space-y-1 hidden">
+                            
+                            <!-- Document 1: Brainstorming -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-alt text-gray-400 text-xs"></i>
+                                        <span>Brainstorming</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Brainstorming -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Brainstorming Session v1.0', 'brainstorming')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v1.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Brainstorming Session v0.9', 'brainstorming')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v0.9</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Brainstorming Session v0.8', 'brainstorming')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v0.8</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 2: Market Research -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-chart-bar text-gray-400 text-xs"></i>
+                                        <span>Market Research</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Market Research -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Market Research Report v2.1', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v2.1 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud text-gray-400 text-xs" title="Not Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Market Research Report v2.0', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v2.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Market Research Report v1.5', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.5</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Market Research Report v1.0', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 3: Competitor Analysis -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-alt text-gray-400 text-xs"></i>
+                                        <span>Competitor Analysis</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Competitor Analysis -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Competitive Analysis v1.2', 'competitor-analysis')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v1.2 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Competitive Analysis v1.1', 'competitor-analysis')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.1</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 4: PRD -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-alt text-gray-400 text-xs"></i>
+                                        <span>PRD</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for PRD -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Product Requirements Document v3.0', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v3.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Product Requirements Document v2.5', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v2.5</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Product Requirements Document v2.0', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v2.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Product Requirements Document v1.0', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 5: Architecture -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-code text-gray-400 text-xs"></i>
+                                        <span>Architecture</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Architecture -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Technical Architecture v2.0', 'architecture')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v2.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Technical Architecture v1.5', 'architecture')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.5</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 6: Epic & Stories -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-list-alt text-gray-400 text-xs"></i>
+                                        <span>Epic & Stories</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Epic & Stories -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Epic, Features & Stories v1.0', 'epic-stories')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v1.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Bottom Section -->
+            <div class="px-4 py-4 border-t border-gray-100 mt-auto">
+                <a href="dashboard.html" class="text-xs nav-item flex items-center text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors mb-1 px-3 py-2.5">
+                    <i class="fas fa-arrow-left w-4 h-4 mr-3 text-gray-400"></i>
+                    <span class="sidebar-text">Back to Projects</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 bg-brand-light h-screen lg:ml-0 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header id="header" class="bg-white border-b border-gray-200 z-10 flex-shrink-0">
+                <div class="px-4 sm:px-4 lg:px-4 py-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-4">                       
+                        <div>
+                            <h1 class="text-lg font-semibold text-brand-dark">AI Assistant</h1>
+                            <p class="text-xs text-gray-500">Your intelligent project companion - Ideation Phase</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+                        <button class="relative text-gray-500 hover:text-brand-primary p-2 transition-colors">
+                            <i class="far fa-bell text-lg"></i>
+                            <span class="absolute top-1.5 right-1.5 h-1.5 w-1.5 bg-brand-danger rounded-full"></span>
+                        </button>
+                        <div class="relative flex items-center space-x-2 sm:space-x-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="User Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
+                            <div class="hidden sm:block">
+                                <p class="font-semibold text-xs text-brand-dark">Alicia Keys</p>
+                                <p class="text-xs text-gray-500">Product Manager</p>
+                            </div>
+                            <button onclick="toggleUserDropdown()" class="text-gray-400 hover:text-brand-dark hidden sm:block">
+                                <i class="fas fa-chevron-down text-xs" id="user-dropdown-arrow"></i>
+                            </button>
+                            <!-- User Dropdown Menu -->
+                            <div id="user-dropdown" class="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 hidden">
+                                <div class="py-2">
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-user w-4 mr-3 text-gray-400"></i>
+                                        <span>Profile</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-cog w-4 mr-3 text-gray-400"></i>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-question-circle w-4 mr-3 text-gray-400"></i>
+                                        <span>Help & Support</span>
+                                    </a>
+                                    <div class="border-t border-gray-200 my-2"></div>
+                                    <a href="login.html" class="flex items-center px-4 py-2 text-xs text-brand-danger hover:bg-red-50 transition-colors">
+                                        <i class="fas fa-sign-out-alt w-4 mr-3"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- AI Assistant Chat Interface -->
+            <div class="flex-1 flex bg-white overflow-hidden min-h-0">
+                <!-- Chat Section -->
+                <div id="chat-section" class="flex flex-col min-h-0" style="flex: 1 1 auto;">
+                    <!-- Chat Messages -->
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50" id="chat-messages">
+                        <!-- Initial AI Message -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs">👋 Welcome to the Ideation Phase! I'm your AI Project Assistant. How can I help you today?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input - Modern Minimal Design -->
+                    <div class="border-t border-gray-100 px-4 py-3 bg-white flex-shrink-0">
+                        <!-- Input Container -->
+                        <div class="flex items-center space-x-2 bg-gray-50 rounded-xl px-3 py-2 border border-gray-200 hover:border-gray-300 focus-within:border-ignis-primary focus-within:ring-2 focus-within:ring-ignis-primary/10 transition-all">
+                            <!-- Left Action Buttons -->
+                            <div class="flex items-center space-x-1">
+                                <!-- Add/New Chat Button -->
+                                <div class="relative">
+                                    <button type="button" id="new-chat-button" onclick="toggleNewChatPopup()" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-ignis-primary hover:bg-white rounded-lg transition-all" title="New chat">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                    
+                                    <!-- New Chat Popup -->
+                                    <div id="new-chat-popup" class="hidden absolute bottom-full left-0 mb-2 w-64 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-4">
+                                        <h3 class="text-xs font-semibold text-gray-900 mb-3">Start New Conversation</h3>
+                                        <div class="space-y-2">
+                                            <button onclick="startNewChat('blank')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-comment text-blue-500"></i>
+                                                <span>Blank Chat</span>
+                                            </button>
+                                            <button onclick="startNewChat('brainstorm')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-lightbulb text-purple-500"></i>
+                                                <span>Brainstorming Session</span>
+                                            </button>
+                                            <button onclick="startNewChat('market-research')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-chart-line text-green-500"></i>
+                                                <span>Market Research</span>
+                                            </button>
+                                            <button onclick="startNewChat('competitor-analysis')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-balance-scale text-orange-500"></i>
+                                                <span>Competitor Analysis</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- File Upload Button -->
+                                <div class="relative">
+                                    <input type="file" id="file-upload" class="hidden" multiple accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg">
+                                    <button type="button" onclick="document.getElementById('file-upload').click()" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-ignis-primary hover:bg-white rounded-lg transition-all" title="Attach files">
+                                        <i class="fas fa-paperclip text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- LLM Selector Badge -->
+                            <div class="relative">
+                                <button type="button" id="llm-selector-badge" onclick="toggleLLMDropdown()" class="flex items-center space-x-1.5 px-2.5 py-1.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-all text-xs font-medium">
+                                    <span id="llm-name">GPT-4 Turbo</span>
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </button>
+                                
+                                <!-- LLM Dropdown -->
+                                <div id="llm-dropdown" class="hidden absolute bottom-full left-0 mb-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2 max-h-96 overflow-hidden">
+                                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 border-b border-gray-100">Select LLM Model</div>
+                                    <div class="overflow-y-auto max-h-80">
+                                        <!-- OpenAI Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">OpenAI</div>
+                                        <button onclick="selectLLM('GPT-4 Turbo', 'openai')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>GPT-4 Turbo</span>
+                                            <span class="text-xs text-gray-400">128K</span>
+                                        </button>
+                                        <button onclick="selectLLM('GPT-4', 'openai')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>GPT-4</span>
+                                            <span class="text-xs text-gray-400">8K</span>
+                                        </button>
+                                        <button onclick="selectLLM('GPT-3.5 Turbo', 'openai')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>GPT-3.5 Turbo</span>
+                                            <span class="text-xs text-gray-400">16K</span>
+                                        </button>
+                                        
+                                        <!-- Anthropic Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">Anthropic</div>
+                                        <button onclick="selectLLM('Claude 3 Opus', 'anthropic')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Claude 3 Opus</span>
+                                            <span class="text-xs text-gray-400">200K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Claude 3 Sonnet', 'anthropic')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Claude 3 Sonnet</span>
+                                            <span class="text-xs text-gray-400">200K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Claude 3 Haiku', 'anthropic')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Claude 3 Haiku</span>
+                                            <span class="text-xs text-gray-400">200K</span>
+                                        </button>
+                                        
+                                        <!-- Google Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">Google</div>
+                                        <button onclick="selectLLM('Gemini Pro', 'google')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Gemini Pro</span>
+                                            <span class="text-xs text-gray-400">32K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Gemini Ultra', 'google')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Gemini Ultra</span>
+                                            <span class="text-xs text-gray-400">32K</span>
+                                        </button>
+                                        
+                                        <!-- Meta Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">Meta</div>
+                                        <button onclick="selectLLM('Llama 2 70B', 'meta')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Llama 2 70B</span>
+                                            <span class="text-xs text-gray-400">4K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Llama 2 13B', 'meta')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Llama 2 13B</span>
+                                            <span class="text-xs text-gray-400">4K</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Agent Selector Badge -->
+                            <div class="relative">
+                                <button type="button" id="agent-badge" onclick="toggleAgentDropdown()" class="flex items-center space-x-1.5 px-2.5 py-1.5 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-all text-xs font-medium">
+                                    <span id="agent-name">Analyst</span>
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </button>
+                                
+                                <!-- Agent Dropdown -->
+                                <div id="agent-dropdown" class="hidden absolute bottom-full left-0 mb-2 w-56 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2">
+                                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 border-b border-gray-100">Select Agent</div>
+                                    <button onclick="selectAgent('Analyst', 'analyst')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>Analyst</span>
+                                    </button>
+                                    <button onclick="selectAgent('Architect', 'architect')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>Architect</span>
+                                    </button>
+                                    <button onclick="selectAgent('BMAD Master', 'bmad-master')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>BMAD Master</span>
+                                    </button>
+                                    <button onclick="selectAgent('BMAD Orchestrator', 'bmad-orchestrator')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>BMAD Orchestrator</span>
+                                    </button>
+                                    <button onclick="selectAgent('Dev', 'dev')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>Dev</span>
+                                    </button>
+                                    <button onclick="selectAgent('PM', 'pm')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>PM</span>
+                                    </button>
+                                    <button onclick="selectAgent('PO', 'po')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>PO</span>
+                                    </button>
+                                    <button onclick="selectAgent('QA', 'qa')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>QA</span>
+                                    </button>
+                                    <button onclick="selectAgent('SM', 'sm')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>SM</span>
+                                    </button>
+                                    <button onclick="selectAgent('UX Expert', 'ux-expert')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>UX Expert</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Text Input -->
+                            <form id="chat-form" class="flex-1 flex items-center">
+                                <input 
+                                    id="chat-input"
+                                    type="text" 
+                                    placeholder="How can I help you today?"
+                                    class="flex-1 bg-transparent text-xs text-gray-900 placeholder-gray-400 outline-none border-none focus:ring-0 px-2"
+                                />
+                                
+                                <!-- Send Button -->
+                                <button type="submit" class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-ignis-primary to-ignis-accent text-white rounded-lg hover:shadow-lg transition-all flex-shrink-0">
+                                    <i class="fas fa-arrow-up text-xs"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Selected Files Display -->
+                        <div id="selected-files" class="mt-2 text-xs text-gray-500"></div>
+                    </div>
+                </div>
+
+                <!-- Resizer -->
+                <div id="resizer" class="hidden w-1 bg-gray-300 hover:bg-ignis-primary cursor-col-resize transition-colors flex-shrink-0" style="cursor: ew-resize;"></div>
+
+                <!-- Document Viewer Panel (Right Side) -->
+                <div id="document-panel" class="hidden border-l border-gray-200 bg-white flex flex-col overflow-hidden" style="flex: 0 0 50%; min-width: 300px; max-width: 80%;">
+                    <!-- Panel Header -->
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 flex-shrink-0">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-file-alt text-ignis-primary"></i>
+                            <h3 id="doc-title" class="text-xs font-semibold text-gray-900">Document Viewer</h3>
+                        </div>
+                        <button onclick="closeDocumentPanel()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Panel Content -->
+                    <div id="doc-content" class="flex-1 overflow-y-auto p-4">
+                        <!-- Content will be dynamically loaded here -->
+                    </div>
+                    
+                    <!-- Panel Footer Actions -->
+                    <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50 flex-shrink-0">
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-download"></i>
+                                <span>Download</span>
+                            </button>
+                            <button class="px-3 py-1.5 text-xs bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                        <button class="px-3 py-1.5 text-xs bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-1.5">
+                            <i class="fas fa-print"></i>
+                            <span>Print</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="shared-sidebar.js"></script>
+    
+    <script>
+        function toggleProjectDropdown() {
+            const dropdown = document.getElementById('project-dropdown');
+            const arrow = document.getElementById('dropdown-arrow');
+            
+            dropdown.classList.toggle('hidden');
+            
+            if (dropdown.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            const arrow = document.getElementById('user-dropdown-arrow');
+            
+            dropdown.classList.toggle('hidden');
+            
+            if (dropdown.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function selectProject(name, description) {
+            document.getElementById('project-name-display').textContent = name;
+            document.getElementById('project-desc-display').textContent = description;
+            toggleProjectDropdown();
+        }
+
+        // Load project data from URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectName = urlParams.get('name') || 'New Project';
+            const projectDesc = urlParams.get('desc') || 'Getting started...';
+
+            // Update sidebar
+            document.getElementById('project-name-display').textContent = projectName;
+            document.getElementById('project-desc-display').textContent = projectDesc;
+
+            // Load project config from localStorage if available
+            const savedConfig = localStorage.getItem('projectConfig');
+            if (savedConfig) {
+                const config = JSON.parse(savedConfig);
+                console.log('Loaded project config:', config);
+            }
+
+            // Phase toggle functionality
+            const phaseToggles = document.querySelectorAll('.phase-toggle');
+            
+            phaseToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const phaseSection = this.closest('.phase-section');
+                    const submenu = phaseSection.querySelector('.phase-submenu');
+                    const chevron = this.querySelector('.fa-chevron-down');
+                    
+                    // Only toggle if not locked (has submenu)
+                    if (submenu) {
+                        // Toggle submenu visibility
+                        submenu.classList.toggle('hidden');
+                        
+                        // Rotate chevron
+                        if (submenu.classList.contains('hidden')) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        } else {
+                            chevron.style.transform = 'rotate(180deg)';
+                        }
+                    }
+                });
+            });
+
+            // Document toggle functionality - For individual documents
+            const documentToggles = document.querySelectorAll('.document-toggle');
+            
+            documentToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const documentSection = this.closest('.document-section');
+                    const versionSubmenu = documentSection.querySelector('.version-submenu');
+                    const chevron = this.querySelector('.fa-chevron-down');
+                    
+                    if (versionSubmenu && chevron) {
+                        // Toggle version submenu visibility
+                        versionSubmenu.classList.toggle('hidden');
+                        
+                        // Rotate chevron
+                        if (versionSubmenu.classList.contains('hidden')) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        } else {
+                            chevron.style.transform = 'rotate(180deg)';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('project-dropdown');
+            const button = document.querySelector('[onclick="toggleProjectDropdown()"]');
+            
+            if (dropdown && button && !dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.add('hidden');
+                const arrow = document.getElementById('dropdown-arrow');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+
+            // Close user dropdown when clicking outside
+            const userDropdown = document.getElementById('user-dropdown');
+            const userButton = document.querySelector('[onclick="toggleUserDropdown()"]');
+            
+            if (userDropdown && userButton && !userDropdown.contains(event.target) && !userButton.contains(event.target)) {
+                userDropdown.classList.add('hidden');
+                const arrow = document.getElementById('user-dropdown-arrow');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        function toggleAgentDropdown() {
+            const dropdown = document.getElementById('agent-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function toggleNewChatPopup() {
+            const popup = document.getElementById('new-chat-popup');
+            popup.classList.toggle('hidden');
+        }
+
+        function toggleLLMDropdown() {
+            const dropdown = document.getElementById('llm-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        let currentLLM = 'GPT-4 Turbo';
+        let currentLLMProvider = 'openai';
+
+        function selectLLM(llmName, provider) {
+            currentLLM = llmName;
+            currentLLMProvider = provider;
+            document.getElementById('llm-name').textContent = llmName;
+            toggleLLMDropdown();
+            console.log('Selected LLM:', llmName, 'Provider:', provider);
+        }
+
+        function startNewChat(type) {
+            console.log('Starting new chat:', type);
+            // Clear current chat
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-r from-ignis-primary to-ignis-accent rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                        <p class="text-gray-900 text-xs">👋 Welcome to the Ideation Phase! I'm ready to help you with ${type === 'blank' ? 'your project' : type.replace('-', ' ')}. How can I help you today?</p>
+                    </div>
+                </div>
+            `;
+            toggleNewChatPopup();
+        }
+
+        let currentAgent = 'Analyst';
+        let currentAgentType = 'analyst';
+
+        function selectAgent(agentName, agentType) {
+            currentAgent = agentName;
+            currentAgentType = agentType;
+            document.getElementById('agent-name').textContent = agentName;
+            toggleAgentDropdown();
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            // Close agent dropdown when clicking outside
+            const agentDropdown = document.getElementById('agent-dropdown');
+            const agentButton = document.getElementById('agent-badge');
+            
+            if (agentDropdown && agentButton && !agentDropdown.contains(event.target) && !agentButton.contains(event.target)) {
+                agentDropdown.classList.add('hidden');
+            }
+
+            // Close new chat popup when clicking outside
+            const newChatPopup = document.getElementById('new-chat-popup');
+            const newChatButton = document.getElementById('new-chat-button');
+            
+            if (newChatPopup && newChatButton && !newChatPopup.contains(event.target) && !newChatButton.contains(event.target)) {
+                newChatPopup.classList.add('hidden');
+            }
+
+            // Close LLM dropdown when clicking outside
+            const llmDropdown = document.getElementById('llm-dropdown');
+            const llmButton = document.getElementById('llm-selector-badge');
+            
+            if (llmDropdown && llmButton && !llmDropdown.contains(event.target) && !llmButton.contains(event.target)) {
+                llmDropdown.classList.add('hidden');
+            }
+        });
+
+        // Document Panel Functions
+        function openDocument(title, type) {
+            const panel = document.getElementById('document-panel');
+            const resizer = document.getElementById('resizer');
+            const docTitle = document.getElementById('doc-title');
+            const docContent = document.getElementById('doc-content');
+            
+            // Set title
+            docTitle.textContent = title;
+            
+            // Load content based on type
+            const content = getDocumentContent(type);
+            docContent.innerHTML = content;
+            
+            // Show panel and resizer
+            panel.classList.remove('hidden');
+            resizer.classList.remove('hidden');
+        }
+
+        function closeDocumentPanel() {
+            const panel = document.getElementById('document-panel');
+            const resizer = document.getElementById('resizer');
+            panel.classList.add('hidden');
+            resizer.classList.add('hidden');
+        }
+
+        function getDocumentContent(type) {
+            const documents = {
+                'config': '<div class="text-xs text-gray-700 leading-relaxed"><p>Project configuration content will be loaded here...</p></div>',
+                'brainstorming': '<div class="text-xs text-gray-700 leading-relaxed"><p>Brainstorming session content will be loaded here...</p></div>',
+                'market-research': '<div class="text-xs text-gray-700 leading-relaxed"><p>Market research content will be loaded here...</p></div>',
+                'competitor-analysis': '<div class="text-xs text-gray-700 leading-relaxed"><p>Competitor analysis content will be loaded here...</p></div>'
+            };
+            
+            return documents[type] || '<p class="text-xs text-gray-700">Document content not available.</p>';
+        }
+
+        // Resizable Panel Logic
+        let isResizing = false;
+        const resizer = document.getElementById('resizer');
+        const panel = document.getElementById('document-panel');
+        const chatSection = document.getElementById('chat-section');
+        const container = document.querySelector('.flex-1.flex.bg-white');
+
+        if (resizer && panel && chatSection && container) {
+            resizer.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                document.body.style.cursor = 'ew-resize';
+                document.body.style.userSelect = 'none';
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (!isResizing) return;
+
+                const containerRect = container.getBoundingClientRect();
+                const containerWidth = containerRect.width;
+                const mouseX = e.clientX - containerRect.left;
+                
+                // Calculate panel width (right side)
+                const panelWidth = containerWidth - mouseX;
+                const panelWidthPercent = (panelWidth / containerWidth) * 100;
+                
+                // Enforce min (20%) and max (80%) constraints
+                if (panelWidthPercent >= 20 && panelWidthPercent <= 80) {
+                    panel.style.flex = `0 0 ${panelWidthPercent}%`;
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                if (isResizing) {
+                    isResizing = false;
+                    document.body.style.cursor = '';
+                    document.body.style.userSelect = '';
+                }
+            });
+        }
+
+        // Chat functionality
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatMessages = document.getElementById('chat-messages');
+        const fileUpload = document.getElementById('file-upload');
+        const selectedFilesDiv = document.getElementById('selected-files');
+        let uploadedFiles = [];
+
+        // File upload handler
+        if (fileUpload) {
+            fileUpload.addEventListener('change', function(e) {
+                const files = Array.from(e.target.files);
+                uploadedFiles = files;
+                
+                if (files.length > 0) {
+                    selectedFilesDiv.innerHTML = `
+                        <span class="inline-flex items-center space-x-1">
+                            <i class="fas fa-file text-ignis-primary"></i>
+                            <span>${files.length} file(s) selected</span>
+                            <button type="button" onclick="clearFiles()" class="ml-2 text-red-500 hover:text-red-700">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        </span>
+                    `;
+                } else {
+                    selectedFilesDiv.innerHTML = '';
+                }
+            });
+        }
+
+        // Clear files function
+        window.clearFiles = function() {
+            uploadedFiles = [];
+            fileUpload.value = '';
+            selectedFilesDiv.innerHTML = '';
+        };
+
+        if (chatForm) {
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const message = chatInput.value.trim();
+                if (!message && uploadedFiles.length === 0) return;
+                
+                // Add user message
+                addUserMessage(message, uploadedFiles, currentAgent);
+                
+                // Clear input
+                chatInput.value = '';
+                clearFiles();
+                
+                // Simulate AI response after a delay
+                setTimeout(() => {
+                    addAIResponse(message, currentAgent);
+                }, 1000);
+            });
+        }
+
+        function addUserMessage(message, files = [], agent = '') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start space-x-3 justify-end';
+            
+            let filesHtml = '';
+            if (files.length > 0) {
+                filesHtml = `
+                    <div class="mt-2 space-y-1">
+                        ${files.map(file => `
+                            <div class="flex items-center space-x-2 text-xs bg-white/20 rounded px-2 py-1">
+                                <i class="fas fa-file"></i>
+                                <span>${escapeHtml(file.name)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                    ${message ? `<p class="text-xs">${escapeHtml(message)}</p>` : ''}
+                    ${filesHtml}
+                </div>
+                <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addAIResponse(userMessage, agent = '') {
+            const ideationResponses = [
+                "Great idea! Let's explore this concept further. What specific aspect of the ideation phase would you like to focus on?",
+                "I can help you with that! For the ideation phase, we should consider brainstorming, market research, and competitor analysis. Which interests you most?",
+                "Excellent question! Let's break this down. In ideation, we focus on generating and refining ideas. What's your primary goal here?",
+                "That's a good starting point! Let me help you structure your thoughts for this early phase of the project.",
+                "Interesting! At this ideation stage, we want to explore all possibilities. Tell me more about what you have in mind."
+            ];
+            
+            const randomResponse = ideationResponses[Math.floor(Math.random() * ideationResponses.length)];
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start space-x-3';
+            messageDiv.innerHTML = `
+                <div class="w-8 h-8 bg-gradient-to-r from-ignis-primary to-ignis-accent rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-robot text-white text-xs"></i>
+                </div>
+                <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                    <p class="text-gray-900 text-xs">${randomResponse}</p>
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+
+</body>
+</html>

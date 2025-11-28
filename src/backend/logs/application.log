@@ -1,0 +1,86 @@
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-24T14:04:29.106Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-24T14:04:29.763Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T07:24:30.982Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T07:24:31.864Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:11:55.462Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:11:55.836Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:12:43.290Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:12:43.608Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:13:41.688Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:13:41.937Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:13:41.963Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 34ms:","templates":5,"timestamp":"2025-11-26T08:13:41.999Z","workflows":3}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:13:42.838Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:13:43.213Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:13:43.306Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 35ms:","templates":5,"timestamp":"2025-11-26T08:13:43.342Z","workflows":3}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:13:49.521Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:13:49.782Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:13:49.812Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 24ms:","templates":5,"timestamp":"2025-11-26T08:13:49.836Z","workflows":3}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:14:01.117Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:14:01.139Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:14:01.627Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:14:01.639Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:14:01.658Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:14:01.670Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 34ms:","templates":5,"timestamp":"2025-11-26T08:14:01.692Z","workflows":3}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 39ms:","templates":5,"timestamp":"2025-11-26T08:14:01.710Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T08:14:01.710Z"}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T08:14:01.693Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3001","timestamp":"2025-11-26T08:14:03.877Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3001/docs","timestamp":"2025-11-26T08:14:03.878Z"}
+{"address":"::1","code":"EADDRINUSE","errno":-4091,"level":"error","message":"Error starting server: listen EADDRINUSE: address already in use ::1:3001","port":3001,"stack":"Error: listen EADDRINUSE: address already in use ::1:3001\n    at Server.setupListenHandle [as _listen2] (node:net:1908:16)\n    at listenInCluster (node:net:1965:12)\n    at GetAddrInfoReqWrap.doListen [as callback] (node:net:2139:7)\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:113:8)","syscall":"listen","timestamp":"2025-11-26T08:14:04.506Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:14:05.580Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:14:05.814Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:14:05.832Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 15ms:","templates":5,"timestamp":"2025-11-26T08:14:05.847Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T08:14:05.848Z"}
+{"address":"::1","code":"EADDRINUSE","errno":-4091,"level":"error","message":"Error starting server: listen EADDRINUSE: address already in use ::1:3001","port":3001,"stack":"Error: listen EADDRINUSE: address already in use ::1:3001\n    at Server.setupListenHandle [as _listen2] (node:net:1908:16)\n    at listenInCluster (node:net:1965:12)\n    at GetAddrInfoReqWrap.doListen [as callback] (node:net:2139:7)\n    at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:113:8)","syscall":"listen","timestamp":"2025-11-26T08:14:06.759Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:15:25.431Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:15:25.682Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:15:25.708Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 13ms:","templates":5,"timestamp":"2025-11-26T08:15:25.722Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T08:15:25.722Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3002","timestamp":"2025-11-26T08:15:26.465Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3002/docs","timestamp":"2025-11-26T08:15:26.465Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:18:23.587Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:18:23.900Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:18:23.929Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 39ms:","templates":5,"timestamp":"2025-11-26T08:18:23.968Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T08:18:23.968Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3001","timestamp":"2025-11-26T08:18:26.426Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3001/docs","timestamp":"2025-11-26T08:18:26.426Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T08:21:41.369Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T08:21:41.666Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T08:21:41.693Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 22ms:","templates":5,"timestamp":"2025-11-26T08:21:41.716Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T08:21:41.716Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3001","timestamp":"2025-11-26T08:21:42.520Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3001/docs","timestamp":"2025-11-26T08:21:42.520Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-26T09:31:51.434Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-26T09:31:52.333Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-26T09:31:52.387Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 94ms:","templates":5,"timestamp":"2025-11-26T09:31:52.482Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-26T09:31:52.482Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3001","timestamp":"2025-11-26T09:31:58.970Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3001/docs","timestamp":"2025-11-26T09:31:58.970Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-27T12:30:18.559Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-27T12:30:19.025Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-27T12:30:19.051Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 365ms:","templates":5,"timestamp":"2025-11-27T12:30:19.418Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-27T12:30:19.418Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3001","timestamp":"2025-11-27T12:30:21.529Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3001/docs","timestamp":"2025-11-27T12:30:21.529Z"}
+{"level":"info","message":"Redis disabled - running without cache","timestamp":"2025-11-27T12:54:19.709Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-27T12:54:20.004Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-27T12:54:20.031Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 29ms:","templates":5,"timestamp":"2025-11-27T12:54:20.061Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-27T12:54:20.062Z"}
+{"level":"info","message":"Connected to Redis","timestamp":"2025-11-27T13:03:56.184Z"}
+{"level":"info","message":"Connected to PostgreSQL","timestamp":"2025-11-27T13:03:56.392Z"}
+{"level":"info","message":"Loading BMad v6 framework data...","timestamp":"2025-11-27T13:03:56.417Z"}
+{"agents":8,"level":"info","message":"BMad v6 framework loaded successfully in 20ms:","templates":5,"timestamp":"2025-11-27T13:03:56.437Z","workflows":3}
+{"level":"info","message":"BMad v6 framework integration plugin loaded successfully","timestamp":"2025-11-27T13:03:56.440Z"}
+{"level":"info","message":"BMad v6 Platform API Server listening on localhost:3001","timestamp":"2025-11-27T13:03:57.573Z"}
+{"level":"info","message":"API Documentation available at http://localhost:3001/docs","timestamp":"2025-11-27T13:03:57.575Z"}

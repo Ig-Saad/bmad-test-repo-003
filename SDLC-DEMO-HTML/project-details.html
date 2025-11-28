@@ -1,0 +1,2653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - SDLC Portal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'ignis-primary': '#3B82F6',
+                        'ignis-secondary': '#8B5CF6',
+                        'ignis-accent': '#EC4899',
+                        'ignis-gradient-start': '#3B82F6',
+                        'ignis-gradient-end': '#EC4899',
+                        'ignis-dark': '#1E293B',
+                        'ignis-light': '#F8FAFC',
+                        'ignis-gray': '#64748B',
+                        'ignis-success': '#10B981',
+                        'ignis-warning': '#F59E0B',
+                        'ignis-danger': '#EF4444',
+                        'brand-primary': '#3B82F6',
+                        'brand-secondary': '#F1F5F9',
+                        'brand-dark': '#1E293B',
+                        'brand-light': '#F8FAFC',
+                        'brand-accent': '#EC4899',
+                        'brand-warning': '#F59E0B',
+                        'brand-danger': '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        /* ::-webkit-scrollbar { display: none;} */
+        
+        /* Completed Phase Styling - Light green background */
+        .phase-section.completed .phase-toggle,
+        .config-link.completed {
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .phase-section.completed .phase-toggle:hover,
+        .config-link.completed:hover {
+            background: rgba(34, 197, 94, 0.1);
+        }
+        
+        /* Completed phase text color */
+        .phase-section.completed .phase-toggle span,
+        .config-link.completed span {
+            color: #16a34a;
+            font-weight: 500;
+        }
+        
+        /* Active Phase Styling */
+        .phase-section.active .phase-toggle {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3B82F6;
+            padding-left: 9px;
+        }
+        
+        .phase-section.active .phase-toggle:hover {
+            background: rgba(59, 130, 246, 0.15);
+        }
+        
+        .phase-section.active .phase-toggle span {
+            color: #1f2937;
+            font-weight: 500;
+        }
+        
+        /* Active phase icon color */
+        .phase-section.active .fas.fa-tasks {
+            color: #3B82F6 !important;
+        }
+        
+        /* Completed phase - hide original icons, show check-circle */
+        .phase-section.completed .fas.fa-lightbulb,
+        .phase-section.completed .fas.fa-file-alt,
+        .config-link.completed .fas.fa-cog {
+            display: none !important;
+        }
+        
+        .phase-section.completed .phase-check-icon,
+        .config-link.completed .phase-check-icon {
+            display: inline-block !important;
+            color: #16a34a !important;
+        }
+        
+        /* Hide check icons for non-completed phases */
+        .phase-check-icon {
+            display: none;
+        }
+        
+        /* Hide the old phase complete icons on the right */
+        .phase-complete-icon {
+            display: none !important;
+        }
+        
+        .submenu-complete-icon {
+            display: none !important;
+        }
+        
+        /* Active phase pulse dot */
+        .phase-section.active .phase-active-dot {
+            display: inline-block !important;
+        }
+        
+        .phase-active-dot {
+            display: none;
+        }
+        
+        /* Completed submenu items */
+        .submenu-item.completed {
+            background: transparent;
+        }
+        
+        .submenu-item.completed:hover {
+            background: rgba(34, 197, 94, 0.08);
+        }
+        
+        .submenu-item.completed span {
+            color: #16a34a;
+            font-weight: 500;
+        }
+        
+        /* Active submenu items */
+        .submenu-item.active span {
+            color: #3B82F6;
+            font-weight: 500;
+        }
+        
+        .submenu-item.active .submenu-active-dot {
+            display: inline-block !important;
+        }
+        
+        .submenu-active-dot {
+            display: none;
+        }
+        
+        /* Fullscreen Document Panel */
+        #document-panel.fullscreen-mode {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            width: 100% !important;
+            height: 100vh !important;
+            max-width: 100% !important;
+            min-width: 100% !important;
+            z-index: 9999 !important;
+            flex: 1 1 100% !important;
+        }
+    </style>
+</head>
+<body class="font-inter bg-brand-light">
+
+    <div id="project-layout" class="flex w-full h-screen min-h-screen overflow-hidden">
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="fixed top-4 left-4 z-50 lg:hidden bg-white p-2 rounded-lg shadow-lg border border-gray-200 transition-all duration-200 hover:shadow-xl">
+            <i class="fas fa-bars text-ignis-primary"></i>
+        </button>
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar-component fixed lg:relative bg-white border-r border-gray-200 flex flex-col z-40 lg:z-auto h-screen lg:h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto" style="width: 250px;" data-expanded="true">
+            <!-- Sidebar Header -->
+            <div class="p-4 py-2 flex items-center justify-between border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <img src="ignis-logo.svg" alt="Ignis Logo" style="height: 30px;">
+                        <p class="text-md text-ignis-gray mt-1 font-semibold">SDLC Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto min-h-0">
+                <!-- Project Selector -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-xs font-semibold text-gray-600 tracking-wider">Project</label>
+                        <button class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-brand-primary hover:bg-brand-primary/10 transition-all duration-200 rounded-md" title="Add New Project">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <button class="w-full px-3 py-3 text-left border-0 rounded-xl bg-gray-50 hover:bg-gray-100 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:shadow-sm outline-none transition-all duration-200 cursor-pointer" onclick="toggleProjectDropdown()">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs font-medium text-brand-dark">E-commerce Platform Revamp</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Complete redesign of existing platform</div>
+                                </div>
+                                <i class="fas fa-chevron-down text-xs text-gray-400" id="dropdown-arrow"></i>
+                            </div>
+                        </button>
+                        <div id="project-dropdown" class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 hidden">
+                            <div class="py-2 max-h-64 overflow-y-auto">
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('E-commerce Platform Revamp', 'Complete redesign of existing platform')">
+                                    <div class="text-xs font-medium text-brand-dark">E-commerce Platform Revamp</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Complete redesign of existing platform</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Mobile App for Healthcare', 'Patient management and telemedicine app')">
+                                    <div class="text-xs font-medium text-brand-dark">Mobile App for Healthcare</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Patient management and telemedicine app</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Internal CRM Tool', 'Customer relationship management system')">
+                                    <div class="text-xs font-medium text-brand-dark">Internal CRM Tool</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Customer relationship management system</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('AI-Powered Analytics Dashboard', 'Real-time data analytics and insights')">
+                                    <div class="text-xs font-medium text-brand-dark">AI-Powered Analytics Dashboard</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Real-time data analytics and insights</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Customer Support Portal', 'Self-service and ticketing system')">
+                                    <div class="text-xs font-medium text-brand-dark">Customer Support Portal</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Self-service and ticketing system</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Enterprise Resource Planning', 'Integrated business management suite')">
+                                    <div class="text-xs font-medium text-brand-dark">Enterprise Resource Planning</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Integrated business management suite</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="mb-6 pb-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-medium text-gray-600">Overall Progress</span>
+                        <span id="progress-percentage" class="text-xs font-semibold text-green-600">45%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-green-500 h-2 rounded-full transition-all duration-300" style="width: 45%"></div>
+                    </div>
+                </div>
+
+                <!-- Phase Menu -->
+                <div class="space-y-1">
+                    <p class="text-xs font-medium text-gray-600 tracking-wide mb-3">Project Phases</p>
+                    
+                    <!-- Config Phase - COMPLETED (First Phase) -->
+                    <a href="project-start.html" class="config-link completed text-xs flex items-center justify-between px-3 py-2 text-xs font-medium bg-green-50 text-green-700 hover:bg-green-100 rounded-lg transition-colors border border-green-200">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle phase-check-icon w-4 h-4 mr-3 text-green-600"></i>
+                            <!-- <i class="fas fa-cog w-4 h-4 mr-3 text-gray-400"></i> -->
+                            <span>Config</span>
+                        </div>
+                    </a>
+
+                    <!-- Ideation Phase - COMPLETED (45% Progress) -->
+                    <a href="#" class="phase-section completed flex items-center justify-between px-3 py-2 text-xs font-medium bg-green-50 text-green-700 hover:bg-green-100 rounded-lg transition-colors border border-green-200" data-phase="ideation">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle phase-check-icon w-4 h-4 mr-3 text-green-600"></i>
+                            <span>Ideation</span>
+                        </div>
+                        <i class="fas fa-check-circle text-green-600 text-xs phase-complete-icon"></i>
+                    </a>
+
+                    <!-- Product Definition Phase - COMPLETED (45% Progress) -->
+                    <a href="#" class="phase-section completed flex items-center justify-between px-3 py-2 text-xs font-medium bg-green-50 text-green-700 hover:bg-green-100 rounded-lg transition-colors border border-green-200" data-phase="product-definition">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle phase-check-icon w-4 h-4 mr-3 text-green-600"></i>
+                            <span>Product Definition</span>
+                        </div>
+                        <i class="fas fa-check-circle text-green-600 text-xs phase-complete-icon"></i>
+                    </a>
+
+                    <!-- Planning Phase - ACTIVE -->
+                    <a href="#" class="phase-section active flex items-center justify-between px-3 py-2 text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 rounded-lg transition-colors border border-blue-200" data-phase="planning">
+                        <div class="flex items-center">
+                            <i class="fas fa-tasks w-4 h-4 mr-3 text-blue-600"></i>
+                            <span>Planning</span>
+                        </div>
+                        <i class="fas fa-circle text-blue-600 text-xs animate-pulse phase-active-dot"></i>
+                    </a>
+
+                    <!-- Implementation Phase -->
+                    <div class="phase-section" data-phase="implementation">
+                        <button class="text-xs phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-400 rounded-lg transition-colors cursor-not-allowed">
+                            <div class="flex items-center">
+                                <i class="fas fa-code w-4 h-4 mr-3 text-gray-400"></i>
+                                <span>Implementation</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-lock text-xs text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Deployment Phase -->
+                    <div class="phase-section" data-phase="deployment">
+                        <button class="text-xs phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-400 rounded-lg transition-colors cursor-not-allowed">
+                            <div class="flex items-center">
+                                <i class="fas fa-rocket w-4 h-4 mr-3 text-gray-400"></i>
+                                <span>Deployment</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-lock text-xs text-gray-400"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Docs & Artifacts Section -->
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <p class="text-xs font-medium text-gray-600 tracking-wide mb-3">Docs & Artifacts</p>
+                    
+                    <!-- Artifacts Menu -->
+                    <div class="phase-section" data-phase="artifacts">
+                        <button class="phase-toggle w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                            <div class="flex items-center space-x-2">
+                                <i class="far fa-folder"></i>
+                                <span>Artifacts</span>
+                            </div>
+                            <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                        </button>
+                        
+                        <!-- Artifacts Submenu - Documents -->
+                        <div class="phase-submenu mt-1 ml-3 space-y-1 hidden">
+                            
+                            <!-- Document 1: Brainstorming -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-alt text-gray-400 text-xs"></i>
+                                        <span>Brainstorming</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Brainstorming -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Brainstorming Session v1.0', 'brainstorming')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v1.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Brainstorming Session v0.9', 'brainstorming')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v0.9</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Brainstorming Session v0.8', 'brainstorming')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v0.8</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 2: Market Research -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-chart-bar text-gray-400 text-xs"></i>
+                                        <span>Market Research</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Market Research -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Market Research Report v2.1', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v2.1 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud text-gray-400 text-xs" title="Not Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Market Research Report v2.0', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v2.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Market Research Report v1.5', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.5</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Market Research Report v1.0', 'market-research')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 3: Competitor Analysis -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-alt text-gray-400 text-xs"></i>
+                                        <span>Competitor Analysis</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Competitor Analysis -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Competitive Analysis v1.2', 'competitor-analysis')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v1.2 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Competitive Analysis v1.1', 'competitor-analysis')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.1</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 4: PRD -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-alt text-gray-400 text-xs"></i>
+                                        <span>PRD</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for PRD -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Product Requirements Document v3.0', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v3.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Product Requirements Document v2.5', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v2.5</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Product Requirements Document v2.0', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v2.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Product Requirements Document v1.0', 'prd')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.0</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Document 5: Architecture -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-file-code text-gray-400 text-xs"></i>
+                                        <span>Architecture</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Architecture -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Technical Architecture v2.0', 'architecture')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v2.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                    <button onclick="openDocument('Technical Architecture v1.5', 'architecture')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-gray-400 text-xs"></i>
+                                            <span>v1.5</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </div>
+                            </div>
+                            
+                            <!-- Document 6: Epic & Stories -->
+                            <div class="document-section">
+                                <button class="document-toggle w-full flex items-center justify-between px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="far fa-list-alt text-gray-400 text-xs"></i>
+                                        <span>Epic & Stories</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-xs transition-transform" style="transform: rotate(0deg);"></i>
+                                </button>
+                                
+                                <!-- Versions for Epic & Stories -->
+                                <div class="version-submenu mt-1 ml-4 space-y-1 hidden">
+                                    <button onclick="openDocument('Epic, Features & Stories v1.0', 'epic-stories')" class="nav-item w-full flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-file text-blue-400 text-xs"></i>
+                                            <span>v1.0 (Current)</span>
+                                        </div>
+                                        <i class="fas fa-cloud-upload-alt text-green-500 text-xs" title="Synced"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Bottom Section -->
+            <div class="px-4 py-4 border-t border-gray-100 mt-auto">
+                <a href="dashboard.html" class="text-xs nav-item flex items-center text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors mb-1">
+                    <i class="fas fa-arrow-left w-4 h-4 mr-3 text-gray-400"></i>
+                    <span class="sidebar-text">Back to Projects</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 bg-brand-light h-screen lg:ml-0 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header id="header" class="bg-white border-b border-gray-200 z-10 flex-shrink-0">
+                <div class="px-4 sm:px-4 lg:px-4 py-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-4">                       
+                        <div>
+                            <h1 class="text-lg font-semibold text-brand-dark">AI Assistant</h1>
+                            <p class="text-xs text-gray-500">Your intelligent project companion</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+                        <button class="relative text-gray-500 hover:text-brand-primary p-2 transition-colors">
+                            <i class="far fa-bell text-lg"></i>
+                            <span class="absolute top-1.5 right-1.5 h-1.5 w-1.5 bg-brand-danger rounded-full"></span>
+                        </button>
+                        <div class="relative flex items-center space-x-2 sm:space-x-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="User Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
+                            <div class="hidden sm:block">
+                                <p class="font-semibold text-xs text-brand-dark">Alicia Keys</p>
+                                <p class="text-xs text-gray-500">Product Manager</p>
+                            </div>
+                            <button onclick="toggleUserDropdown()" class="text-gray-400 hover:text-brand-dark hidden sm:block">
+                                <i class="fas fa-chevron-down text-xs" id="user-dropdown-arrow"></i>
+                            </button>
+                            <!-- User Dropdown Menu -->
+                            <div id="user-dropdown" class="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 hidden">
+                                <div class="py-2">
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-user w-4 mr-3 text-gray-400"></i>
+                                        <span>Profile</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-cog w-4 mr-3 text-gray-400"></i>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-question-circle w-4 mr-3 text-gray-400"></i>
+                                        <span>Help & Support</span>
+                                    </a>
+                                    <div class="border-t border-gray-200 my-2"></div>
+                                    <a href="login.html" class="flex items-center px-4 py-2 text-xs text-brand-danger hover:bg-red-50 transition-colors">
+                                        <i class="fas fa-sign-out-alt w-4 mr-3"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- AI Assistant Chat Interface -->
+            <div class="flex-1 flex bg-white overflow-hidden min-h-0">
+                <!-- Chat Section -->
+                <div id="chat-section" class="flex flex-col min-h-0" style="flex: 1 1 auto;">
+                    <!-- Chat Messages -->
+                    <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50" id="chat-messages">
+                        <!-- Initial AI Message -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs">Hi! I'm your AI Project Assistant. I can see you've completed the Ideation and Product Definition phases. Would you like me to walk you through what we've accomplished?</p>
+                            </div>
+                        </div>
+
+                        <!-- User initiates Ideation Phase -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                                <p class="text-xs">Yes, let's review the Ideation phase</p>
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <!-- AI Response - Phase Overview -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-3"><strong>Ideation Phase Overview</strong></p>
+                                <p class="text-gray-700 text-xs mb-2">We completed three key activities:</p>
+                                <ul class="list-none space-y-1 text-gray-700 text-xs">
+                                    <li>✓ Brainstorming Session</li>
+                                    <li>✓ Market Research</li>
+                                    <li>✓ Competitor Analysis</li>
+                                </ul>
+                                <p class="text-gray-600 text-xs mt-2">Which one would you like to explore first?</p>
+                            </div>
+                        </div>
+
+                        <!-- Ideation Phase - Brainstorming -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                                <p class="text-xs">Show me the brainstorming results</p>
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-3"><strong>Brainstorming Session - E-commerce Platform</strong></p>
+                                <p class="text-gray-700 text-xs mb-2">Generated 15+ innovative ideas. Top 5 features:</p>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700 text-xs mb-3">
+                                    <li>AI-powered personalized product recommendations</li>
+                                    <li>One-click checkout with saved preferences</li>
+                                    <li>Social shopping with live streaming</li>
+                                    <li>AR product visualization (try before buy)</li>
+                                    <li>Gamified loyalty program with rewards</li>
+                                </ul>
+                                <div class="flex gap-2 mt-3">
+                                    <button onclick="openDocument('Brainstorming', 'brainstorming')" class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span>View Full Document</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-download"></i>
+                                        <span>Download</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ideation Phase - Market Research -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                                <p class="text-xs">What did we learn from market research?</p>
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-3"><strong>Market Research Findings</strong></p>
+                                <div class="space-y-2 text-xs text-gray-700 mb-3">
+                                    <p><strong>Target Audience:</strong><br>Primary: 25-45 years, tech-savvy, value convenience<br>Secondary: 18-24 years, early adopters, social media active</p>
+                                    <p><strong>Market Size:</strong><br>TAM: $5.2B | SAM: $1.8B | SOM: $280M (Year 1)<br>Expected growth: 15% CAGR</p>
+                                    <p><strong>Key Trends:</strong><br>• Mobile-first approach (68% traffic from mobile)<br>• Sustainability and ethical sourcing<br>• Social commerce integration<br>• Voice and visual search capabilities</p>
+                                </div>
+                                <div class="flex gap-2 mt-3">
+                                    <button onclick="openDocument('Market Research', 'market-research')" class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span>View Market Report</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <span>View Analytics</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ideation Phase - Competitor Analysis -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                                <p class="text-xs">How do we compare to competitors?</p>
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-3"><strong>Competitive Analysis Summary</strong></p>
+                                <div class="space-y-2 text-xs text-gray-700 mb-3">
+                                    <p><strong>Competitor A (Market Leader):</strong><br>Strengths: Strong mobile app, 5M+ users<br>Weaknesses: Poor personalization, 4.2★<br>Price: Mid-range</p>
+                                    <p><strong>Competitor B (Fast Growing):</strong><br>Strengths: Excellent UX, modern design<br>Weaknesses: Limited payment options, 4.5★<br>Price: Premium</p>
+                                    <p><strong>Competitor C (Budget):</strong><br>Strengths: Wide product variety, low prices<br>Weaknesses: Slow checkout, outdated UI, 3.9★<br>Price: Budget</p>
+                                </div>
+                                <p class="text-xs text-gray-900 bg-green-50 p-2 rounded mb-3"><strong>Our Competitive Advantage:</strong><br>AI-powered personalization + streamlined checkout + modern UX at competitive pricing</p>
+                                <div class="flex gap-2 mt-3">
+                                    <button onclick="openDocument('Competitor Analysis', 'competitor-analysis')" class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span>View Analysis Report</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>View Comparison Matrix</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transition to Product Definition -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                                <p class="text-xs">Great! Now show me Product Definition phase</p>
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <!-- Product Definition Phase - PRD -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-3"><strong>Product Requirements Document (PRD)</strong></p>
+                                <p class="text-gray-700 text-xs mb-2"><strong>Functional Requirements:</strong></p>
+                                <ol class="list-decimal list-inside space-y-1 text-gray-700 text-xs mb-3">
+                                    <li>User authentication (email, social login, SSO)</li>
+                                    <li>Product catalog with advanced search & filters</li>
+                                    <li>AI-powered recommendation engine</li>
+                                    <li>Shopping cart & wishlist management</li>
+                                    <li>Multi-payment gateway (Stripe, PayPal, Apple Pay)</li>
+                                    <li>Order tracking with real-time notifications</li>
+                                    <li>Customer reviews & ratings system</li>
+                                    <li>Admin dashboard for inventory & analytics</li>
+                                </ol>
+                                <p class="text-gray-700 text-xs mb-2"><strong>Non-Functional Requirements:</strong></p>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700 text-xs mb-3">
+                                    <li>Page load: &lt;2s (desktop), &lt;3s (mobile)</li>
+                                    <li>Uptime: 99.9% availability (SLA)</li>
+                                    <li>Scalability: 10,000+ concurrent users</li>
+                                    <li>Security: GDPR, PCI-DSS compliant</li>
+                                    <li>Accessibility: WCAG 2.1 Level AA</li>
+                                </ul>
+                                <div class="flex gap-2 mt-3">
+                                    <button onclick="openDocument('PRD', 'prd')" class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span>View Complete PRD</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-download"></i>
+                                        <span>Download PDF</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-share-alt"></i>
+                                        <span>Share</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product Definition Phase - Architecture -->
+                        <div class="flex items-start space-x-3 justify-end">
+                            <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                                <p class="text-xs">What's the technical architecture?</p>
+                            </div>
+                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-3"><strong>Technical Architecture Design</strong></p>
+                                <div class="space-y-2 text-xs text-gray-700 mb-3">
+                                    <p><strong>Frontend Layer:</strong><br>React.js 18 + Next.js 14 (SSR/SSG)<br>Tailwind CSS + Shadcn UI components<br>Redux Toolkit for state management<br>React Query for data fetching</p>
+                                    <p><strong>Backend Layer:</strong><br>Node.js 20 + Express.js<br>RESTful APIs + GraphQL<br>JWT authentication + OAuth 2.0<br>WebSockets for real-time features</p>
+                                    <p><strong>Data Layer:</strong><br>PostgreSQL 15 (primary database)<br>Redis 7 (caching & sessions)<br>Elasticsearch 8 (search engine)<br>MongoDB (product catalog)</p>
+                                    <p><strong>Infrastructure:</strong><br>AWS (EC2, S3, RDS, CloudFront CDN)<br>Docker containers + Kubernetes<br>CI/CD: GitHub Actions + ArgoCD<br>Monitoring: Datadog + Sentry</p>
+                                    <p><strong>AI/ML Services:</strong><br>Python 3.11 + TensorFlow 2.x<br>Recommendation engine on AWS SageMaker<br>Image recognition for visual search</p>
+                                </div>
+                                <p class="text-xs text-gray-900 bg-blue-50 p-2 rounded mb-3"><strong>Architecture Pattern:</strong> Microservices with API Gateway, Event-driven (RabbitMQ), CQRS for read-heavy operations</p>
+                                <div class="flex gap-2 mt-3">
+                                    <button onclick="openDocument('Architecture', 'architecture')" class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-file-alt"></i>
+                                        <span>View Architecture Docs</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-project-diagram"></i>
+                                        <span>View Diagrams</span>
+                                    </button>
+                                    <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                        <i class="fas fa-code"></i>
+                                        <span>Tech Stack Details</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs mb-2">That's everything we've completed so far! You're 45% through the project.</p>
+                                <p class="text-gray-700 text-xs">Next up: <strong>Planning Phase</strong> (Epic, Feature & Stories). Ready to continue?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input - Modern Minimal Design -->
+                    <div class="border-t border-gray-100 px-4 py-3 bg-white flex-shrink-0">
+                        <!-- Input Container -->
+                        <div class="flex items-center space-x-2 bg-gray-50 rounded-xl px-3 py-2 border border-gray-200 hover:border-gray-300 focus-within:border-ignis-primary focus-within:ring-2 focus-within:ring-ignis-primary/10 transition-all">
+                            <!-- Left Action Buttons -->
+                            <div class="flex items-center space-x-1">
+                                <!-- Add/New Chat Button -->
+                                <div class="relative">
+                                    <button type="button" id="new-chat-button" onclick="toggleNewChatPopup()" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-ignis-primary hover:bg-white rounded-lg transition-all" title="New chat">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                    
+                                    <!-- New Chat Popup -->
+                                    <div id="new-chat-popup" class="hidden absolute bottom-full left-0 mb-2 w-64 bg-white border border-gray-200 rounded-xl shadow-xl z-50 p-4">
+                                        <h3 class="text-xs font-semibold text-gray-900 mb-3">Start New Conversation</h3>
+                                        <div class="space-y-2">
+                                            <button onclick="startNewChat('blank')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-comment text-blue-500"></i>
+                                                <span>Blank Chat</span>
+                                            </button>
+                                            <button onclick="startNewChat('brainstorm')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-lightbulb text-purple-500"></i>
+                                                <span>Brainstorming Session</span>
+                                            </button>
+                                            <button onclick="startNewChat('requirements')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-file-alt text-green-500"></i>
+                                                <span>Requirements Review</span>
+                                            </button>
+                                            <button onclick="startNewChat('architecture')" class="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-gray-50 rounded-lg transition-colors flex items-center space-x-2">
+                                                <i class="fas fa-sitemap text-orange-500"></i>
+                                                <span>Architecture Planning</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- File Upload Button -->
+                                <div class="relative">
+                                    <input type="file" id="file-upload" class="hidden" multiple accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg">
+                                    <button type="button" onclick="document.getElementById('file-upload').click()" class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-ignis-primary hover:bg-white rounded-lg transition-all" title="Attach files">
+                                        <i class="fas fa-paperclip text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- LLM Selector Badge -->
+                            <div class="relative">
+                                <button type="button" id="llm-selector-badge" onclick="toggleLLMDropdown()" class="flex items-center space-x-1.5 px-2.5 py-1.5 bg-purple-50 text-purple-700 rounded-lg hover:bg-purple-100 transition-all text-xs font-medium">
+                                    <!-- <i class="fas fa-brain text-xs"></i> -->
+                                    <span id="llm-name">GPT-4 Turbo</span>
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </button>
+                                
+                                <!-- LLM Dropdown -->
+                                <div id="llm-dropdown" class="hidden absolute bottom-full left-0 mb-2 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2 max-h-96 overflow-hidden">
+                                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 border-b border-gray-100">Select LLM Model</div>
+                                    <div class="overflow-y-auto max-h-80">
+                                        <!-- OpenAI Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">OpenAI</div>
+                                        <button onclick="selectLLM('GPT-4 Turbo', 'openai')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>GPT-4 Turbo</span>
+                                            <span class="text-xs text-gray-400">128K</span>
+                                        </button>
+                                        <button onclick="selectLLM('GPT-4', 'openai')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>GPT-4</span>
+                                            <span class="text-xs text-gray-400">8K</span>
+                                        </button>
+                                        <button onclick="selectLLM('GPT-3.5 Turbo', 'openai')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>GPT-3.5 Turbo</span>
+                                            <span class="text-xs text-gray-400">16K</span>
+                                        </button>
+                                        
+                                        <!-- Anthropic Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">Anthropic</div>
+                                        <button onclick="selectLLM('Claude 3 Opus', 'anthropic')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Claude 3 Opus</span>
+                                            <span class="text-xs text-gray-400">200K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Claude 3 Sonnet', 'anthropic')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Claude 3 Sonnet</span>
+                                            <span class="text-xs text-gray-400">200K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Claude 3 Haiku', 'anthropic')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Claude 3 Haiku</span>
+                                            <span class="text-xs text-gray-400">200K</span>
+                                        </button>
+                                        
+                                        <!-- Google Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">Google</div>
+                                        <button onclick="selectLLM('Gemini Pro', 'google')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Gemini Pro</span>
+                                            <span class="text-xs text-gray-400">32K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Gemini Ultra', 'google')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Gemini Ultra</span>
+                                            <span class="text-xs text-gray-400">32K</span>
+                                        </button>
+                                        
+                                        <!-- Meta Models -->
+                                        <div class="px-3 py-1 text-xs font-semibold text-gray-400 mt-2">Meta</div>
+                                        <button onclick="selectLLM('Llama 2 70B', 'meta')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Llama 2 70B</span>
+                                            <span class="text-xs text-gray-400">4K</span>
+                                        </button>
+                                        <button onclick="selectLLM('Llama 2 13B', 'meta')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                                            <span>Llama 2 13B</span>
+                                            <span class="text-xs text-gray-400">4K</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Agent Selector Badge -->
+                            <div class="relative">
+                                <button type="button" id="agent-badge" onclick="toggleAgentDropdown()" class="flex items-center space-x-1.5 px-2.5 py-1.5 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-all text-xs font-medium">
+                                    <span id="agent-name">PM</span>
+                                    <i class="fas fa-chevron-down text-xs"></i>
+                                </button>
+                                
+                                <!-- Agent Dropdown -->
+                                <div id="agent-dropdown" class="hidden absolute bottom-full left-0 mb-2 w-56 bg-white border border-gray-200 rounded-xl shadow-xl z-50 py-2">
+                                    <div class="px-3 py-2 text-xs font-semibold text-gray-500 border-b border-gray-100">Select Agent</div>
+                                    <button onclick="selectAgent('Analyst', 'analyst')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>Analyst</span>
+                                    </button>
+                                    <button onclick="selectAgent('Architect', 'architect')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>Architect</span>
+                                    </button>
+                                    <button onclick="selectAgent('BMAD Master', 'bmad-master')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>BMAD Master</span>
+                                    </button>
+                                    <button onclick="selectAgent('BMAD Orchestrator', 'bmad-orchestrator')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>BMAD Orchestrator</span>
+                                    </button>
+                                    <button onclick="selectAgent('Dev', 'dev')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>Dev</span>
+                                    </button>
+                                    <button onclick="selectAgent('PM', 'pm')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>PM</span>
+                                    </button>
+                                    <button onclick="selectAgent('PO', 'po')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>PO</span>
+                                    </button>
+                                    <button onclick="selectAgent('QA', 'qa')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>QA</span>
+                                    </button>
+                                    <button onclick="selectAgent('SM', 'sm')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>SM</span>
+                                    </button>
+                                    <button onclick="selectAgent('UX Expert', 'ux-expert')" class="w-full text-left px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <span>UX Expert</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Text Input -->
+                            <form id="chat-form" class="flex-1 flex items-center">
+                                <input 
+                                    id="chat-input"
+                                    type="text" 
+                                    placeholder="How can I help you today?"
+                                    class="flex-1 bg-transparent text-xs text-gray-900 placeholder-gray-400 outline-none border-none focus:ring-0 px-2"
+                                />
+                                
+                                <!-- Send Button -->
+                                <button type="submit" class="w-9 h-9 flex items-center justify-center bg-gradient-to-br from-ignis-primary to-ignis-accent text-white rounded-lg hover:shadow-lg transition-all flex-shrink-0">
+                                    <i class="fas fa-arrow-up text-xs"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Selected Files Display -->
+                        <div id="selected-files" class="mt-2 text-xs text-gray-500"></div>
+                    </div>
+                </div>
+
+                <!-- Resizer -->
+                <div id="resizer" class="hidden w-1 bg-gray-300 hover:bg-ignis-primary cursor-col-resize transition-colors flex-shrink-0" style="cursor: ew-resize;"></div>
+
+                <!-- Document Viewer Panel (Right Side) -->
+                <div id="document-panel" class="hidden border-l border-gray-200 bg-white flex flex-col overflow-hidden" style="flex: 0 0 50%; min-width: 300px; max-width: 80%;">
+                    <!-- Panel Header -->
+                    <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 flex-shrink-0">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-file-alt text-ignis-primary"></i>
+                            <h3 id="doc-title" class="text-xs font-semibold text-gray-900">Document Viewer</h3>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <!-- Sync Status Indicator -->
+                            <div id="sync-status" class="flex items-center space-x-1.5 text-xs">
+                                <i class="fas fa-cloud-upload-alt text-green-500" id="sync-icon" title="Synced"></i>
+                                <span id="sync-text" class="text-gray-600">Synced</span>
+                            </div>
+                            <!-- Edit Button -->
+                            <button onclick="toggleDocumentEdit()" id="edit-btn" class="text-gray-400 hover:text-gray-600 transition-colors" title="Edit Document">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <!-- Fullscreen Button -->
+                            <button onclick="toggleDocumentFullscreen()" id="fullscreen-btn" class="text-gray-400 hover:text-gray-600 transition-colors" title="Fullscreen">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button onclick="closeDocumentPanel()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Panel Content -->
+                    <div id="doc-content" class="flex-1 overflow-y-auto p-4">
+                        <!-- Content will be dynamically loaded here -->
+                    </div>
+                    
+                    <!-- Markdown Editor (Hidden by default) -->
+                    <div id="doc-editor" class="hidden flex-1 flex flex-col overflow-hidden">
+                        <textarea id="markdown-editor" class="flex-1 p-4 text-xs font-mono border-0 outline-none resize-none" placeholder="Edit document in markdown format..."></textarea>
+                    </div>
+                    
+                    <!-- Panel Footer Actions -->
+                    <div id="view-mode-footer" class="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50 flex-shrink-0">
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 text-xs bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-download"></i>
+                                <span>Download</span>
+                            </button>
+                            <button class="px-3 py-1.5 text-xs bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Share</span>
+                            </button>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="approve-btn" onclick="approveDocument()" class="px-3 py-1.5 text-xs bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Approve</span>
+                            </button>
+                            <button id="sync-btn" onclick="syncToSource()" class="px-3 py-1.5 text-xs bg-gray-400 text-white rounded-lg cursor-not-allowed transition-colors flex items-center gap-1.5" disabled title="Document must be approved before syncing">
+                                <i class="fas fa-sync-alt"></i>
+                                <span>Sync to Source</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Edit Mode Footer -->
+                    <div id="edit-mode-footer" class="hidden flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50 flex-shrink-0">
+                        <div class="text-xs text-gray-600">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            <span>Edit in markdown format. Changes will be saved when you click Save.</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="cancelDocumentEdit()" class="px-3 py-1.5 text-xs bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-times"></i>
+                                <span>Cancel</span>
+                            </button>
+                            <button onclick="saveDocumentEdit()" class="px-3 py-1.5 text-xs bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-save"></i>
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="shared-sidebar.js"></script>
+    
+
+                <script>
+                function toggleProjectDropdown() {
+                    const dropdown = document.getElementById('project-dropdown');
+                    const arrow = document.getElementById('dropdown-arrow');
+                    
+                    dropdown.classList.toggle('hidden');
+                    
+                    if (dropdown.classList.contains('hidden')) {
+                        arrow.style.transform = 'rotate(0deg)';
+                    } else {
+                        arrow.style.transform = 'rotate(180deg)';
+                    }
+                }
+
+                function toggleUserDropdown() {
+                    const dropdown = document.getElementById('user-dropdown');
+                    const arrow = document.getElementById('user-dropdown-arrow');
+                    
+                    dropdown.classList.toggle('hidden');
+                    
+                    if (dropdown.classList.contains('hidden')) {
+                        arrow.style.transform = 'rotate(0deg)';
+                    } else {
+                        arrow.style.transform = 'rotate(180deg)';
+                    }
+                }
+
+                function toggleAgentDropdown() {
+                    const dropdown = document.getElementById('agent-dropdown');
+                    dropdown.classList.toggle('hidden');
+                }
+
+                function toggleNewChatPopup() {
+                    const popup = document.getElementById('new-chat-popup');
+                    popup.classList.toggle('hidden');
+                }
+
+                function toggleLLMDropdown() {
+                    const dropdown = document.getElementById('llm-dropdown');
+                    dropdown.classList.toggle('hidden');
+                }
+
+                let currentLLM = 'GPT-4 Turbo';
+                let currentLLMProvider = 'openai';
+
+                function selectLLM(llmName, provider) {
+                    currentLLM = llmName;
+                    currentLLMProvider = provider;
+                    document.getElementById('llm-name').textContent = llmName;
+                    toggleLLMDropdown();
+                    console.log('Selected LLM:', llmName, 'Provider:', provider);
+                }
+
+                function startNewChat(type) {
+                    console.log('Starting new chat:', type);
+                    // Clear current chat
+                    const chatMessages = document.getElementById('chat-messages');
+                    chatMessages.innerHTML = `
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-robot text-xs"></i>
+                            </div>
+                            <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                                <p class="text-gray-900 text-xs">Hi! I'm ready to help you with ${type === 'blank' ? 'your project' : type.replace('-', ' ')}. What would you like to discuss?</p>
+                            </div>
+                        </div>
+                    `;
+                    toggleNewChatPopup();
+                }
+
+                function loadChatHistory(chatId) {
+                    console.log('Loading chat:', chatId);
+                    alert('Loading chat history: ' + chatId + '\n(This would load the previous conversation)');
+                }
+
+                function viewAllHistory() {
+                    console.log('Viewing all history');
+                    alert('This would open a full history page with all past conversations');
+                }
+
+                let currentAgent = 'PM';
+                let currentAgentType = 'general';
+
+                function selectAgent(agentName, agentType) {
+                    currentAgent = agentName;
+                    currentAgentType = agentType;
+                    document.getElementById('agent-name').textContent = agentName;
+                    toggleAgentDropdown();
+                }
+
+                // Close dropdowns when clicking outside
+                document.addEventListener('click', function(event) {
+                    const dropdown = document.getElementById('project-dropdown');
+                    const button = document.querySelector('[onclick="toggleProjectDropdown()"]');
+                    
+                    if (dropdown && button && !dropdown.contains(event.target) && !button.contains(event.target)) {
+                        dropdown.classList.add('hidden');
+                        const arrow = document.getElementById('dropdown-arrow');
+                        if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    }
+
+                    // Close user dropdown when clicking outside
+                    const userDropdown = document.getElementById('user-dropdown');
+                    const userButton = document.querySelector('[onclick="toggleUserDropdown()"]');
+                    
+                    if (userDropdown && userButton && !userDropdown.contains(event.target) && !userButton.contains(event.target)) {
+                        userDropdown.classList.add('hidden');
+                        const arrow = document.getElementById('user-dropdown-arrow');
+                        if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    }
+
+                    // Close agent dropdown when clicking outside
+                    const agentDropdown = document.getElementById('agent-dropdown');
+                    const agentButton = document.getElementById('agent-badge');
+                    
+                    if (agentDropdown && agentButton && !agentDropdown.contains(event.target) && !agentButton.contains(event.target)) {
+                        agentDropdown.classList.add('hidden');
+                    }
+
+                    // Close new chat popup when clicking outside
+                    const newChatPopup = document.getElementById('new-chat-popup');
+                    const newChatButton = document.getElementById('new-chat-button');
+                    
+                    if (newChatPopup && newChatButton && !newChatPopup.contains(event.target) && !newChatButton.contains(event.target)) {
+                        newChatPopup.classList.add('hidden');
+                    }
+
+                    // Close LLM dropdown when clicking outside
+                    const llmDropdown = document.getElementById('llm-dropdown');
+                    const llmButton = document.getElementById('llm-selector-button');
+                    
+                    if (llmDropdown && llmButton && !llmDropdown.contains(event.target) && !llmButton.contains(event.target)) {
+                        llmDropdown.classList.add('hidden');
+                    }
+                });
+
+                // Document Panel Functions
+                function openDocument(title, type) {
+                    const panel = document.getElementById('document-panel');
+                    const resizer = document.getElementById('resizer');
+                    const docTitle = document.getElementById('doc-title');
+                    const docContent = document.getElementById('doc-content');
+                    const syncIcon = document.getElementById('sync-icon');
+                    const syncText = document.getElementById('sync-text');
+                    
+                    // Set title
+                    docTitle.textContent = title;
+                    
+                    // Load content based on type
+                    const content = getDocumentContent(type);
+                    docContent.innerHTML = content;
+                    
+                    // Update sync status based on document type
+                    if (type === 'market-research') {
+                        // Not synced
+                        syncIcon.className = 'fas fa-cloud text-gray-400';
+                        syncIcon.title = 'Not Synced';
+                        syncText.textContent = 'Not Synced';
+                        syncText.className = 'text-gray-600';
+                    } else {
+                        // Synced
+                        syncIcon.className = 'fas fa-cloud-upload-alt text-green-500';
+                        syncIcon.title = 'Synced';
+                        syncText.textContent = 'Synced';
+                        syncText.className = 'text-gray-600';
+                    }
+                    
+                    // Show panel and resizer
+                    panel.classList.remove('hidden');
+                    resizer.classList.remove('hidden');
+                }
+
+                function closeDocumentPanel() {
+                    const panel = document.getElementById('document-panel');
+                    const resizer = document.getElementById('resizer');
+                    const chatSection = document.getElementById('chat-section');
+                    const docEditor = document.getElementById('doc-editor');
+                    
+                    // Exit edit mode if active
+                    if (!docEditor.classList.contains('hidden')) {
+                        cancelDocumentEdit();
+                    }
+                    
+                    // Exit fullscreen if active
+                    if (panel.classList.contains('fullscreen-mode')) {
+                        toggleDocumentFullscreen();
+                    }
+                    
+                    panel.classList.add('hidden');
+                    resizer.classList.add('hidden');
+                }
+
+                function toggleDocumentFullscreen() {
+                    const panel = document.getElementById('document-panel');
+                    const resizer = document.getElementById('resizer');
+                    const chatSection = document.getElementById('chat-section');
+                    const fullscreenBtn = document.getElementById('fullscreen-btn');
+                    const fullscreenIcon = fullscreenBtn.querySelector('i');
+                    
+                    if (panel.classList.contains('fullscreen-mode')) {
+                        // Exit fullscreen
+                        panel.classList.remove('fullscreen-mode');
+                        panel.style.flex = '0 0 50%';
+                        chatSection.classList.remove('hidden');
+                        resizer.classList.remove('hidden');
+                        fullscreenIcon.className = 'fas fa-expand';
+                        fullscreenBtn.title = 'Fullscreen';
+                    } else {
+                        // Enter fullscreen
+                        panel.classList.add('fullscreen-mode');
+                        panel.style.flex = '1 1 100%';
+                        chatSection.classList.add('hidden');
+                        resizer.classList.add('hidden');
+                        fullscreenIcon.className = 'fas fa-compress';
+                        fullscreenBtn.title = 'Exit Fullscreen';
+                    }
+                }
+
+                function syncToSource() {
+                    const syncBtn = document.getElementById('sync-btn');
+                    
+                    // Check if document is approved
+                    if (syncBtn.disabled) {
+                        alert('Document must be approved before syncing to source.');
+                        return;
+                    }
+                    
+                    const docTitle = document.getElementById('doc-title').textContent;
+                    const syncIcon = document.getElementById('sync-icon');
+                    const syncText = document.getElementById('sync-text');
+                    const syncBtnIcon = syncBtn.querySelector('i');
+                    const syncBtnText = syncBtn.querySelector('span');
+                    
+                    // Disable sync button during process
+                    syncBtn.disabled = true;
+                    syncBtn.classList.add('cursor-not-allowed', 'bg-gray-400');
+                    syncBtn.classList.remove('hover:bg-green-700', 'bg-green-600');
+                    syncBtnIcon.classList.add('fa-spin');
+                    syncBtnText.textContent = 'Syncing...';
+                    
+                    // Update header sync status to syncing
+                    syncIcon.className = 'fas fa-sync-alt fa-spin text-blue-500';
+                    syncText.textContent = 'Syncing...';
+                    syncText.className = 'text-blue-600';
+                    
+                    // Simulate sync process
+                    setTimeout(() => {
+                        // Update header to synced state
+                        syncIcon.className = 'fas fa-cloud-upload-alt text-green-500';
+                        syncText.textContent = 'Synced';
+                        syncText.className = 'text-gray-600';
+                        
+                        // Reset sync button to completed state
+                        syncBtnIcon.classList.remove('fa-spin');
+                        syncBtnIcon.classList.add('fa-check');
+                        syncBtnText.textContent = 'Synced';
+                        syncBtn.classList.add('bg-green-600');
+                        syncBtn.classList.remove('bg-gray-400');
+                        
+                        alert(`"${docTitle}" has been successfully synced to source!`);
+                        
+                        // Add your actual sync logic here
+                        // For example: send data to backend, update database, sync with external system, etc.
+                    }, 2000);
+                }
+
+                function approveDocument() {
+                    const docTitle = document.getElementById('doc-title').textContent;
+                    
+                    // Show confirmation dialog
+                    if (confirm(`Are you sure you want to approve "${docTitle}"?`)) {
+                        // Simulate approval process
+                        const approveBtn = document.getElementById('approve-btn');
+                        const syncBtn = document.getElementById('sync-btn');
+                        const originalHtml = approveBtn.innerHTML;
+                        
+                        // Update button to show processing
+                        approveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Approving...</span>';
+                        approveBtn.disabled = true;
+                        
+                        setTimeout(() => {
+                            // Update approve button to approved state
+                            approveBtn.innerHTML = '<i class="fas fa-check-circle"></i><span>Approved</span>';
+                            approveBtn.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+                            approveBtn.classList.add('bg-green-600', 'cursor-default');
+                            approveBtn.disabled = true;
+                            
+                            // Enable sync button
+                            syncBtn.disabled = false;
+                            syncBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                            syncBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                            syncBtn.title = 'Sync to source';
+                            
+                            alert(`"${docTitle}" has been approved successfully! You can now sync to source.`);
+                            
+                            // Add your actual approval logic here
+                            // For example: update approval status, notify stakeholders, etc.
+                        }, 1500);
+                    }
+                }
+
+                function toggleDocumentEdit() {
+                    const docContent = document.getElementById('doc-content');
+                    const docEditor = document.getElementById('doc-editor');
+                    const markdownEditor = document.getElementById('markdown-editor');
+                    const editBtn = document.getElementById('edit-btn');
+                    const editIcon = editBtn.querySelector('i');
+                    const viewFooter = document.getElementById('view-mode-footer');
+                    const editFooter = document.getElementById('edit-mode-footer');
+                    
+                    if (docEditor.classList.contains('hidden')) {
+                        // Enter edit mode
+                        // Convert HTML content to markdown-like text
+                        const htmlContent = docContent.innerHTML;
+                        const textContent = htmlToMarkdown(htmlContent);
+                        markdownEditor.value = textContent;
+                        
+                        // Switch views
+                        docContent.classList.add('hidden');
+                        docEditor.classList.remove('hidden');
+                        viewFooter.classList.add('hidden');
+                        editFooter.classList.remove('hidden');
+                        
+                        // Update button
+                        editIcon.className = 'fas fa-eye';
+                        editBtn.title = 'Preview';
+                    } else {
+                        // Exit edit mode (preview)
+                        cancelDocumentEdit();
+                    }
+                }
+
+                function htmlToMarkdown(html) {
+                    // Simple conversion from HTML to markdown-like text
+                    let text = html;
+                    
+                    // Remove HTML comments
+                    text = text.replace(/<!--[\s\S]*?-->/g, '');
+                    
+                    // Convert headings
+                    text = text.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
+                    text = text.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n');
+                    text = text.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n\n');
+                    
+                    // Convert paragraphs
+                    text = text.replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n');
+                    
+                    // Convert strong/bold
+                    text = text.replace(/<strong>(.*?)<\/strong>/gi, '**$1**');
+                    
+                    // Convert lists
+                    text = text.replace(/<li[^>]*>(.*?)<\/li>/gi, '• $1\n');
+                    
+                    // Convert divs to line breaks
+                    text = text.replace(/<div[^>]*>/gi, '\n');
+                    text = text.replace(/<\/div>/gi, '');
+                    
+                    // Remove remaining HTML tags
+                    text = text.replace(/<[^>]+>/g, '');
+                    
+                    // Clean up extra whitespace
+                    text = text.replace(/\n{3,}/g, '\n\n');
+                    text = text.trim();
+                    
+                    return text;
+                }
+
+                function markdownToHtml(markdown) {
+                    // Simple conversion from markdown to HTML
+                    let html = markdown;
+                    
+                    // Convert headings
+                    html = html.replace(/^### (.*$)/gim, '<h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">$1</h3>');
+                    html = html.replace(/^## (.*$)/gim, '<h2 class="text-base font-bold text-gray-900 mb-3">$1</h2>');
+                    
+                    // Convert bold
+                    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    
+                    // Convert bullet points
+                    html = html.replace(/^• (.*$)/gim, '<p class="mb-1">• $1</p>');
+                    
+                    // Convert line breaks to paragraphs
+                    html = html.split('\n\n').map(para => {
+                        if (para.trim() && !para.startsWith('<')) {
+                            return `<p class="mb-4">${para}</p>`;
+                        }
+                        return para;
+                    }).join('\n');
+                    
+                    return `<div class="text-xs text-gray-700 leading-relaxed">${html}</div>`;
+                }
+
+                function saveDocumentEdit() {
+                    const docContent = document.getElementById('doc-content');
+                    const docEditor = document.getElementById('doc-editor');
+                    const markdownEditor = document.getElementById('markdown-editor');
+                    const editBtn = document.getElementById('edit-btn');
+                    const editIcon = editBtn.querySelector('i');
+                    const viewFooter = document.getElementById('view-mode-footer');
+                    const editFooter = document.getElementById('edit-mode-footer');
+                    const syncIcon = document.getElementById('sync-icon');
+                    const syncText = document.getElementById('sync-text');
+                    
+                    // Convert markdown to HTML
+                    const markdownContent = markdownEditor.value;
+                    const htmlContent = markdownToHtml(markdownContent);
+                    docContent.innerHTML = htmlContent;
+                    
+                    // Switch views
+                    docEditor.classList.add('hidden');
+                    docContent.classList.remove('hidden');
+                    editFooter.classList.add('hidden');
+                    viewFooter.classList.remove('hidden');
+                    
+                    // Update button
+                    editIcon.className = 'fas fa-edit';
+                    editBtn.title = 'Edit Document';
+                    
+                    // Update sync status to "Not Synced"
+                    syncIcon.className = 'fas fa-cloud text-gray-400';
+                    syncIcon.title = 'Not Synced';
+                    syncText.textContent = 'Not Synced';
+                    syncText.className = 'text-gray-600';
+                }
+
+                function cancelDocumentEdit() {
+                    const docContent = document.getElementById('doc-content');
+                    const docEditor = document.getElementById('doc-editor');
+                    const editBtn = document.getElementById('edit-btn');
+                    const editIcon = editBtn.querySelector('i');
+                    const viewFooter = document.getElementById('view-mode-footer');
+                    const editFooter = document.getElementById('edit-mode-footer');
+                    
+                    // Switch views without saving
+                    docEditor.classList.add('hidden');
+                    docContent.classList.remove('hidden');
+                    editFooter.classList.add('hidden');
+                    viewFooter.classList.remove('hidden');
+                    
+                    // Update button
+                    editIcon.className = 'fas fa-edit';
+                    editBtn.title = 'Edit Document';
+                }
+
+                function getDocumentContent(type) {
+                    const documents = {
+                        'epic-stories': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Epic, Features & User Stories</h2>
+                                <p class="text-gray-600 mb-4">E-commerce Platform - Planning Phase Documentation</p>
+                                
+                                <!-- Epic 1 -->
+                                <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-4 mb-4 border-l-4 border-blue-600">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-sm font-bold text-gray-900 flex items-center">
+                                            <i class="fas fa-layer-group text-blue-600 mr-2"></i>
+                                            Epic 1: User Management & Authentication
+                                        </h3>
+                                        <span class="px-2 py-1 bg-blue-200 text-blue-800 text-xs rounded-full font-semibold">45 Story Points</span>
+                                    </div>
+                                    <p class="text-xs text-gray-700 mb-3">Comprehensive user authentication system with multiple login options and secure session management.</p>
+                                    
+                                    <!-- Feature 1.1 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 1.1: Multi-Channel Authentication
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 1.1.1: Email/Password Registration</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> new user, <strong>I want to</strong> register with my email and password <strong>so that</strong> I can create an account securely.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">5 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 1.1.2: Social Login Integration</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> user, <strong>I want to</strong> sign in using Google/Facebook/Apple <strong>so that</strong> I can quickly access my account without creating new credentials.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">8 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 1.1.3: Two-Factor Authentication</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> security-conscious user, <strong>I want to</strong> enable 2FA <strong>so that</strong> my account has an extra layer of protection.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">5 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 1.2 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 1.2: User Profile Management
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 1.2.1: Profile Creation & Editing</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> registered user, <strong>I want to</strong> edit my profile information <strong>so that</strong> I can keep my details up to date.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">3 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 1.2.2: Address Management</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> user, <strong>I want to</strong> save multiple shipping addresses <strong>so that</strong> I can quickly select delivery locations.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">3 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Epic 2 -->
+                                <div class="bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg p-4 mb-4 border-l-4 border-purple-600">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-sm font-bold text-gray-900 flex items-center">
+                                            <i class="fas fa-layer-group text-purple-600 mr-2"></i>
+                                            Epic 2: Shopping Experience & Product Discovery
+                                        </h3>
+                                        <span class="px-2 py-1 bg-purple-200 text-purple-800 text-xs rounded-full font-semibold">65 Story Points</span>
+                                    </div>
+                                    <p class="text-xs text-gray-700 mb-3">Intuitive product browsing, search, and AI-powered recommendations for personalized shopping experience.</p>
+                                    
+                                    <!-- Feature 2.1 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 2.1: Product Catalog & Search
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.1.1: Advanced Search with Filters</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> shopper, <strong>I want to</strong> search products with multiple filters <strong>so that</strong> I can find exactly what I'm looking for.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">8 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.1.2: Voice Search</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> mobile user, <strong>I want to</strong> search using voice commands <strong>so that</strong> I can find products hands-free.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-gray-100 text-gray-800 text-xs rounded">Priority: Low</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">5 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.1.3: Visual Search</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> user, <strong>I want to</strong> upload an image to find similar products <strong>so that</strong> I can discover items I've seen elsewhere.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">13 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 2.2 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 2.2: AI-Powered Recommendations
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.2.1: Personalized Homepage</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> returning user, <strong>I want to</strong> see personalized product recommendations <strong>so that</strong> I discover items matching my interests.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">13 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.2.2: "Customers Also Bought"</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> shopper, <strong>I want to</strong> see what other customers purchased <strong>so that</strong> I can discover complementary products.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">8 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 2.3 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 2.3: AR Product Visualization
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.3.1: AR Try-On Feature</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> customer, <strong>I want to</strong> visualize products in my space using AR <strong>so that</strong> I can make confident purchase decisions.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">13 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 2.4 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 2.4: Wishlist & Favorites
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 2.4.1: Add to Wishlist</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> user, <strong>I want to</strong> save products to my wishlist <strong>so that</strong> I can purchase them later.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">3 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Epic 3 -->
+                                <div class="bg-gradient-to-r from-green-50 to-green-100 rounded-lg p-4 mb-4 border-l-4 border-green-600">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="text-sm font-bold text-gray-900 flex items-center">
+                                            <i class="fas fa-layer-group text-green-600 mr-2"></i>
+                                            Epic 3: Checkout & Order Management
+                                        </h3>
+                                        <span class="px-2 py-1 bg-green-200 text-green-800 text-xs rounded-full font-semibold">55 Story Points</span>
+                                    </div>
+                                    <p class="text-xs text-gray-700 mb-3">Streamlined checkout process with multiple payment options and comprehensive order tracking.</p>
+                                    
+                                    <!-- Feature 3.1 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 3.1: Shopping Cart
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.1.1: Add/Remove Cart Items</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> shopper, <strong>I want to</strong> add and remove items from my cart <strong>so that</strong> I can manage my purchase selections.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">5 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.1.2: Persistent Cart</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> user, <strong>I want to</strong> access my cart across devices <strong>so that</strong> I can continue shopping seamlessly.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">5 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 3.2 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 3.2: One-Click Checkout
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.2.1: Express Checkout</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> returning customer, <strong>I want to</strong> checkout with one click using saved info <strong>so that</strong> I can complete purchases quickly.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">8 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.2.2: Guest Checkout</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> first-time visitor, <strong>I want to</strong> checkout without creating an account <strong>so that</strong> I can make quick purchases.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">5 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 3.3 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 3.3: Payment Processing
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.3.1: Multiple Payment Methods</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> customer, <strong>I want to</strong> pay with various methods (card/PayPal/Apple Pay) <strong>so that</strong> I can use my preferred payment option.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">13 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.3.2: Buy Now Pay Later</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> shopper, <strong>I want to</strong> split payments using services like Klarna <strong>so that</strong> I can manage my budget better.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">8 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Feature 3.4 -->
+                                    <div class="bg-white rounded-lg p-3 mb-3 border-l-2 border-purple-400">
+                                        <h4 class="text-xs font-semibold text-gray-900 mb-2 flex items-center">
+                                            <i class="fas fa-star text-purple-600 mr-2"></i>
+                                            Feature 3.4: Order Tracking
+                                        </h4>
+                                        <div class="space-y-2 ml-6">
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.4.1: Real-time Order Status</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> customer, <strong>I want to</strong> track my order in real-time <strong>so that</strong> I know when to expect delivery.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded">Priority: High</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">8 SP</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="bg-gray-50 rounded p-2">
+                                                <p class="text-xs font-medium text-gray-900 mb-1"><i class="fas fa-book text-green-600 mr-1"></i> Story 3.4.2: Order History</p>
+                                                <p class="text-xs text-gray-600 mb-1"><strong>As a</strong> user, <strong>I want to</strong> view my past orders <strong>so that</strong> I can reorder or check previous purchases.</p>
+                                                <div class="flex gap-2 mt-2">
+                                                    <span class="px-2 py-0.5 bg-yellow-100 text-yellow-800 text-xs rounded">Priority: Medium</span>
+                                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 text-xs rounded">3 SP</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Summary Section -->
+                                <div class="bg-gray-100 rounded-lg p-4 mt-6">
+                                    <h3 class="text-sm font-bold text-gray-900 mb-3">Project Summary</h3>
+                                    <div class="grid grid-cols-3 gap-4">
+                                        <div class="text-center">
+                                            <p class="text-2xl font-bold text-blue-600">3</p>
+                                            <p class="text-xs text-gray-600">Epics</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-2xl font-bold text-purple-600">12</p>
+                                            <p class="text-xs text-gray-600">Features</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-2xl font-bold text-green-600">24</p>
+                                            <p class="text-xs text-gray-600">User Stories</p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 pt-4 border-t border-gray-300">
+                                        <p class="text-xs text-gray-700 mb-2"><strong>Total Story Points:</strong> 165 SP</p>
+                                        <p class="text-xs text-gray-700 mb-2"><strong>Estimated Duration:</strong> 6 sprints (12 weeks)</p>
+                                        <p class="text-xs text-gray-700"><strong>Team Velocity:</strong> ~27 SP per sprint</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `,
+                        'config': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Project Configuration</h2>
+                                <p class="mb-4">Initial project setup and configuration completed.</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Project Details</h3>
+                                <p class="mb-1"><strong>Project Name:</strong> E-commerce Platform Revamp</p>
+                                <p class="mb-1"><strong>Project Type:</strong> Web Application</p>
+                                <p class="mb-1"><strong>Timeline:</strong> 6 months</p>
+                                <p class="mb-1"><strong>Team Size:</strong> 12 members</p>
+                                <p class="mb-4"><strong>Budget:</strong> $500K</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Tech Stack Selected</h3>
+                                <p class="mb-1">• Frontend: React.js, Next.js, Tailwind CSS</p>
+                                <p class="mb-1">• Backend: Node.js, Express.js</p>
+                                <p class="mb-1">• Database: PostgreSQL, Redis, MongoDB</p>
+                                <p class="mb-1">• Cloud: AWS</p>
+                                <p class="mb-4">• DevOps: Docker, Kubernetes, GitHub Actions</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Team Roles</h3>
+                                <p class="mb-1">• Product Manager (1)</p>
+                                <p class="mb-1">• Product Owner (1)</p>
+                                <p class="mb-1">• Scrum Master (1)</p>
+                                <p class="mb-1">• Frontend Developers (3)</p>
+                                <p class="mb-1">• Backend Developers (3)</p>
+                                <p class="mb-1">• UX Designer (1)</p>
+                                <p class="mb-1">• QA Engineers (2)</p>
+                            </div>
+                        `,
+                        'brainstorming': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Brainstorming Session Results</h2>
+                                <p class="mb-4">Generated 15+ innovative ideas for the e-commerce platform.</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Top 5 Features</h3>
+                                
+                                <p class="font-semibold mt-3 mb-1">1. AI-Powered Personalization</p>
+                                <p class="mb-3">Machine learning algorithms to recommend products based on user behavior, preferences, and purchase history.</p>
+                                
+                                <p class="font-semibold mb-1">2. One-Click Checkout</p>
+                                <p class="mb-3">Streamlined checkout process with saved preferences, reducing cart abandonment by 30%.</p>
+                                
+                                <p class="font-semibold mb-1">3. Social Shopping & Live Streaming</p>
+                                <p class="mb-3">Integrate social features and live product demonstrations to boost engagement.</p>
+                                
+                                <p class="font-semibold mb-1">4. AR Product Visualization</p>
+                                <p class="mb-3">Allow customers to visualize products in their space before purchasing.</p>
+                                
+                                <p class="font-semibold mb-1">5. Gamified Loyalty Program</p>
+                                <p class="mb-4">Reward points, badges, and exclusive perks to increase customer retention.</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Additional Ideas</h3>
+                                <p class="mb-1">• Voice-activated search and shopping</p>
+                                <p class="mb-1">• Subscription boxes for regular purchases</p>
+                                <p class="mb-1">• Virtual personal shopper assistant</p>
+                                <p class="mb-1">• Sustainability score for products</p>
+                                <p class="mb-1">• Multi-currency and multi-language support</p>
+                            </div>
+                        `,
+                        'market-research': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Market Research Report</h2>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Target Audience</h3>
+                                
+                                <p class="font-semibold mt-3 mb-1">Primary Segment</p>
+                                <p class="mb-1"><strong>Age:</strong> 25-45 years old</p>
+                                <p class="mb-1"><strong>Profile:</strong> Tech-savvy professionals, value convenience and quality</p>
+                                <p class="mb-3"><strong>Behavior:</strong> Shop online 2-3 times per week, average order value $85</p>
+                                
+                                <p class="font-semibold mb-1">Secondary Segment</p>
+                                <p class="mb-1"><strong>Age:</strong> 18-24 years old</p>
+                                <p class="mb-1"><strong>Profile:</strong> Early adopters, highly active on social media</p>
+                                <p class="mb-4"><strong>Behavior:</strong> Influenced by trends, prefer mobile shopping</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Market Size & Opportunity</h3>
+                                <p class="mb-1"><strong>TAM (Total Addressable Market):</strong> $5.2 Billion</p>
+                                <p class="mb-1"><strong>SAM (Serviceable Addressable Market):</strong> $1.8 Billion</p>
+                                <p class="mb-1"><strong>SOM (Serviceable Obtainable Market):</strong> $280 Million (Year 1)</p>
+                                <p class="mb-4"><strong>Expected Growth:</strong> 15% CAGR over next 5 years</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Key Market Trends</h3>
+                                <p class="mb-1">• <strong>Mobile-First:</strong> 68% of traffic comes from mobile devices</p>
+                                <p class="mb-1">• <strong>Sustainability:</strong> 72% of consumers prefer eco-friendly brands</p>
+                                <p class="mb-1">• <strong>Social Commerce:</strong> 55% discover products through social media</p>
+                                <p class="mb-1">• <strong>Voice & Visual Search:</strong> Growing adoption of new search methods</p>
+                                <p class="mb-4">• <strong>Fast Delivery:</strong> Same-day delivery increasingly expected</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Consumer Pain Points</h3>
+                                <p class="mb-1">• Complicated checkout processes (38% cart abandonment)</p>
+                                <p class="mb-1">• Poor product search and filtering</p>
+                                <p class="mb-1">• Lack of personalization</p>
+                                <p class="mb-1">• Limited payment options</p>
+                                <p class="mb-1">• Slow customer support response</p>
+                            </div>
+                        `,
+                        'competitor-analysis': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Competitive Analysis</h2>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Competitor A - Market Leader (⭐ 4.2/5)</h3>
+                                <p class="mb-1"><strong>Market Share:</strong> 35%</p>
+                                <p class="mb-1"><strong>Users:</strong> 5M+ active users</p>
+                                <p class="mb-1"><strong>Strengths:</strong> Strong mobile app, brand recognition, wide product range</p>
+                                <p class="mb-1"><strong>Weaknesses:</strong> Poor personalization, slow checkout, limited payment options</p>
+                                <p class="mb-4"><strong>Pricing:</strong> Mid-range, competitive</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Competitor B - Fast Growing (⭐ 4.5/5)</h3>
+                                <p class="mb-1"><strong>Market Share:</strong> 18%</p>
+                                <p class="mb-1"><strong>Users:</strong> 2.5M+ active users</p>
+                                <p class="mb-1"><strong>Strengths:</strong> Excellent UX, modern design, fast delivery</p>
+                                <p class="mb-1"><strong>Weaknesses:</strong> Limited payment gateways, smaller product catalog</p>
+                                <p class="mb-4"><strong>Pricing:</strong> Premium positioning</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Competitor C - Budget Option (⭐ 3.9/5)</h3>
+                                <p class="mb-1"><strong>Market Share:</strong> 12%</p>
+                                <p class="mb-1"><strong>Users:</strong> 1.8M+ active users</p>
+                                <p class="mb-1"><strong>Strengths:</strong> Low prices, wide variety, frequent discounts</p>
+                                <p class="mb-1"><strong>Weaknesses:</strong> Outdated UI, slow checkout, poor mobile experience</p>
+                                <p class="mb-4"><strong>Pricing:</strong> Budget-focused</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Our Competitive Advantage</h3>
+                                <p class="mb-1">• AI-powered personalization (unique differentiator)</p>
+                                <p class="mb-1">• Streamlined one-click checkout</p>
+                                <p class="mb-1">• Modern, intuitive UI/UX</p>
+                                <p class="mb-1">• Multiple payment options (including crypto)</p>
+                                <p class="mb-1">• Competitive pricing with premium experience</p>
+                                <p class="mb-1">• Social commerce integration</p>
+                                <p class="mb-1">• AR product visualization</p>
+                            </div>
+                        `,
+                        'prd': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Product Requirements Document</h2>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Functional Requirements</h3>
+                                
+                                <p class="font-semibold mt-3 mb-1">1. User Authentication & Authorization</p>
+                                <p class="mb-1">• Email/password login</p>
+                                <p class="mb-1">• Social login (Google, Facebook, Apple)</p>
+                                <p class="mb-1">• Single Sign-On (SSO) for enterprise</p>
+                                <p class="mb-1">• Two-factor authentication</p>
+                                <p class="mb-3">• Role-based access control</p>
+                                
+                                <p class="font-semibold mb-1">2. Product Catalog & Search</p>
+                                <p class="mb-1">• Advanced search with filters</p>
+                                <p class="mb-1">• Category browsing</p>
+                                <p class="mb-1">• Voice search capability</p>
+                                <p class="mb-1">• Visual search (image-based)</p>
+                                <p class="mb-3">• Product comparison tool</p>
+                                
+                                <p class="font-semibold mb-1">3. AI Recommendation Engine</p>
+                                <p class="mb-1">• Personalized product suggestions</p>
+                                <p class="mb-1">• Behavior-based recommendations</p>
+                                <p class="mb-1">• "Frequently bought together" feature</p>
+                                <p class="mb-3">• Dynamic homepage personalization</p>
+                                
+                                <p class="font-semibold mb-1">4. Shopping Cart & Checkout</p>
+                                <p class="mb-1">• Add/remove/update cart items</p>
+                                <p class="mb-1">• Persistent cart across devices</p>
+                                <p class="mb-1">• One-click checkout</p>
+                                <p class="mb-1">• Guest checkout option</p>
+                                <p class="mb-3">• Promo code application</p>
+                                
+                                <p class="font-semibold mb-1">5. Payment Processing</p>
+                                <p class="mb-1">• Multiple payment gateways (Stripe, PayPal)</p>
+                                <p class="mb-1">• Digital wallets (Apple Pay, Google Pay)</p>
+                                <p class="mb-1">• Buy now, pay later (Klarna, Afterpay)</p>
+                                <p class="mb-1">• Cryptocurrency support</p>
+                                <p class="mb-4">• Saved payment methods</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Non-Functional Requirements</h3>
+                                
+                                <p class="font-semibold mt-3 mb-1">Performance</p>
+                                <p class="mb-1">• Page load time: &lt;2s on desktop, &lt;3s on mobile</p>
+                                <p class="mb-1">• API response time: &lt;200ms (95th percentile)</p>
+                                <p class="mb-3">• Support 10,000+ concurrent users</p>
+                                
+                                <p class="font-semibold mb-1">Reliability</p>
+                                <p class="mb-1">• 99.9% uptime SLA</p>
+                                <p class="mb-1">• Automated backup every 6 hours</p>
+                                <p class="mb-3">• Disaster recovery plan with &lt;1 hour RTO</p>
+                                
+                                <p class="font-semibold mb-1">Security</p>
+                                <p class="mb-1">• GDPR compliant</p>
+                                <p class="mb-1">• PCI-DSS Level 1 certification</p>
+                                <p class="mb-1">• End-to-end encryption for sensitive data</p>
+                                <p class="mb-3">• Regular security audits</p>
+                                
+                                <p class="font-semibold mb-1">Accessibility</p>
+                                <p class="mb-1">• WCAG 2.1 Level AA compliance</p>
+                                <p class="mb-1">• Screen reader compatible</p>
+                                <p class="mb-1">• Keyboard navigation support</p>
+                            </div>
+                        `,
+                        'architecture': `
+                            <div class="text-xs text-gray-700 leading-relaxed">
+                                <h2 class="text-base font-bold text-gray-900 mb-3">Technical Architecture</h2>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">System Architecture Overview</h3>
+                                <p class="mb-4">Microservices-based architecture with event-driven communication, designed for scalability and resilience.</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Frontend Layer</h3>
+                                <p class="mb-1">• <strong>Framework:</strong> React.js 18 with Next.js 14 (SSR/SSG)</p>
+                                <p class="mb-1">• <strong>Styling:</strong> Tailwind CSS + Shadcn UI components</p>
+                                <p class="mb-1">• <strong>State Management:</strong> Redux Toolkit + React Query</p>
+                                <p class="mb-1">• <strong>Build Tool:</strong> Webpack 5 with module federation</p>
+                                <p class="mb-4">• <strong>Testing:</strong> Jest + React Testing Library + Cypress</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Backend Services</h3>
+                                <p class="mb-1">• <strong>Runtime:</strong> Node.js 20 LTS</p>
+                                <p class="mb-1">• <strong>Framework:</strong> Express.js with TypeScript</p>
+                                <p class="mb-1">• <strong>API:</strong> RESTful + GraphQL (Apollo Server)</p>
+                                <p class="mb-1">• <strong>Authentication:</strong> JWT + OAuth 2.0 + Passport.js</p>
+                                <p class="mb-4">• <strong>Real-time:</strong> WebSockets (Socket.io)</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Data Layer</h3>
+                                <p class="mb-1">• <strong>Primary Database:</strong> PostgreSQL 15 (user data, orders)</p>
+                                <p class="mb-1">• <strong>Cache:</strong> Redis 7 (sessions, temporary data)</p>
+                                <p class="mb-1">• <strong>Search Engine:</strong> Elasticsearch 8 (product search)</p>
+                                <p class="mb-1">• <strong>Document Store:</strong> MongoDB (product catalog)</p>
+                                <p class="mb-4">• <strong>Object Storage:</strong> AWS S3 (images, assets)</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">AI/ML Services</h3>
+                                <p class="mb-1">• <strong>Framework:</strong> Python 3.11 + TensorFlow 2.x</p>
+                                <p class="mb-1">• <strong>Recommendation Engine:</strong> Collaborative filtering + Content-based</p>
+                                <p class="mb-1">• <strong>Deployment:</strong> AWS SageMaker</p>
+                                <p class="mb-4">• <strong>Image Recognition:</strong> Computer Vision for visual search</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Infrastructure & DevOps</h3>
+                                <p class="mb-1">• <strong>Cloud Provider:</strong> AWS (EC2, RDS, S3, CloudFront)</p>
+                                <p class="mb-1">• <strong>Containers:</strong> Docker + Kubernetes (EKS)</p>
+                                <p class="mb-1">• <strong>CI/CD:</strong> GitHub Actions + ArgoCD</p>
+                                <p class="mb-1">• <strong>Monitoring:</strong> Datadog + Sentry + CloudWatch</p>
+                                <p class="mb-1">• <strong>Message Queue:</strong> RabbitMQ for async processing</p>
+                                <p class="mb-4">• <strong>CDN:</strong> CloudFront for global content delivery</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Key Architecture Patterns</h3>
+                                <p class="mb-1">• <strong>Microservices:</strong> Independent services for user, product, order, payment</p>
+                                <p class="mb-1">• <strong>API Gateway:</strong> Single entry point with rate limiting and authentication</p>
+                                <p class="mb-1">• <strong>Event-Driven:</strong> RabbitMQ for async communication between services</p>
+                                <p class="mb-1">• <strong>CQRS:</strong> Separate read/write models for high-traffic operations</p>
+                                <p class="mb-1">• <strong>Circuit Breaker:</strong> Resilience4j for fault tolerance</p>
+                                <p class="mb-4">• <strong>Service Mesh:</strong> Istio for service-to-service communication</p>
+                                
+                                <h3 class="text-xs font-semibold text-gray-900 mb-2 mt-4">Security Measures</h3>
+                                <p class="mb-1">• TLS 1.3 encryption for all communications</p>
+                                <p class="mb-1">• WAF (Web Application Firewall) for DDoS protection</p>
+                                <p class="mb-1">• Secrets management with AWS Secrets Manager</p>
+                                <p class="mb-1">• Regular penetration testing and vulnerability scans</p>
+                                <p class="mb-1">• Zero-trust network architecture</p>
+                            </div>
+                        `
+                    };
+                    
+                    return documents[type] || '<p class="text-xs text-gray-700">Document content not available.</p>';
+                }
+
+                // Resizable Panel Logic
+                let isResizing = false;
+                const resizer = document.getElementById('resizer');
+                const panel = document.getElementById('document-panel');
+                const chatSection = document.getElementById('chat-section');
+                const container = document.querySelector('.flex-1.flex.bg-white');
+
+                resizer.addEventListener('mousedown', function(e) {
+                    isResizing = true;
+                    document.body.style.cursor = 'ew-resize';
+                    document.body.style.userSelect = 'none';
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (!isResizing) return;
+
+                    const containerRect = container.getBoundingClientRect();
+                    const containerWidth = containerRect.width;
+                    const mouseX = e.clientX - containerRect.left;
+                    
+                    // Calculate panel width (right side)
+                    const panelWidth = containerWidth - mouseX;
+                    const panelWidthPercent = (panelWidth / containerWidth) * 100;
+                    
+                    // Enforce min (20%) and max (80%) constraints
+                    if (panelWidthPercent >= 20 && panelWidthPercent <= 80) {
+                        panel.style.flex = `0 0 ${panelWidthPercent}%`;
+                    }
+                });
+
+                document.addEventListener('mouseup', function() {
+                    if (isResizing) {
+                        isResizing = false;
+                        document.body.style.cursor = '';
+                        document.body.style.userSelect = '';
+                    }
+                });
+                </script>
+
+    <script>
+        // Page-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Phase completion based on progress
+            const progressPercentage = parseInt(document.getElementById('progress-percentage').textContent);
+            
+            // Define phase completion thresholds
+            const phaseThresholds = {
+                'ideation': 20,
+                'product-definition': 40,
+                'planning': 60,
+                'implementation': 80,
+                'deployment': 100
+            };
+            
+            // Update phase completion status
+            function updatePhaseCompletion() {
+                document.querySelectorAll('.phase-section').forEach(phaseSection => {
+                    const phaseName = phaseSection.getAttribute('data-phase');
+                    const threshold = phaseThresholds[phaseName];
+                    
+                    if (threshold && progressPercentage >= threshold) {
+                        // Mark phase as complete
+                        const phaseIcon = phaseSection.querySelector('.phase-complete-icon');
+                        if (phaseIcon) {
+                            phaseIcon.classList.remove('hidden');
+                        }
+                        
+                        // Mark all submenus as complete
+                        const submenuIcons = phaseSection.querySelectorAll('.submenu-complete-icon');
+                        submenuIcons.forEach(icon => {
+                            icon.classList.remove('hidden');
+                        });
+                    }
+                });
+            }
+            
+            // Initialize phase completion
+            updatePhaseCompletion();
+            
+            // Phase toggle functionality - For Artifacts section
+            const phaseToggles = document.querySelectorAll('.phase-toggle');
+            
+            phaseToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const phaseSection = this.closest('.phase-section');
+                    const submenu = phaseSection.querySelector('.phase-submenu');
+                    const chevron = this.querySelector('.fa-chevron-down');
+                    
+                    if (submenu && chevron) {
+                        // Toggle submenu visibility
+                        submenu.classList.toggle('hidden');
+                        
+                        // Rotate chevron
+                        if (submenu.classList.contains('hidden')) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        } else {
+                            chevron.style.transform = 'rotate(180deg)';
+                        }
+                    }
+                });
+            });
+            
+            // Document toggle functionality - For individual documents
+            const documentToggles = document.querySelectorAll('.document-toggle');
+            
+            documentToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const documentSection = this.closest('.document-section');
+                    const versionSubmenu = documentSection.querySelector('.version-submenu');
+                    const chevron = this.querySelector('.fa-chevron-down');
+                    
+                    if (versionSubmenu && chevron) {
+                        // Toggle version submenu visibility
+                        versionSubmenu.classList.toggle('hidden');
+                        
+                        // Rotate chevron
+                        if (versionSubmenu.classList.contains('hidden')) {
+                            chevron.style.transform = 'rotate(0deg)';
+                        } else {
+                            chevron.style.transform = 'rotate(180deg)';
+                        }
+                    }
+                });
+            });
+            
+            // Mobile and tablet menu functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const sidebar = document.getElementById('sidebar');
+            let sidebarOverlay = null;
+            
+            function toggleMobileSidebar() {
+                const isOpen = sidebar.classList.contains('translate-x-0');
+                
+                if (isOpen) {
+                    // Close sidebar
+                    sidebar.classList.remove('translate-x-0');
+                    sidebar.classList.add('-translate-x-full');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.remove();
+                        sidebarOverlay = null;
+                    }
+                } else {
+                    // Open sidebar
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebar.classList.add('translate-x-0');
+                    
+                    // Create overlay only for mobile/tablet
+                    if (window.innerWidth < 1024) {
+                        sidebarOverlay = document.createElement('div');
+                        sidebarOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 z-30';
+                        sidebarOverlay.addEventListener('click', toggleMobileSidebar);
+                        document.body.appendChild(sidebarOverlay);
+                    }
+                }
+            }
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', toggleMobileSidebar);
+            }
+            
+            // Close mobile/tablet sidebar when clicking on nav links
+            document.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 1024 && sidebar.classList.contains('translate-x-0')) {
+                        toggleMobileSidebar();
+                    }
+                });
+            });
+            
+            // Handle window resize to ensure proper sidebar behavior
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 1024) {
+                    // Desktop - ensure sidebar is visible and remove overlay
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebar.classList.add('translate-x-0');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.remove();
+                        sidebarOverlay = null;
+                    }
+                } else if (window.innerWidth < 1024) {
+                    // Mobile/tablet - hide sidebar by default
+                    if (!sidebar.classList.contains('translate-x-0')) {
+                        sidebar.classList.add('-translate-x-full');
+                        sidebar.classList.remove('translate-x-0');
+                    }
+                }
+            });
+
+            // Chat functionality
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const chatMessages = document.getElementById('chat-messages');
+            const fileUpload = document.getElementById('file-upload');
+            const selectedFilesDiv = document.getElementById('selected-files');
+            const agentSelector = document.getElementById('agent-selector');
+            let uploadedFiles = [];
+
+            // File upload handler
+            if (fileUpload) {
+                fileUpload.addEventListener('change', function(e) {
+                    const files = Array.from(e.target.files);
+                    uploadedFiles = files;
+                    
+                    if (files.length > 0) {
+                        const fileNames = files.map(f => f.name).join(', ');
+                        selectedFilesDiv.innerHTML = `
+                            <span class="inline-flex items-center space-x-1">
+                                <i class="fas fa-file text-ignis-primary"></i>
+                                <span>${files.length} file(s) selected</span>
+                                <button type="button" onclick="clearFiles()" class="ml-2 text-red-500 hover:text-red-700">
+                                    <i class="fas fa-times text-xs"></i>
+                                </button>
+                            </span>
+                        `;
+                    } else {
+                        selectedFilesDiv.innerHTML = '';
+                    }
+                });
+            }
+
+            // Clear files function
+            window.clearFiles = function() {
+                uploadedFiles = [];
+                fileUpload.value = '';
+                selectedFilesDiv.innerHTML = '';
+            };
+
+            // Agent change handler
+            if (agentSelector) {
+                agentSelector.addEventListener('change', function(e) {
+                    const agent = e.target.options[e.target.selectedIndex].text;
+                    console.log('Selected agent:', agent);
+                    // You can add visual feedback here if needed
+                });
+            }
+
+            if (chatForm) {
+                chatForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const message = chatInput.value.trim();
+                    if (!message && uploadedFiles.length === 0) return;
+                    
+                    const selectedAgent = currentAgent; // Use global currentAgent variable
+                    
+                    // Check if user is asking to generate epic/stories
+                    const lowerMessage = message.toLowerCase();
+                    const isEpicGeneration = lowerMessage === 'yes' || lowerMessage.includes('generate') || 
+                        lowerMessage.includes('epic') || lowerMessage.includes('stories') ||
+                        lowerMessage.includes('planning') || lowerMessage.includes('ready');
+                    
+                    // Add user message (without agent name if it's epic generation)
+                    addUserMessage(message, uploadedFiles, isEpicGeneration ? '' : selectedAgent);
+                    
+                    // Clear input
+                    chatInput.value = '';
+                    clearFiles();
+                    
+                    if (isEpicGeneration) {
+                        // Show generating message
+                        setTimeout(() => {
+                            addAIGeneratingMessage();
+                        }, 500);
+                        
+                        // Generate and show epic/stories after processing time
+                        setTimeout(() => {
+                            generateEpicAndStories();
+                        }, 3000);
+                    } else {
+                        // Simulate normal AI response
+                        setTimeout(() => {
+                            addAIResponse(message, selectedAgent);
+                        }, 1000);
+                    }
+                });
+            }
+
+            function addUserMessage(message, files = [], agent = '') {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3 justify-end';
+                
+                let filesHtml = '';
+                if (files.length > 0) {
+                    filesHtml = `
+                        <div class="mt-2 space-y-1">
+                            ${files.map(file => `
+                                <div class="flex items-center space-x-2 text-xs bg-white/20 rounded px-2 py-1">
+                                    <i class="fas fa-file"></i>
+                                    <span>${escapeHtml(file.name)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+                
+                // Only show agent name if it's provided and not empty
+                const agentHtml = agent ? `<div class="mt-2 text-xs opacity-75"><i class="fas fa-user-tie mr-1"></i>${escapeHtml(agent)}</div>` : '';
+                
+                messageDiv.innerHTML = `
+                    <div class="bg-ignis-primary text-white rounded-lg rounded-tr-none p-3 max-w-xs shadow-sm">
+                        ${message ? `<p class="text-xs">${escapeHtml(message)}</p>` : ''}
+                        ${filesHtml}
+                        ${agentHtml}
+                    </div>
+                    <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fa-regular fa-user text-gray-600 text-xs"></i>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function addAIResponse(userMessage, agent = '') {
+                const agentResponses = {
+                    'Ideation Specialist': [
+                        "Great idea! Let me help you explore this concept further with some brainstorming techniques.",
+                        "I can assist with market research and competitor analysis for this idea.",
+                        "Let's validate this concept and identify your target audience."
+                    ],
+                    'Requirements Analyst': [
+                        "I'll help you create comprehensive requirements documentation.",
+                        "Let me break down the functional and non-functional requirements for this.",
+                        "I can generate a detailed PRD based on your specifications."
+                    ],
+                    'Technical Architect': [
+                        "Let me design the technical architecture for your system.",
+                        "I'll help you choose the right technology stack for this project.",
+                        "I can create scalable architecture diagrams and technical specifications."
+                    ],
+                    'Planning Expert': [
+                        "I'll help you create a detailed project roadmap with milestones.",
+                        "Let me break this down into epics and user stories.",
+                        "I can assist with sprint planning and resource allocation."
+                    ],
+                    'Design Consultant': [
+                        "I'll help you create a comprehensive design system.",
+                        "Let me assist with wireframes and UI/UX specifications.",
+                        "I can provide design guidelines and component libraries."
+                    ],
+                    'Development Advisor': [
+                        "I can help with code structure and development best practices.",
+                        "Let me assist with setting up your development environment.",
+                        "I'll provide guidance on coding standards and patterns."
+                    ],
+                    'Testing Specialist': [
+                        "I'll create comprehensive test cases for your application.",
+                        "Let me help with test strategy and quality assurance planning.",
+                        "I can assist with automated testing and coverage analysis."
+                    ],
+                    'Deployment Expert': [
+                        "I'll help you create a deployment strategy and checklist.",
+                        "Let me assist with CI/CD pipeline configuration.",
+                        "I can provide guidance on production environment setup."
+                    ]
+                };
+                
+                const defaultResponses = [
+                    "That's a great question! Let me help you with that.",
+                    "I can definitely assist you with that. Here's what I suggest...",
+                    "Great! I'm analyzing your request and preparing a response.",
+                    "I understand. Let me provide you with some insights on this.",
+                    "Excellent point! Here's what you need to know..."
+                ];
+                
+                const responses = agentResponses[agent] || defaultResponses;
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3';
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                        ${agent !== 'General Assistant' ? `<div class="text-xs font-semibold text-ignis-primary mb-2"><i class="fas fa-user-tie mr-1"></i>${escapeHtml(agent)}</div>` : ''}
+                        <p class="text-gray-900 text-xs">${randomResponse}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function escapeHtml(text) {
+                const map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, m => map[m]);
+            }
+
+            // Add AI generating message
+            function addAIGeneratingMessage() {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3';
+                messageDiv.id = 'generating-message';
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                        <div class="flex items-center space-x-2">
+                            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-ignis-primary"></div>
+                            <p class="text-gray-900 text-xs">Generating Epic, Features & Stories based on your PRD and Architecture...</p>
+                        </div>
+                        <p class="text-gray-500 text-xs mt-2">This may take a few moments...</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Generate Epic and Stories
+            function generateEpicAndStories() {
+                // Remove generating message
+                const generatingMsg = document.getElementById('generating-message');
+                if (generatingMsg) {
+                    generatingMsg.remove();
+                }
+
+                // Add completion message with button to view document
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'flex items-start space-x-3';
+                messageDiv.innerHTML = `
+                    <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-xs"></i>
+                    </div>
+                    <div class="bg-white rounded-lg rounded-tl-none p-3 max-w-2xl shadow-sm">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <i class="fas fa-check-circle text-green-500"></i>
+                            <p class="text-gray-900 text-xs font-semibold">Planning Phase Complete!</p>
+                        </div>
+                        <p class="text-gray-700 text-xs mb-3">I've successfully generated 3 Epics with 12 Features and 45 User Stories for your E-commerce Platform project.</p>
+                        
+                        <div class="bg-blue-50 rounded-lg p-3 mb-3">
+                            <p class="text-xs font-semibold text-gray-900 mb-2">Summary:</p>
+                            <div class="space-y-1 text-xs text-gray-700">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-layer-group text-blue-600"></i>
+                                    <span><strong>3 Epics:</strong> User Management, Shopping Experience, Order Processing</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-star text-purple-600"></i>
+                                    <span><strong>12 Features</strong> mapped to business requirements</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-book text-green-600"></i>
+                                    <span><strong>45 User Stories</strong> ready for sprint planning</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex gap-2 mt-3">
+                            <button onclick="openDocument('Epic, Features & Stories', 'epic-stories')" class="px-3 py-1.5 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-file-alt"></i>
+                                <span>View Full Document</span>
+                            </button>
+                            <button onclick="downloadDocument('epic-stories')" class="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-download"></i>
+                                <span>Download</span>
+                            </button>
+                            <button onclick="exportToJira()" class="px-3 py-1.5 bg-green-100 text-green-700 text-xs rounded-lg hover:bg-green-200 transition-colors flex items-center gap-1.5">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Export to Jira</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Automatically open the document in the right panel
+                setTimeout(() => {
+                    openDocument('Epic, Features & Stories', 'epic-stories');
+                }, 500);
+            }
+
+            // Download document function
+            window.downloadDocument = function(type) {
+                alert('Downloading document...\n(This would generate a PDF/DOCX file with all the content)');
+            };
+
+            // Export to Jira function
+            window.exportToJira = function() {
+                alert('Exporting to Jira...\n(This would integrate with Jira API to create epics and stories)');
+            };
+        });
+    </script>
+
+</body>
+</html>

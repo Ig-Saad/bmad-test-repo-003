@@ -1,0 +1,57 @@
+{
+  "name": "@bmad-platform/monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BMad v6-Powered SDLC Platform - Monorepo Root",
+  "workspaces": [
+    "src/backend",
+    "src/frontend",
+    "src/shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --workspace=src/backend",
+    "dev:frontend": "npm run dev --workspace=src/frontend",
+    "build": "npm run build --workspaces",
+    "build:backend": "npm run build --workspace=src/backend",
+    "build:frontend": "npm run build --workspace=src/frontend",
+    "test": "npm run test --workspaces",
+    "test:backend": "npm run test --workspace=src/backend",
+    "test:frontend": "npm run test --workspace=src/frontend",
+    "test:shared": "npm run test --workspace=src/shared",
+    "lint": "npm run lint --workspaces",
+    "format": "npm run format --workspaces",
+    "type-check": "npm run type-check --workspaces",
+    "db:migrate": "npm run db:migrate --workspace=src/backend",
+    "db:generate": "npm run db:generate --workspace=src/backend",
+    "db:studio": "npm run db:studio --workspace=src/backend",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.dev.yml down",
+    "docker:clean": "docker-compose -f docker-compose.dev.yml down -v",
+    "setup": "npm install && npm run docker:dev && npm run db:generate && npm run db:migrate",
+    "clean": "npm run docker:down && rm -rf node_modules src/*/node_modules",
+    "type-check:shared": "npm run type-check --workspace=src/shared"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  },
+  "engines": {
+    "node": ">=20.17.0",
+    "npm": ">=10.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/bmad-platform.git"
+  },
+  "keywords": [
+    "bmad",
+    "sdlc",
+    "agile",
+    "project-management",
+    "ai-powered",
+    "workflow-automation"
+  ],
+  "author": "BMad Platform Team",
+  "license": "MIT"
+}

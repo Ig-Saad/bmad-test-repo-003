@@ -1,0 +1,33 @@
+{
+  "name": "@bmad-platform/shared",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BMad v6-Powered SDLC Platform - Shared Types & Utilities",
+  "main": "index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "typescript": "5.5.4",
+    "@types/node": "^20.16.10",
+    "eslint": "^8.57.1",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "prettier": "^3.3.3",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.13"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "engines": {
+    "node": ">=20.17.0",
+    "npm": ">=10.8.0"
+  }
+}

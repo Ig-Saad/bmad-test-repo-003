@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SDLC Portal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'ignis-primary': '#3B82F6',      // Blue from logo
+                        'ignis-secondary': '#8B5CF6',    // Purple from logo  
+                        'ignis-accent': '#EC4899',       // Pink from logo
+                        'ignis-gradient-start': '#3B82F6',
+                        'ignis-gradient-end': '#EC4899',
+                        'ignis-dark': '#1E293B',
+                        'ignis-light': '#F8FAFC',
+                        'ignis-gray': '#64748B',
+                        'ignis-success': '#10B981',
+                        'ignis-warning': '#F59E0B',
+                        'ignis-danger': '#EF4444',
+                        // Legacy support
+                        'brand-primary': '#3B82F6',
+                        'brand-secondary': '#F1F5F9',
+                        'brand-dark': '#1E293B',
+                        'brand-light': '#F8FAFC',
+                        'brand-accent': '#EC4899',
+                        'brand-warning': '#F59E0B',
+                        'brand-danger': '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>::-webkit-scrollbar { display: none;}</style>
+</head>
+<body class="font-inter bg-brand-light">
+
+    <div id="dashboard-layout" class="flex w-full h-screen min-h-screen overflow-hidden">
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 bg-brand-light overflow-y-auto h-screen">
+            <!-- Header -->
+            <header id="header" class="bg-white border-b border-gray-200 sticky top-0 z-10">
+                <div class="px-4 sm:px-4 lg:px-4 py-3 flex justify-between items-center">
+                    <!-- Logo and Name -->
+                    <div class="flex items-end space-x-3">
+                        <img src="ignis-logo.svg" alt="Ignis Logo" style="height: 35px;">
+                        <div>
+                            <h1 style="margin-bottom: -5px;" class="text-xl font-semibold text-ignis-dark">SDLC Portal</h1>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Notifications and User Profile -->
+                    <div class="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+                        <button class="relative text-gray-500 hover:text-brand-primary p-2 transition-colors">
+                            <i class="far fa-bell text-lg"></i>
+                            <span class="absolute top-1.5 right-1.5 h-1.5 w-1.5 bg-brand-danger rounded-full"></span>
+                        </button>
+                        <div class="flex items-center space-x-2 sm:space-x-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="User Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
+                            <div class="hidden sm:block">
+                                <p class="font-semibold text-xs text-brand-dark">Alicia Keys</p>
+                                <p class="text-xs text-gray-500">Product Manager</p>
+                            </div>
+                            <button class="text-gray-400 hover:text-brand-dark hidden sm:block">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Body -->
+            <div class="p-4 sm:p-4 lg:p-4">
+                <!-- Projects Section -->
+                <section id="projects-section">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 space-y-3 sm:space-y-0">
+                        <div>
+                            <h2 class="text-xl font-semibold text-brand-dark">Project Workspace</h2>
+                            <p class="text-xs text-gray-500 mt-0">A centralized view to track existing projects and initiate new ones seamlessly.</p>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <input type="text" placeholder="Search projects..." class="pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent bg-white w-64">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
+                            <button onclick="openNewProjectModal()" class="bg-brand-primary hover:bg-brand-primary/90 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 flex items-center space-x-2">
+                                <i class="fas fa-plus text-xs"></i>
+                                <span class="text-xs">New Project</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="project-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <!-- Project Card 1 -->
+                        <a href="project-details.html" id="project-card-1" class="group bg-white p-5 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all duration-200 cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="text-base font-medium text-brand-dark group-hover:text-brand-primary transition-colors">E-commerce Platform Revamp</h4>
+                                <i class="fas fa-arrow-right text-gray-400 group-hover:text-brand-primary transition-colors flex-shrink-0 ml-2 text-xs"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 line-clamp-2">Complete redesign of the e-commerce platform with modern UI/UX and improved performance.</p>
+                            <div class="mb-3">
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="text-xs text-gray-600 font-medium ml-1">Brownfield</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">In Progress</span>
+                                <span class="text-xs text-gray-500">Updated 2 hours ago</span>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 2 -->
+                        <a href="project-details.html" id="project-card-2" class="group bg-white p-5 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all duration-200 cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="text-base font-medium text-brand-dark group-hover:text-brand-primary transition-colors">Mobile App for Healthcare</h4>
+                                <i class="fas fa-arrow-right text-gray-400 group-hover:text-brand-primary transition-colors flex-shrink-0 ml-2 text-xs"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 line-clamp-2">Healthcare management app with telemedicine features and patient record management.</p>
+                            <div class="mb-3">
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="text-xs text-gray-600 font-medium ml-1">Greenfield</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Completed</span>
+                                <span class="text-xs text-gray-500">Updated 1 day ago</span>
+                            </div>
+                        </a>
+                        
+                        <!-- Project Card 3 -->
+                        <a href="project-details.html" id="project-card-3" class="group bg-white p-5 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all duration-200 cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="text-base font-medium text-brand-dark group-hover:text-brand-primary transition-colors">Internal CRM Tool</h4>
+                                <i class="fas fa-arrow-right text-gray-400 group-hover:text-brand-primary transition-colors flex-shrink-0 ml-2 text-xs"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 line-clamp-2">Custom CRM solution for internal sales and customer relationship management.</p>
+                            <div class="mb-3">
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="text-xs text-gray-600 font-medium ml-1">Greenfield</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">In Progress</span>
+                                <span class="text-xs text-gray-500">Updated 5 hours ago</span>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 4 -->
+                        <a href="project-details.html" id="project-card-4" class="group bg-white p-5 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all duration-200 cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="text-base font-medium text-brand-dark group-hover:text-brand-primary transition-colors">AI-Powered Analytics Dashboard</h4>
+                                <i class="fas fa-arrow-right text-gray-400 group-hover:text-brand-primary transition-colors flex-shrink-0 ml-2 text-xs"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 line-clamp-2">Advanced analytics platform with AI-driven insights and real-time data visualization.</p>
+                            <div class="mb-3">
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="text-xs text-gray-600 font-medium ml-1">Greenfield</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Planning</span>
+                                <span class="text-xs text-gray-500">Updated 3 days ago</span>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 5 -->
+                        <a href="project-details.html" id="project-card-5" class="group bg-white p-5 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all duration-200 cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="text-base font-medium text-brand-dark group-hover:text-brand-primary transition-colors">Customer Support Portal</h4>
+                                <i class="fas fa-arrow-right text-gray-400 group-hover:text-brand-primary transition-colors flex-shrink-0 ml-2 text-xs"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 line-clamp-2">Self-service portal for customers with ticket management and knowledge base integration.</p>
+                            <div class="mb-3">
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="text-xs text-gray-600 font-medium ml-1">Brownfield</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">In Progress</span>
+                                <span class="text-xs text-gray-500">Updated 1 week ago</span>
+                            </div>
+                        </a>
+
+                        <!-- Project Card 6 -->
+                        <a href="project-details.html" id="project-card-6" class="group bg-white p-5 rounded-lg border border-gray-200 hover:border-brand-primary hover:shadow-md transition-all duration-200 cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="text-base font-medium text-brand-dark group-hover:text-brand-primary transition-colors">Enterprise Resource Planning</h4>
+                                <i class="fas fa-arrow-right text-gray-400 group-hover:text-brand-primary transition-colors flex-shrink-0 ml-2 text-xs"></i>
+                            </div>
+                            <p class="text-xs text-gray-600 mb-3 line-clamp-2">Comprehensive ERP system for resource planning, inventory management, and operations.</p>
+                            <div class="mb-3">
+                                <span class="text-xs text-gray-500">Type:</span>
+                                <span class="text-xs text-gray-600 font-medium ml-1">Brownfield</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Review</span>
+                                <span class="text-xs text-gray-500">Updated 2 weeks ago</span>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Project Modal -->
+    <div id="new-project-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300">
+        <div id="modal-content" class="bg-white rounded-2xl shadow-2xl max-w-lg w-full transform transition-all duration-300 scale-95 opacity-0">
+            <!-- Modal Header with Gradient -->
+            <div class="relative px-8 py-6 border-b border-gray-100 bg-gradient-to-r from-brand-primary/5 to-brand-accent/5">
+                <div class="flex items-center space-x-3">
+                    <!-- <div class="w-12 h-12 bg-gradient-to-br from-brand-primary to-brand-accent rounded-xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-rocket text-white text-lg"></i>
+                    </div> -->
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Create New Project</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">Start your journey with a new project</p>
+                    </div>
+                </div>
+                <button onclick="closeNewProjectModal()" class="absolute top-6 right-6 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all duration-200">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="px-8 py-6">
+                <form id="new-project-form" class="space-y-5">
+                    <div>
+                        <label for="project-name" class="block text-xs font-semibold text-gray-700 mb-2">
+                            Project Name <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fas fa-folder absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs"></i>
+                            <input 
+                                type="text" 
+                                id="project-name" 
+                                required
+                                placeholder="e.g., E-commerce Platform"
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all duration-200 hover:border-gray-400"
+                            />
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label for="project-description" class="block text-xs font-semibold text-gray-700 mb-2">
+                            Description <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <i class="fas fa-align-left absolute left-3 top-3 text-gray-400 text-xs"></i>
+                            <textarea 
+                                id="project-description" 
+                                required
+                                rows="4"
+                                placeholder="Describe your project goals and objectives..."
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent resize-none transition-all duration-200 hover:border-gray-400"
+                            ></textarea>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2 flex items-center">
+                            <i class="fas fa-info-circle mr-1.5"></i>
+                            Provide a clear description to help your team understand the project scope
+                        </p>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end space-x-3 px-8 py-5 border-t border-gray-100 bg-gray-50/50 rounded-b-2xl">
+                <button 
+                    onclick="closeNewProjectModal()" 
+                    class="px-6 py-2.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm"
+                >
+                    <i class="fas fa-times mr-2 text-xs"></i>
+                    Cancel
+                </button>
+                <button 
+                    onclick="saveNewProject()" 
+                    class="px-6 py-2.5 text-xs font-medium text-white bg-gradient-to-r from-brand-primary to-brand-accent rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 shadow-md"
+                >
+                    <i class="fas fa-check mr-2 text-xs"></i>
+                    Create Project
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="shared-sidebar.js"></script>
+    <script>
+        // Dashboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dashboard-specific initialization
+        });
+
+        // New Project Modal Functions
+        function openNewProjectModal() {
+            const modal = document.getElementById('new-project-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            
+            // Trigger animation
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeNewProjectModal() {
+            const modal = document.getElementById('new-project-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            // Animate out
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+                // Clear form
+                document.getElementById('new-project-form').reset();
+            }, 300);
+        }
+
+        function saveNewProject() {
+            const projectName = document.getElementById('project-name').value.trim();
+            const projectDescription = document.getElementById('project-description').value.trim();
+            
+            // Validate inputs
+            if (!projectName || !projectDescription) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Here you would typically save the project to your backend
+            console.log('New Project Created:', {
+                name: projectName,
+                description: projectDescription,
+                createdAt: new Date().toISOString()
+            });
+            
+            // Close modal
+            closeNewProjectModal();
+            
+            // Redirect to project start/config page with data
+            const encodedName = encodeURIComponent(projectName);
+            const encodedDesc = encodeURIComponent(projectDescription);
+            window.location.href = `project-start.html?name=${encodedName}&desc=${encodedDesc}`;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('new-project-modal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeNewProjectModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('new-project-modal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeNewProjectModal();
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

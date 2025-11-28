@@ -1,0 +1,713 @@
+/* Enhanced Shared Sidebar Styles */
+#header{
+    height: 75px;
+}
+.sidebar-component {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+    max-height: 100vh;
+    background: linear-gradient(180deg, #ffffff 0%, #fefefe  50%, #fdfdfd 100%);
+    border-right: 1px solid rgba(226, 232, 240, 0.8);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(20px);
+}
+
+.sidebar-text {
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-item {
+    position: relative;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-item i {
+    transition: color 0.2s ease-in-out;
+}
+
+/* Tooltip styles for collapsed sidebar */
+.nav-item[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #374151;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-left: 8px;
+    z-index: 1000;
+    opacity: 0;
+    animation: tooltipFadeIn 0.2s ease-out forwards;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.nav-item[title]:hover::before {
+    content: '';
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 2px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 6px 4px 0;
+    border-color: transparent #374151 transparent transparent;
+    z-index: 1001;
+}
+
+@keyframes tooltipFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(-50%) translateX(-4px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(-50%) translateX(0); 
+    }
+}
+
+/* Hover effects for navigation items */
+.nav-item:hover {
+    transform: translateX(2px);
+}
+
+.nav-item.active {
+    position: relative;
+}
+
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #4F46E5, #6366F1);
+    border-radius: 0 2px 2px 0;
+}
+
+/* Section dividers */
+.sidebar-section {
+    position: relative;
+}
+
+.sidebar-section:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #E5E7EB, transparent);
+}
+
+/* Smooth width transitions */
+.sidebar-component[data-expanded="false"] {
+    width: 4rem; /* w-16 */
+}
+
+.sidebar-component[data-expanded="true"] {
+    width: 16rem; /* w-64 */
+}
+
+/* Icon animations */
+.sidebar-toggle-icon {
+    transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-component[data-expanded="false"] .sidebar-toggle-icon {
+    transform: rotate(180deg);
+}
+
+/* Text fade animations */
+.sidebar-component[data-expanded="false"] .sidebar-text {
+    opacity: 0;
+    transform: scale(0.95);
+    display: none;
+}
+
+.sidebar-component[data-expanded="true"] .sidebar-text {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Responsive height and layout adjustments */
+@media (min-width: 1024px) {
+    .sidebar-component {
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        position: relative;
+    }
+}
+
+/* Tablet responsive */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .sidebar-component {
+        position: fixed;
+        z-index: 40;
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        width: 16rem;
+    }
+    
+    .sidebar-component.translate-x-0 {
+        transform: translateX(0);
+    }
+    
+    .sidebar-component.-translate-x-full {
+        transform: translateX(-100%);
+    }
+    
+    /* Hide sidebar toggle button on tablet */
+    #sidebar-toggle {
+        display: none;
+    }
+    
+    /* Ensure sidebar is always expanded on tablet when visible */
+    .sidebar-component[data-expanded="false"] {
+        width: 16rem;
+    }
+    
+    .sidebar-component[data-expanded="false"] .sidebar-text {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+    .sidebar-component {
+        position: fixed;
+        z-index: 40;
+        height: 100vh;
+        min-height: 100vh;
+        max-height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        width: 16rem;
+        left: 0;
+        top: 0;
+    }
+    
+    .sidebar-component.translate-x-0 {
+        transform: translateX(0);
+    }
+    
+    .sidebar-component.-translate-x-full {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 30;
+    }
+    
+    /* Hide sidebar toggle button on mobile */
+    #sidebar-toggle {
+        display: none;
+    }
+    
+    /* Ensure sidebar is always expanded on mobile when visible */
+    .sidebar-component[data-expanded="false"] {
+        width: 16rem; /* Keep full width on mobile even when "collapsed" */
+    }
+    
+    .sidebar-component[data-expanded="false"] .sidebar-text {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    /* Adjust mobile menu button position */
+    #mobile-menu-button {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 50;
+    }
+}
+
+/* Custom scrollbar for sidebar */
+.sidebar-component::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar-component::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar-component::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+.sidebar-component::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Navigation scrollbar */
+nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+nav::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+nav::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Global scrollbar for all elements */
+*::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Chat messages scrollbar */
+#chat-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Document panel content scrollbar */
+#doc-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+#doc-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#doc-content::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+#doc-content::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Dropdown scrollbar */
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb {
+    background: #E5E7EB;
+    border-radius: 2px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover,
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+    background: #D1D5DB;
+}
+
+/* Ensure proper flex layout for all content */
+.sidebar-component {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ensure navigation takes available space but can scroll */
+.sidebar-component nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    min-height: 0; /* Important for flex scrolling */
+}
+
+/* Ensure bottom section stays at bottom */
+.sidebar-component > div:last-child {
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+/* Main content responsive adjustments */
+#main-content {
+    height: 100vh;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+    /* Desktop - sidebar is always visible */
+    .sidebar-component[data-expanded="true"] ~ #main-content {
+        margin-left: 0;
+    }
+    
+    .sidebar-component[data-expanded="false"] ~ #main-content {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 1023px) {
+    /* Tablet and mobile - sidebar overlay */
+    #main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Responsive adjustments for very small screens */
+@media (max-width: 480px) {
+    .sidebar-component {
+        width: 280px; /* Slightly wider on very small screens for better usability */
+    }
+    
+    .sidebar-component[data-expanded="false"] {
+        width: 280px;
+    }
+    
+    /* Ensure mobile menu button is always accessible */
+    #mobile-menu-button {
+        position: fixed;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 60; /* Higher than sidebar */
+        padding: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Dashboard layout adjustments */
+#dashboard-layout {
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Hierarchical Menu Styles */
+.menu-section {
+    margin-bottom: 0.25rem;
+}
+
+.menu-item {
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(236, 72, 153, 0.1));
+}
+
+.sub-menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    opacity: 0;
+}
+
+.sub-menu.expanded {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.sub-menu-item {
+    padding-left: 2.5rem;
+    font-size: 0.875rem;
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.sub-menu-item.active {
+    border-left-color: #3B82F6;
+    background: rgba(59, 130, 246, 0.1);
+    color: #3B82F6;
+}
+
+.sub-sub-menu-item {
+    padding-left: 3.5rem;
+    font-size: 0.8rem;
+}
+
+/* Chevron animations */
+.fa-chevron-down, .fa-chevron-right {
+    transition: transform 0.2s ease;
+}
+
+/* Menu toggle button styles */
+[data-toggle] {
+    cursor: pointer;
+}
+
+[data-toggle]:hover .fa-chevron-down,
+[data-toggle]:hover .fa-chevron-right {
+    color: #3B82F6;
+}
+
+/* Enhanced active states */
+.nav-item.active {
+    background: linear-gradient(135deg, #3B82F6, #EC4899);
+    color: white;
+}
+
+.nav-item.active i {
+    color: white;
+}
+
+/* Smooth transitions for sidebar expansion */
+.sidebar-component[data-expanded="false"] .sub-menu,
+.sidebar-component[data-expanded="false"] .menu-item span {
+    display: none;
+}
+
+/* Enhanced Project-specific menu styles */
+.project-header-menu {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.project-header-menu::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(59, 130, 246, 0.4) 20%, rgba(236, 72, 153, 0.4) 80%, transparent 100%);
+}
+
+.project-header-menu .flex {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(236, 72, 153, 0.06) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-left: 4px solid #3B82F6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+    transition: all 0.3s ease;
+}
+
+.project-header-menu .flex:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.phase-section {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.phase-section .nav-item {
+    position: relative;
+    border-radius: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.phase-section .nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(236, 72, 153, 0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.phase-section .nav-item:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced Active phase indicator */
+.phase-section .nav-item.active {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(236, 72, 153, 0.08) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.phase-section .nav-item.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+    border-radius: 0 8px 8px 0;
+}
+
+/* Project name truncation */
+#current-project-name {
+    max-width: 150px;
+}
+
+/* Current project header styling */
+.project-header-menu .flex {
+    border-left-color: #3B82F6;
+    background: linear-gradient(90deg, rgba(59, 130, 246, 0.05), rgba(236, 72, 153, 0.05));
+}
+
+/* Phase completion indicators */
+.phase-complete::after {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #10B981;
+    font-size: 10px;
+}
+
+.phase-in-progress::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background: #3B82F6;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+.phase-upcoming::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #D1D5DB;
+    border-radius: 50%;
+}
+
+/* Enhanced sub-menu item styles for project phases */
+.phase-section .sub-menu-item {
+    padding: 0.625rem 1rem 0.625rem 3rem;
+    border-left: 2px solid transparent;
+    margin: 0.25rem 0 0.25rem 1rem;
+    position: relative;
+    border-radius: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.phase-section .sub-menu-item::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #E5E7EB;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #E5E7EB;
+}
+
+.phase-section .sub-menu-item:hover {
+    background: rgba(59, 130, 246, 0.06);
+    transform: translateX(2px);
+}
+
+.phase-section .sub-menu-item:hover::before {
+    background: #93C5FD;
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #93C5FD;
+}
+
+.phase-section .sub-menu-item.active {
+    border-left-color: #3B82F6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(139, 92, 246, 0.08) 50%, rgba(236, 72, 153, 0.06) 100%);
+    color: #3B82F6;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+.phase-section .sub-menu-item.active::before {
+    background: linear-gradient(135deg, #3B82F6 0%, #EC4899 100%);
+    width: 8px;
+    height: 8px;
+    box-shadow: 0 0 0 2px white, 0 0 0 3px #3B82F6, 0 2px 8px rgba(59, 130, 246, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-50%) scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Responsive adjustments for project menu */
+@media (max-width: 767px) {
+    #current-project-name {
+        max-width: 120px;
+    }
+}
+
+/* Loading animation for project data */
+.project-loading {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Project - Config - SDLC Portal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'ignis-primary': '#3B82F6',
+                        'ignis-secondary': '#8B5CF6',
+                        'ignis-accent': '#EC4899',
+                        'ignis-gradient-start': '#3B82F6',
+                        'ignis-gradient-end': '#EC4899',
+                        'ignis-dark': '#1E293B',
+                        'ignis-light': '#F8FAFC',
+                        'ignis-gray': '#64748B',
+                        'ignis-success': '#10B981',
+                        'ignis-warning': '#F59E0B',
+                        'ignis-danger': '#EF4444',
+                        'brand-primary': '#3B82F6',
+                        'brand-secondary': '#F1F5F9',
+                        'brand-dark': '#1E293B',
+                        'brand-light': '#F8FAFC',
+                        'brand-accent': '#EC4899',
+                        'brand-warning': '#F59E0B',
+                        'brand-danger': '#EF4444',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="shared-sidebar.css">
+    <style>
+        .phase-section.completed {
+            background: rgba(34, 197, 94, 0.05);
+        }
+        
+        .config-link.active {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid #3B82F6;
+        }
+
+        .connection-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .connection-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .connection-card.connected {
+            border-color: #10B981;
+            background: linear-gradient(to bottom, #ffffff, #f0fdf4);
+        }
+
+        .connection-card.connected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #10B981, #059669);
+        }
+    </style>
+</head>
+<body class="font-inter bg-brand-light">
+
+    <div id="project-layout" class="flex w-full h-screen min-h-screen overflow-hidden">
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="fixed top-4 left-4 z-50 lg:hidden bg-white p-2 rounded-lg shadow-lg border border-gray-200 transition-all duration-200 hover:shadow-xl">
+            <i class="fas fa-bars text-ignis-primary"></i>
+        </button>
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="sidebar-component fixed lg:relative bg-white border-r border-gray-200 flex flex-col z-40 lg:z-auto h-screen lg:h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 overflow-y-auto" style="width: 250px;" data-expanded="true">
+            <!-- Sidebar Header -->
+            <div class="p-4 py-2 flex items-center justify-between border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <div>
+                        <img src="ignis-logo.svg" alt="Ignis Logo" style="height: 30px;">
+                        <p class="text-md text-ignis-gray mt-1 font-semibold">SDLC Portal</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto min-h-0">
+                <!-- Project Selector -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-xs font-semibold text-gray-600 tracking-wider">Project</label>
+                        <button onclick="createNewProject()" class="w-6 h-6 flex items-center justify-center text-gray-400 hover:text-brand-primary hover:bg-brand-primary/10 transition-all duration-200 rounded-md" title="Add New Project">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="relative">
+                        <button class="w-full px-3 py-3 text-left border-0 rounded-xl bg-gray-50 hover:bg-gray-100 focus:bg-white focus:ring-2 focus:ring-brand-primary/20 focus:shadow-sm outline-none transition-all duration-200 cursor-pointer" onclick="toggleProjectDropdown()">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div id="project-name-display" class="text-xs font-medium text-brand-dark">New Project</div>
+                                    <div id="project-desc-display" class="text-xs text-gray-500 mt-0.5">Getting started...</div>
+                                </div>
+                                <i class="fas fa-chevron-down text-xs text-gray-400" id="dropdown-arrow"></i>
+                            </div>
+                        </button>
+                        <div id="project-dropdown" class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-lg z-50 hidden">
+                            <div class="py-2 max-h-64 overflow-y-auto">
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('New Project', 'Getting started...')">
+                                    <div class="text-xs font-medium text-brand-dark">New Project</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Getting started...</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('E-commerce Platform Revamp', 'Complete redesign of existing platform')">
+                                    <div class="text-xs font-medium text-brand-dark">E-commerce Platform Revamp</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Complete redesign of existing platform</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Mobile App for Healthcare', 'Patient management and telemedicine app')">
+                                    <div class="text-xs font-medium text-brand-dark">Mobile App for Healthcare</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Patient management and telemedicine app</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Internal CRM Tool', 'Customer relationship management system')">
+                                    <div class="text-xs font-medium text-brand-dark">Internal CRM Tool</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Customer relationship management system</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('AI-Powered Analytics Dashboard', 'Real-time data analytics and insights')">
+                                    <div class="text-xs font-medium text-brand-dark">AI-Powered Analytics Dashboard</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Real-time data analytics and insights</div>
+                                </div>
+                                <div class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors" onclick="selectProject('Customer Support Portal', 'Self-service and ticketing system')">
+                                    <div class="text-xs font-medium text-brand-dark">Customer Support Portal</div>
+                                    <div class="text-xs text-gray-500 mt-0.5">Self-service and ticketing system</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="mb-6 pb-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-medium text-gray-600">Overall Progress</span>
+                        <span id="progress-percentage" class="text-xs font-semibold text-gray-600">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="progress-bar" class="bg-gray-400 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Phase Menu -->
+                <div class="space-y-1">
+                    <p class="text-xs font-medium text-gray-600 tracking-wide mb-3">Configuration</p>
+                    
+                    <!-- Config Phase - ACTIVE -->
+                    <a href="#" class="config-link active text-xs flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-700 hover:text-brand-primary hover:bg-gray-50 rounded-lg transition-colors">
+                        <div class="flex items-center">
+                            <i class="fas fa-cog w-4 h-4 mr-3 text-brand-primary"></i>
+                            <span>Config</span>
+                        </div>
+                        <i class="fas fa-circle text-blue-500 text-xs animate-pulse"></i>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Bottom Section -->
+            <div class="px-4 py-4 border-t border-gray-100 mt-auto">
+                <a href="dashboard.html" class="text-xs nav-item flex items-center text-xs font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors mb-1 px-3 py-2.5">
+                    <i class="fas fa-arrow-left w-4 h-4 mr-3 text-gray-400"></i>
+                    <span class="sidebar-text">Back to Projects</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="flex-1 bg-brand-light h-screen lg:ml-0 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header id="header" class="bg-white border-b border-gray-200 z-10 flex-shrink-0">
+                <div class="px-4 sm:px-4 lg:px-4 py-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-4">                       
+                        <div>
+                            <h1 class="text-lg font-semibold text-brand-dark">Project Configuration</h1>
+                            <p class="text-xs text-gray-500">Let's set up your project foundation</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4 lg:space-x-6">
+                        <button class="relative text-gray-500 hover:text-brand-primary p-2 transition-colors">
+                            <i class="far fa-bell text-lg"></i>
+                            <span class="absolute top-1.5 right-1.5 h-1.5 w-1.5 bg-brand-danger rounded-full"></span>
+                        </button>
+                        <div class="relative flex items-center space-x-2 sm:space-x-3">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="User Avatar" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover">
+                            <div class="hidden sm:block">
+                                <p class="font-semibold text-xs text-brand-dark">Alicia Keys</p>
+                                <p class="text-xs text-gray-500">Product Manager</p>
+                            </div>
+                            <button onclick="toggleUserDropdown()" class="text-gray-400 hover:text-brand-dark hidden sm:block">
+                                <i class="fas fa-chevron-down text-xs" id="user-dropdown-arrow"></i>
+                            </button>
+                            <!-- User Dropdown Menu -->
+                            <div id="user-dropdown" class="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-lg z-50 hidden">
+                                <div class="py-2">
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-user w-4 mr-3 text-gray-400"></i>
+                                        <span>Profile</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-cog w-4 mr-3 text-gray-400"></i>
+                                        <span>Settings</span>
+                                    </a>
+                                    <a href="#" class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-50 transition-colors">
+                                        <i class="fas fa-question-circle w-4 mr-3 text-gray-400"></i>
+                                        <span>Help & Support</span>
+                                    </a>
+                                    <div class="border-t border-gray-200 my-2"></div>
+                                    <a href="login.html" class="flex items-center px-4 py-2 text-xs text-brand-danger hover:bg-red-50 transition-colors">
+                                        <i class="fas fa-sign-out-alt w-4 mr-3"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Configuration Content -->
+            <div class="flex-1 overflow-y-auto p-4 bg-gray-50">
+                <div class="w-full">                  
+
+                    <!-- Configuration Form -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-4">
+                        <!-- <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-md font-semibold text-gray-900">Project Information</h3>
+                            <span class="text-xs text-gray-500">* Required fields</span>
+                        </div> -->
+                        
+                        <form id="config-form" class="space-y-4">
+                            <!-- First Row: Project Name, Project Type, and Project Category -->
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                <!-- Project Name -->
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-700 mb-2">
+                                        Project Name *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="config-project-name" 
+                                        required
+                                        readonly
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs bg-gray-50"
+                                        placeholder="Enter project name"
+                                    />
+                                </div>
+
+                                <!-- Project Type: Greenfield or Brownfield -->
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-700 mb-2">
+                                        Project Type *
+                                    </label>
+                                    <select 
+                                        id="config-project-type" 
+                                        required
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                                    >
+                                        <option value="">Select project type</option>
+                                        <option value="greenfield">Greenfield (New Project)</option>
+                                        <option value="brownfield">Brownfield (Existing Project Enhancement)</option>
+                                    </select>
+                                </div>
+
+                                <!-- Project Category -->
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-700 mb-2">
+                                        Project Category
+                                    </label>
+                                    <select 
+                                        id="config-project-category" 
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                                    >
+                                        <option value="">Select project category</option>
+                                        <option value="web-app">Web Application</option>
+                                        <option value="mobile-app">Mobile Application (iOS/Android)</option>
+                                        <option value="desktop-app">Desktop Application</option>
+                                        <option value="api">API/Backend Service</option>
+                                        <option value="microservices">Microservices Architecture</option>
+                                        <option value="saas">SaaS Platform</option>
+                                        <option value="e-commerce">E-commerce Platform</option>
+                                        <option value="crm">CRM System</option>
+                                        <option value="cms">Content Management System</option>
+                                        <option value="analytics">Analytics/Dashboard</option>
+                                        <option value="iot">IoT Application</option>
+                                        <option value="ai-ml">AI/ML Application</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Second Row: Project Description -->
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-2">
+                                    Project Description *
+                                </label>
+                                <textarea 
+                                    id="config-project-description" 
+                                    required
+                                    readonly
+                                    rows="3"
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs bg-gray-50 resize-none"
+                                    placeholder="Provide a brief description of your project"
+                                ></textarea>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Integration Options -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-md font-semibold text-gray-900 mb-1">Add Integration</h3>
+                                <p class="text-xs text-gray-500">Connect your project with external tools and services</p>
+                            </div>
+                        </div>
+
+                        <!-- Add Integration Selector -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <!-- Category Dropdown -->
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-2">Category</label>
+                                <select 
+                                    id="integration-category" 
+                                    onchange="updateSubcategoryDropdown()"
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                                >
+                                    <option value="">Select category</option>
+                                    <option value="doc-repo">Document Repository</option>
+                                    <option value="code-repo">Code Repository</option>
+                                    <option value="project-mgmt">Project Management</option>
+                                </select>
+                            </div>
+
+                            <!-- Subcategory Dropdown -->
+                            <div>
+                                <label class="block text-xs font-medium text-gray-700 mb-2">Tool</label>
+                                <select 
+                                    id="integration-subcategory" 
+                                    disabled
+                                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary disabled:bg-gray-100 disabled:cursor-not-allowed"
+                                >
+                                    <option value="">Select tool</option>
+                                </select>
+                            </div>
+
+                            <!-- Add Button -->
+                            <div class="flex items-end">
+                                <button 
+                                    onclick="openIntegrationConfig()"
+                                    class="w-full px-4 py-2.5 text-xs font-medium text-white bg-brand-primary rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add Integration</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Connected Integrations List -->
+                        <div id="integrations-list">
+                            <div class="border-t border-gray-200 pt-4">
+                                <h4 class="text-xs font-semibold text-gray-700 mb-3">Connected Integrations</h4>
+                                <div id="all-connections" class="space-y-2">
+                                    <p class="text-xs text-gray-500 italic">No integrations connected yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Save Button -->
+                    <div class="flex items-center justify-end space-x-3 bg-white rounded-xl shadow-sm border border-gray-200 p-4">
+                        <a href="dashboard.html" class="px-4 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                            Cancel
+                        </a>
+                        <button 
+                            onclick="saveConfiguration()"
+                            class="px-4 py-2 text-xs font-medium text-white bg-brand-primary rounded-md hover:bg-blue-600 transition-colors flex items-center space-x-2"
+                        >
+                            <span>Save Configuration</span>
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Connection Configuration Modal -->
+    <div id="integration-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-md w-full">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-900" id="integration-modal-title">Configure Connection</h3>
+                <button onclick="closeIntegrationModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="px-6 py-4">
+                <form id="integration-form" class="space-y-4">
+                    <div>
+                        <label for="integration-type" class="block text-xs font-medium text-gray-700 mb-2">Select Tool *</label>
+                        <select 
+                            id="integration-type" 
+                            onchange="updateConnectionFields()"
+                            required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                        >
+                            <option value="">Choose a tool</option>
+                        </select>
+                    </div>
+                    
+                    <div id="connection-fields">
+                        <!-- Dynamic fields will be added here based on selected tool -->
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-end space-x-3 px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl">
+                <button 
+                    onclick="closeIntegrationModal()" 
+                    class="px-4 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                >
+                    Cancel
+                </button>
+                <button 
+                    onclick="saveIntegrationConnection()" 
+                    class="px-4 py-2 text-xs font-medium text-white bg-brand-primary rounded-lg hover:bg-blue-600 transition-colors"
+                >
+                    Connect
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="shared-sidebar.js"></script>
+    <script>
+        // Load project data from URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectName = urlParams.get('name') || 'New Project';
+            const projectDesc = urlParams.get('desc') || 'Getting started...';
+
+            // Update sidebar
+            document.getElementById('project-name-display').textContent = projectName;
+            document.getElementById('project-desc-display').textContent = projectDesc;
+
+            // Update form fields
+            document.getElementById('config-project-name').value = projectName;
+            document.getElementById('config-project-description').value = projectDesc;
+        });
+
+        // Integration Tools Configuration
+        const integrationTools = {
+            'doc-repo': [
+                { value: 'onedrive', label: 'OneDrive', icon: 'fab fa-microsoft', color: 'blue' },
+                { value: 'confluence', label: 'Confluence', icon: 'fab fa-confluence', color: 'blue' },
+                { value: 'sharepoint', label: 'SharePoint', icon: 'fab fa-microsoft', color: 'green' },
+                { value: 'google-drive', label: 'Google Drive', icon: 'fab fa-google-drive', color: 'yellow' },
+                { value: 'dropbox', label: 'Dropbox', icon: 'fab fa-dropbox', color: 'blue' },
+                { value: 'notion', label: 'Notion', icon: 'fas fa-book', color: 'gray' }
+            ],
+            'code-repo': [
+                { value: 'github', label: 'GitHub', icon: 'fab fa-github', color: 'gray' },
+                { value: 'gitlab', label: 'GitLab', icon: 'fab fa-gitlab', color: 'orange' },
+                { value: 'bitbucket', label: 'Bitbucket', icon: 'fab fa-bitbucket', color: 'blue' },
+                { value: 'azure-repos', label: 'Azure Repos', icon: 'fab fa-microsoft', color: 'blue' },
+                { value: 'aws-codecommit', label: 'AWS CodeCommit', icon: 'fab fa-aws', color: 'orange' }
+            ],
+            'project-mgmt': [
+                { value: 'jira', label: 'Jira', icon: 'fab fa-jira', color: 'blue' },
+                { value: 'azure-boards', label: 'Azure Boards', icon: 'fab fa-microsoft', color: 'blue' },
+                { value: 'trello', label: 'Trello', icon: 'fab fa-trello', color: 'blue' },
+                { value: 'asana', label: 'Asana', icon: 'fas fa-tasks', color: 'red' },
+                { value: 'monday', label: 'Monday.com', icon: 'fas fa-calendar-check', color: 'red' },
+                { value: 'clickup', label: 'ClickUp', icon: 'fas fa-mouse-pointer', color: 'purple' }
+            ]
+        };
+
+        const categoryIcons = {
+            'doc-repo': { icon: 'fas fa-file-alt', color: 'blue' },
+            'code-repo': { icon: 'fas fa-code-branch', color: 'orange' },
+            'project-mgmt': { icon: 'fas fa-tasks', color: 'green' }
+        };
+
+        const categoryLabels = {
+            'doc-repo': 'Document Repository',
+            'code-repo': 'Code Repository',
+            'project-mgmt': 'Project Management'
+        };
+
+        // Connection fields configuration
+        const connectionFields = {
+            'onedrive': [
+                { id: 'tenant-id', label: 'Tenant ID', type: 'text', placeholder: 'Enter Tenant ID', required: true },
+                { id: 'client-id', label: 'Client ID', type: 'text', placeholder: 'Enter Client ID', required: true },
+                { id: 'client-secret', label: 'Client Secret', type: 'password', placeholder: 'Enter Client Secret', required: true }
+            ],
+            'confluence': [
+                { id: 'site-url', label: 'Site URL', type: 'url', placeholder: 'https://yoursite.atlassian.net', required: true },
+                { id: 'email', label: 'Email', type: 'email', placeholder: 'your-email@company.com', required: true },
+                { id: 'api-token', label: 'API Token', type: 'password', placeholder: 'Enter API Token', required: true }
+            ],
+            'sharepoint': [
+                { id: 'site-url', label: 'Site URL', type: 'url', placeholder: 'https://yourcompany.sharepoint.com', required: true },
+                { id: 'username', label: 'Username', type: 'text', placeholder: 'Enter Username', required: true },
+                { id: 'password', label: 'Password', type: 'password', placeholder: 'Enter Password', required: true }
+            ],
+            'google-drive': [
+                { id: 'client-id', label: 'Client ID', type: 'text', placeholder: 'Enter Client ID', required: true },
+                { id: 'client-secret', label: 'Client Secret', type: 'password', placeholder: 'Enter Client Secret', required: true },
+                { id: 'redirect-uri', label: 'Redirect URI', type: 'url', placeholder: 'https://your-app.com/callback', required: true }
+            ],
+            'dropbox': [
+                { id: 'app-key', label: 'App Key', type: 'text', placeholder: 'Enter App Key', required: true },
+                { id: 'app-secret', label: 'App Secret', type: 'password', placeholder: 'Enter App Secret', required: true }
+            ],
+            'notion': [
+                { id: 'integration-token', label: 'Integration Token', type: 'password', placeholder: 'Enter Integration Token', required: true },
+                { id: 'database-id', label: 'Database ID', type: 'text', placeholder: 'Enter Database ID', required: false }
+            ],
+            'github': [
+                { id: 'repo-url', label: 'Repository URL', type: 'url', placeholder: 'https://github.com/username/repo', required: true },
+                { id: 'access-token', label: 'Personal Access Token', type: 'password', placeholder: 'Enter Access Token', required: true }
+            ],
+            'gitlab': [
+                { id: 'repo-url', label: 'Repository URL', type: 'url', placeholder: 'https://gitlab.com/username/repo', required: true },
+                { id: 'access-token', label: 'Access Token', type: 'password', placeholder: 'Enter Access Token', required: true }
+            ],
+            'bitbucket': [
+                { id: 'workspace', label: 'Workspace', type: 'text', placeholder: 'Enter Workspace', required: true },
+                { id: 'repo-slug', label: 'Repository Slug', type: 'text', placeholder: 'Enter Repository Slug', required: true },
+                { id: 'app-password', label: 'App Password', type: 'password', placeholder: 'Enter App Password', required: true }
+            ],
+            'azure-repos': [
+                { id: 'organization', label: 'Organization', type: 'text', placeholder: 'Enter Organization', required: true },
+                { id: 'project', label: 'Project', type: 'text', placeholder: 'Enter Project', required: true },
+                { id: 'pat', label: 'Personal Access Token', type: 'password', placeholder: 'Enter PAT', required: true }
+            ],
+            'aws-codecommit': [
+                { id: 'region', label: 'AWS Region', type: 'text', placeholder: 'us-east-1', required: true },
+                { id: 'repo-name', label: 'Repository Name', type: 'text', placeholder: 'Enter Repository Name', required: true },
+                { id: 'access-key', label: 'Access Key ID', type: 'text', placeholder: 'Enter Access Key ID', required: true },
+                { id: 'secret-key', label: 'Secret Access Key', type: 'password', placeholder: 'Enter Secret Key', required: true }
+            ],
+            'jira': [
+                { id: 'site-url', label: 'Site URL', type: 'url', placeholder: 'https://yoursite.atlassian.net', required: true },
+                { id: 'email', label: 'Email', type: 'email', placeholder: 'your-email@company.com', required: true },
+                { id: 'api-token', label: 'API Token', type: 'password', placeholder: 'Enter API Token', required: true },
+                { id: 'project-key', label: 'Project Key', type: 'text', placeholder: 'PROJ', required: true }
+            ],
+            'azure-boards': [
+                { id: 'organization', label: 'Organization', type: 'text', placeholder: 'Enter Organization', required: true },
+                { id: 'project', label: 'Project', type: 'text', placeholder: 'Enter Project', required: true },
+                { id: 'pat', label: 'Personal Access Token', type: 'password', placeholder: 'Enter PAT', required: true }
+            ],
+            'trello': [
+                { id: 'api-key', label: 'API Key', type: 'text', placeholder: 'Enter API Key', required: true },
+                { id: 'token', label: 'Token', type: 'password', placeholder: 'Enter Token', required: true },
+                { id: 'board-id', label: 'Board ID', type: 'text', placeholder: 'Enter Board ID', required: true }
+            ],
+            'asana': [
+                { id: 'workspace-id', label: 'Workspace ID', type: 'text', placeholder: 'Enter Workspace ID', required: true },
+                { id: 'access-token', label: 'Personal Access Token', type: 'password', placeholder: 'Enter Access Token', required: true }
+            ],
+            'monday': [
+                { id: 'api-token', label: 'API Token', type: 'password', placeholder: 'Enter API Token', required: true },
+                { id: 'board-id', label: 'Board ID', type: 'text', placeholder: 'Enter Board ID', required: true }
+            ],
+            'clickup': [
+                { id: 'api-token', label: 'API Token', type: 'password', placeholder: 'Enter API Token', required: true },
+                { id: 'workspace-id', label: 'Workspace ID', type: 'text', placeholder: 'Enter Workspace ID', required: true }
+            ]
+        };
+
+        // Store all connections
+        let allConnections = [];
+        let editingConnectionId = null;
+        let connectionIdCounter = 0;
+
+        // Update subcategory dropdown based on selected category
+        function updateSubcategoryDropdown() {
+            const category = document.getElementById('integration-category').value;
+            const subcategoryDropdown = document.getElementById('integration-subcategory');
+            
+            subcategoryDropdown.innerHTML = '<option value="">Select tool</option>';
+            
+            if (!category) {
+                subcategoryDropdown.disabled = true;
+                return;
+            }
+            
+            subcategoryDropdown.disabled = false;
+            
+            integrationTools[category].forEach(tool => {
+                subcategoryDropdown.innerHTML += `<option value="${tool.value}">${tool.label}</option>`;
+            });
+        }
+
+        // Open integration configuration modal
+        function openIntegrationConfig() {
+            const category = document.getElementById('integration-category').value;
+            const subcategory = document.getElementById('integration-subcategory').value;
+            
+            if (!category || !subcategory) {
+                alert('Please select both category and tool');
+                return;
+            }
+            
+            // Populate modal
+            const tool = integrationTools[category].find(t => t.value === subcategory);
+            document.getElementById('integration-modal-title').textContent = `Configure ${tool.label}`;
+            
+            // Set integration type in modal
+            const dropdown = document.getElementById('integration-type');
+            dropdown.innerHTML = `<option value="${subcategory}" selected>${tool.label}</option>`;
+            dropdown.disabled = true;
+            dropdown.dataset.category = category;
+            
+            // Update fields
+            updateConnectionFields();
+            
+            // Show modal
+            document.getElementById('integration-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Update connection fields based on selected tool
+        function updateConnectionFields() {
+            const selectedTool = document.getElementById('integration-type').value;
+            const fieldsContainer = document.getElementById('connection-fields');
+            
+            if (!selectedTool || !connectionFields[selectedTool]) {
+                fieldsContainer.innerHTML = '';
+                return;
+            }
+            
+            const fields = connectionFields[selectedTool];
+            let html = '';
+            
+            fields.forEach(field => {
+                html += `
+                    <div>
+                        <label for="${field.id}" class="block text-xs font-medium text-gray-700 mb-2">
+                            ${field.label} ${field.required ? '*' : ''}
+                        </label>
+                        <input 
+                            type="${field.type}" 
+                            id="${field.id}" 
+                            ${field.required ? 'required' : ''}
+                            placeholder="${field.placeholder}"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-primary"
+                        />
+                    </div>
+                `;
+            });
+            
+            fieldsContainer.innerHTML = html;
+        }
+
+        // Save integration connection
+        function saveIntegrationConnection() {
+            const selectedTool = document.getElementById('integration-type').value;
+            const category = document.getElementById('integration-type').dataset.category;
+            
+            if (!selectedTool) {
+                alert('Please select a tool');
+                return;
+            }
+            
+            const fields = connectionFields[selectedTool];
+            const tool = integrationTools[category].find(t => t.value === selectedTool);
+            
+            const connectionData = {
+                id: editingConnectionId || `conn-${++connectionIdCounter}`,
+                category: category,
+                categoryLabel: categoryLabels[category],
+                tool: selectedTool,
+                toolLabel: tool.label,
+                icon: tool.icon,
+                color: tool.color,
+                data: {}
+            };
+            
+            // Collect field values
+            let allValid = true;
+            fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                if (field.required && !input.value) {
+                    allValid = false;
+                }
+                connectionData.data[field.id] = input.value;
+            });
+            
+            if (!allValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Add or update connection
+            if (editingConnectionId) {
+                const index = allConnections.findIndex(c => c.id === editingConnectionId);
+                allConnections[index] = connectionData;
+            } else {
+                allConnections.push(connectionData);
+            }
+            
+            // Render all connections
+            renderAllConnections();
+            
+            // Reset dropdowns
+            document.getElementById('integration-category').value = '';
+            document.getElementById('integration-subcategory').value = '';
+            document.getElementById('integration-subcategory').disabled = true;
+            
+            // Close modal
+            closeIntegrationModal();
+            
+            alert(`Successfully ${editingConnectionId ? 'updated' : 'connected'} to ${connectionData.toolLabel}!`);
+        }
+
+        // Render all connections
+        function renderAllConnections() {
+            const container = document.getElementById('all-connections');
+            
+            if (allConnections.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-500 italic">No integrations connected yet</p>';
+                return;
+            }
+            
+            let html = '';
+            allConnections.forEach(conn => {
+                const colorClasses = {
+                    'blue': 'bg-blue-100 text-blue-600',
+                    'orange': 'bg-orange-100 text-orange-600',
+                    'green': 'bg-green-100 text-green-600',
+                    'red': 'bg-red-100 text-red-600',
+                    'purple': 'bg-purple-100 text-purple-600',
+                    'yellow': 'bg-yellow-100 text-yellow-600',
+                    'gray': 'bg-gray-100 text-gray-600'
+                };
+                
+                html += `
+                    <div class="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:shadow-sm transition-shadow">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 ${colorClasses[conn.color] || 'bg-blue-100 text-blue-600'} rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="${conn.icon}"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-semibold text-gray-900">${conn.toolLabel}</p>
+                                <p class="text-xs text-gray-500">${conn.categoryLabel}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-1 text-xs font-medium text-green-600 bg-green-50 rounded">
+                                <i class="fas fa-check-circle mr-1"></i>Connected
+                            </span>
+                            <button 
+                                onclick="editIntegration('${conn.id}')"
+                                class="px-2.5 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+                                title="Edit">
+                                <i class="fas fa-edit mr-1"></i>Edit
+                            </button>
+                            <button 
+                                onclick="disconnectIntegration('${conn.id}')"
+                                class="px-2.5 py-1.5 text-xs font-medium text-orange-600 bg-white border border-orange-300 rounded hover:bg-orange-50 transition-colors"
+                                title="Disconnect">
+                                <i class="fas fa-unlink mr-1"></i>Disconnect
+                            </button>
+                            <button 
+                                onclick="deleteIntegration('${conn.id}')"
+                                class="px-2.5 py-1.5 text-xs font-medium text-white bg-red-600 border border-red-600 rounded hover:bg-red-700 transition-colors"
+                                title="Delete">
+                                <i class="fas fa-trash mr-1"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Edit integration
+        function editIntegration(connId) {
+            const connection = allConnections.find(c => c.id === connId);
+            editingConnectionId = connId;
+            
+            // Populate modal
+            document.getElementById('integration-modal-title').textContent = `Edit ${connection.toolLabel}`;
+            
+            const dropdown = document.getElementById('integration-type');
+            dropdown.innerHTML = `<option value="${connection.tool}" selected>${connection.toolLabel}</option>`;
+            dropdown.disabled = true;
+            dropdown.dataset.category = connection.category;
+            
+            // Update fields
+            updateConnectionFields();
+            
+            // Populate field values
+            setTimeout(() => {
+                Object.keys(connection.data).forEach(key => {
+                    const input = document.getElementById(key);
+                    if (input) {
+                        input.value = connection.data[key];
+                    }
+                });
+            }, 100);
+            
+            document.getElementById('integration-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Disconnect integration (keeps the config but marks as disconnected)
+        function disconnectIntegration(connId) {
+            const connection = allConnections.find(c => c.id === connId);
+            
+            if (!confirm(`Are you sure you want to disconnect from ${connection.toolLabel}? You can reconnect later.`)) {
+                return;
+            }
+            
+            // In a real app, you would mark it as disconnected without deleting
+            // For now, we'll just show a message
+            alert(`${connection.toolLabel} has been disconnected. The configuration is still saved.`);
+            
+            // You could add a 'status' property to track connected/disconnected state
+            // connection.status = 'disconnected';
+            // renderAllConnections();
+        }
+
+        // Delete integration (permanently removes the integration)
+        function deleteIntegration(connId) {
+            const connection = allConnections.find(c => c.id === connId);
+            
+            if (!confirm(`Are you sure you want to permanently delete ${connection.toolLabel}? This action cannot be undone.`)) {
+                return;
+            }
+            
+            allConnections = allConnections.filter(c => c.id !== connId);
+            renderAllConnections();
+            
+            alert(`Successfully deleted ${connection.toolLabel}!`);
+        }
+
+        // Close integration modal
+        function closeIntegrationModal() {
+            document.getElementById('integration-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+            document.getElementById('integration-form').reset();
+            document.getElementById('connection-fields').innerHTML = '';
+            document.getElementById('integration-type').disabled = false;
+            editingConnectionId = null;
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('integration-modal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    closeIntegrationModal();
+                }
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('integration-modal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeIntegrationModal();
+            }
+        });
+
+        // Save configuration function
+        function saveConfiguration() {
+            const formData = {
+                name: document.getElementById('config-project-name').value,
+                description: document.getElementById('config-project-description').value,
+                type: document.getElementById('config-project-type').value,
+                category: document.getElementById('config-project-category').value,
+                integrations: allConnections,
+                configuredAt: new Date().toISOString(),
+                configPhaseComplete: true
+            };
+
+            // Validate required fields
+            if (!formData.type) {
+                alert('Please fill in all required fields (Project Type)');
+                return;
+            }
+
+            console.log('Project Configuration Saved:', formData);
+
+            // Save to localStorage for next phase
+            localStorage.setItem('projectConfig', JSON.stringify(formData));
+
+            // Show success message
+            alert('Project configuration saved successfully! Proceeding to Ideation phase...');
+
+            // Redirect to ideation phase
+            const encodedName = encodeURIComponent(formData.name);
+            const encodedDesc = encodeURIComponent(formData.description);
+            window.location.href = `project-ideation.html?name=${encodedName}&desc=${encodedDesc}`;
+        }
+
+        // Project Dropdown Functions
+        function toggleProjectDropdown() {
+            const dropdown = document.getElementById('project-dropdown');
+            const arrow = document.getElementById('dropdown-arrow');
+            
+            dropdown.classList.toggle('hidden');
+            
+            if (dropdown.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            const arrow = document.getElementById('user-dropdown-arrow');
+            
+            dropdown.classList.toggle('hidden');
+            
+            if (dropdown.classList.contains('hidden')) {
+                arrow.style.transform = 'rotate(0deg)';
+            } else {
+                arrow.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function selectProject(name, description) {
+            document.getElementById('project-name-display').textContent = name;
+            document.getElementById('project-desc-display').textContent = description;
+            document.getElementById('config-project-name').value = name;
+            document.getElementById('config-project-description').value = description;
+            
+            // Close dropdown
+            document.getElementById('project-dropdown').classList.add('hidden');
+            document.getElementById('dropdown-arrow').style.transform = 'rotate(0deg)';
+        }
+
+        function createNewProject() {
+            // Redirect to newproject.html page
+            window.location.href = 'newproject.html';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('project-dropdown');
+            const button = document.querySelector('[onclick="toggleProjectDropdown()"]');
+            
+            if (dropdown && button && !dropdown.contains(event.target) && !button.contains(event.target)) {
+                dropdown.classList.add('hidden');
+                const arrow = document.getElementById('dropdown-arrow');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+
+            // Close user dropdown when clicking outside
+            const userDropdown = document.getElementById('user-dropdown');
+            const userButton = document.querySelector('[onclick="toggleUserDropdown()"]');
+            
+            if (userDropdown && userButton && !userDropdown.contains(event.target) && !userButton.contains(event.target)) {
+                userDropdown.classList.add('hidden');
+                const arrow = document.getElementById('user-dropdown-arrow');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
+        });
+    </script>
+
+</body>
+</html>

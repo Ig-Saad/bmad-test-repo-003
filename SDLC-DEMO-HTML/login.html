@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login - SDLC Portal</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            inter: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            'ignis-primary': '#3B82F6',      // Blue from logo
+                            'ignis-secondary': '#8B5CF6',    // Purple from logo  
+                            'ignis-accent': '#EC4899',       // Pink from logo
+                            'ignis-gradient-start': '#3B82F6',
+                            'ignis-gradient-end': '#EC4899',
+                            'ignis-dark': '#1E293B',
+                            'ignis-light': '#F8FAFC',
+                            'ignis-gray': '#64748B',
+                            'ignis-success': '#10B981',
+                            'ignis-warning': '#F59E0B',
+                            'ignis-danger': '#EF4444',
+                            // Legacy support
+                            'brand-primary': '#3B82F6',
+                            'brand-secondary': '#F1F5F9',
+                            'brand-dark': '#1E293B',
+                            'brand-light': '#F8FAFC',
+                            'brand-accent': '#EC4899',
+                            'brand-warning': '#F59E0B',
+                            'brand-danger': '#EF4444',
+                        }
+                    }
+                }
+            }
+        </script>
+        <style>::-webkit-scrollbar { display: none;}</style>
+    </head>
+    <body class="font-inter bg-gradient-to-br from-ignis-light to-blue-50 min-h-screen">
+
+        <div id="login-screen-layout" class="flex items-center justify-center w-full min-h-screen p-2 sm:p-4 md:p-6 lg:p-8">
+            <div id="login-container" class="w-full max-w-sm sm:max-w-md md:max-w-4xl lg:max-w-6xl mx-auto bg-white rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg sm:shadow-xl lg:shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 border border-gray-100">
+
+                <!-- Left Panel: Branding & Illustration -->
+                <div id="branding-panel" class="relative hidden lg:block">
+                    <div class="h-full w-full">
+                        <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c2a5596107-23f4010ed7453a07f36c.png" alt="A vibrant, abstract illustration representing collaboration, project management, and data analysis. Use a cool color palette with shades of blue, purple, and green. Minimalist and clean style." />
+                    </div>
+                    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-ignis-primary/80 to-ignis-accent/80 p-12 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-4">                               
+                                <div>
+                                    <h1 class="text-3xl font-bold text-white tracking-tight">SDLC Portal</h1>
+                                </div>
+                            </div>
+                            <p class="text-white/90 mt-8 text-xl leading-relaxed max-w-md font-light">
+                                Accelerate your software development lifecycle with intelligent project management and seamless team collaboration.
+                            </p>
+                            <div class="mt-8 space-y-3">
+                                <div class="flex items-center space-x-3 text-white/80">
+                                    <div class="w-2 h-2 bg-white/60 rounded-full"></div>
+                                    <span class="text-sm">AI-Powered Project Planning</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-white/80">
+                                    <div class="w-2 h-2 bg-white/60 rounded-full"></div>
+                                    <span class="text-sm">Real-time Collaboration Tools</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-white/80">
+                                    <div class="w-2 h-2 bg-white/60 rounded-full"></div>
+                                    <span class="text-sm">Comprehensive Analytics Dashboard</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-white/60 text-sm">
+                            © 2025 Ignis SDLC Portal. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Login Form -->
+                <div id="login-form-panel" class="w-full p-4 sm:p-6 md:p-8 lg:p-12 flex flex-col justify-center">
+                    <div class="max-w-md mx-auto w-full">
+                        <div class="mb-6 sm:mb-8 text-center lg:text-left">
+                            <div class="flex items-center justify-center lg:justify-start space-x-3 mb-3 sm:mb-4">
+                                <img src="ignis-logo.svg" alt="Ignis Logo" style="height:40px ;">
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-bold text-ignis-dark">Welcome Back</h2>
+                            <p class="text-sm sm:text-base text-ignis-gray mt-2">Please enter your details to access your SDLC dashboard.</p>
+                        </div>
+
+                        <form id="login-form" action="#" method="POST" class="space-y-4 sm:space-y-6">
+                            <div>
+                                <label for="email" class="block text-xs sm:text-sm font-semibold text-ignis-dark mb-1.5 sm:mb-2">Email Address</label>
+                                <div class="relative">
+                                    <i class="fa-regular fa-envelope absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-ignis-gray text-sm"></i>
+                                    <input type="email" id="email" name="email" placeholder="you@company.com" class="w-full pl-9 sm:pl-11 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-ignis-primary focus:border-ignis-primary outline-none transition-all duration-200 hover:border-ignis-secondary" required>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center mb-1.5 sm:mb-2">
+                                    <label for="password" class="block text-xs sm:text-sm font-semibold text-ignis-dark">Password</label>
+                                    <a href="#" class="text-xs sm:text-sm font-medium bg-gradient-to-r from-ignis-primary to-ignis-accent bg-clip-text text-transparent hover:underline">Forgot password?</a>
+                                </div>
+                                <div class="relative">
+                                    <i class="fa-solid fa-lock absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-ignis-gray text-sm"></i>
+                                    <input type="password" id="password" name="password" placeholder="••••••••" class="w-full pl-9 sm:pl-11 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-ignis-primary focus:border-ignis-primary outline-none transition-all duration-200 hover:border-ignis-secondary" required>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input id="remember-me" name="remember-me" type="checkbox" class="h-3.5 w-3.5 sm:h-4 sm:w-4 text-ignis-primary focus:ring-ignis-primary border-gray-300 rounded">
+                                <label for="remember-me" class="ml-2 block text-xs sm:text-sm text-ignis-dark">Remember me for 30 days</label>
+                            </div>
+
+                            <div>
+                                <button type="submit" onclick="window.location.href='dashboard.html'" class="w-full bg-gradient-to-r from-ignis-primary to-ignis-accent hover:from-ignis-primary/90 hover:to-ignis-accent/90 text-white font-semibold py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ignis-primary transition-all duration-300 transform hover:scale-[1.02]">
+                                    <span class="flex items-center justify-center space-x-2">
+                                        <span class="text-sm sm:text-base">Sign In to Ignis</span>
+                                        <i class="fa-solid fa-arrow-right text-xs sm:text-sm"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+                        <p id="signup-link" class="mt-6 sm:mt-8 text-center text-xs sm:text-sm text-ignis-gray">
+                            Don't have an account? 
+                            <a href="#" class="font-semibold bg-gradient-to-r from-ignis-primary to-ignis-accent bg-clip-text text-transparent hover:underline">Contact your administrator</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+    </html>

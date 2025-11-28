@@ -1,0 +1,258 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Model for EntraID/Azure AD integration
+model User {
+  id          String   @id @default(cuid())
+  azureId     String   @unique @map("azure_id")
+  email       String   @unique
+  name        String
+  givenName   String?  @map("given_name")
+  surname     String?
+  avatarUrl   String?  @map("avatar_url")
+  tenantId    String   @map("tenant_id")
+  role        UserRole @default(STAKEHOLDER)
+
+  // BMad v6 Integration
+  preferences Json?    // User preferences for BMad v6 workflows
+
+  // Relationships
+  projects          ProjectUser[]
+  workflowInstances BMadWorkflowInstance[]
+
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  lastLoginAt DateTime? @map("last_login_at")
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  PROJECT_MANAGER
+  STAKEHOLDER
+  VIEWER
+}
+
+// Project Model for BMad v6 workflow management
+model Project {
+  id            String        @id @default(cuid())
+  name          String
+  description   String?
+  status        ProjectStatus @default(DRAFT)
+
+  // BMad v6 Scale-Adaptive Intelligence
+  selectedTrack BMadTrack     @default(QUICK_FLOW) @map("selected_track")
+  complexityScore Int         @default(0) @map("complexity_score")
+
+  // 4-Phase Workflow State
+  currentPhase  BMadPhase     @default(ANALYSIS) @map("current_phase")
+  phaseProgress Json?         @map("phase_progress") // PhaseProgress[]
+
+  // Integration Configuration
+  githubConfig     Json?      @map("github_config")
+  sharepointConfig Json?      @map("sharepoint_config")
+  ignisConfig      Json?      @map("ignis_config")
+
+  // Agent Orchestration
+  activeAgents  Json?         @map("active_agents") // string[]
+  contextData   Json?         @map("context_data")  // ProjectContext
+
+  // Relationships
+  users         ProjectUser[]
+  artifacts     Artifact[]
+
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  lastActivityAt DateTime?    @map("last_activity_at")
+
+  @@map("projects")
+}
+
+enum ProjectStatus {
+  DRAFT
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  ARCHIVED
+}
+
+enum BMadTrack {
+  QUICK_FLOW
+  BMAD_METHOD
+  BROWNFIELD
+}
+
+enum BMadPhase {
+  ANALYSIS
+  PLANNING
+  SOLUTIONING
+  IMPLEMENTATION
+}
+
+// Project User Relationship
+model ProjectUser {
+  id        String   @id @default(cuid())
+  projectId String   @map("project_id")
+  userId    String   @map("user_id")
+  role      ProjectRole @default(MEMBER)
+
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([projectId, userId])
+  @@map("project_users")
+}
+
+enum ProjectRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+// Artifact Model for BMad v6 document management
+model Artifact {
+  id          String        @id @default(cuid())
+  projectId   String        @map("project_id")
+  name        String
+  type        ArtifactType
+  phase       BMadPhase
+  content     String        @db.Text
+  metadata    Json?         // BMad v6 template metadata
+  version     Int           @default(1)
+
+  // Sync Status
+  githubSynced    Boolean   @default(false) @map("github_synced")
+  sharepointSynced Boolean  @default(false) @map("sharepoint_synced")
+  syncedAt        DateTime? @map("synced_at")
+
+  project     Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  @@map("artifacts")
+}
+
+enum ArtifactType {
+  PROJECT_BRIEF
+  PRD
+  ARCHITECTURE
+  USER_STORIES
+  TEST_PLAN
+  MARKET_RESEARCH
+  BUSINESS_CASE
+  TRAINING_MATERIAL
+}
+
+// Agent Engagement Tracking
+model AgentEngagement {
+  id        String   @id @default(cuid())
+  projectId String   @map("project_id")
+  agentId   String   @map("agent_id")
+  agentName String   @map("agent_name")
+  phase     BMadPhase
+  context   Json?    // Agent context and conversation history
+  startedAt DateTime @default(now()) @map("started_at")
+  endedAt   DateTime? @map("ended_at")
+
+  @@map("agent_engagements")
+}
+
+// Codebase Configuration for External Service Integration
+model CodebaseConfig {
+  id               String   @id @default(cuid())
+  tenantId         String   @unique @map("tenant_id")
+
+  // GitHub Configuration - encrypted in JSON
+  githubConfig     Json?    @map("github_config")
+
+  // SharePoint Configuration - encrypted in JSON
+  sharepointConfig Json?    @map("sharepoint_config")
+
+  // Ignis Platform Configuration - encrypted in JSON
+  ignisConfig      Json?    @map("ignis_config")
+
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@map("codebase_configs")
+}
+
+// BMad v6 Workflow Instances
+model BMadWorkflowInstance {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  projectId       String?  @map("project_id")
+  workflowType    String   @map("workflow_type") // 'quick_flow', 'bmad_method', 'brownfield'
+  currentPhase    String   @map("current_phase") // 'analysis', 'planning', 'solutioning', 'implementation'
+  phaseProgress   Json     @default("{}") @map("phase_progress")
+  workflowState   Json     @default("{}") @map("workflow_state")
+  activeAgents    String[] @map("active_agents") // Array of currently active agent IDs
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+  agentInteractions BMadAgentInteraction[]
+  templateUsage    BMadTemplateUsage[]
+
+  @@map("bmad_workflow_instances")
+}
+
+// BMad v6 Agent Interactions
+model BMadAgentInteraction {
+  id                  String   @id @default(cuid())
+  workflowInstanceId  String   @map("workflow_instance_id")
+  agentId             String   @map("agent_id")
+  interactionType     String   @map("interaction_type") // 'selection', 'engagement', 'completion'
+  interactionData     Json?    @map("interaction_data")
+  responseTimeMs      Int?     @map("response_time_ms")
+
+  workflowInstance    BMadWorkflowInstance @relation(fields: [workflowInstanceId], references: [id], onDelete: Cascade)
+
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  @@map("bmad_agent_interactions")
+}
+
+// BMad v6 Template Usage Tracking
+model BMadTemplateUsage {
+  id                  String   @id @default(cuid())
+  workflowInstanceId  String   @map("workflow_instance_id")
+  templateId          String   @map("template_id")
+  templateType        String   @map("template_type")
+  usageContext        Json?    @map("usage_context")
+
+  workflowInstance    BMadWorkflowInstance @relation(fields: [workflowInstanceId], references: [id], onDelete: Cascade)
+
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  @@map("bmad_template_usage")
+}// Telemetry and Performance Tracking
+model TelemetryEvent {
+  id        String   @id @default(cuid())
+  eventType String   @map("event_type")
+  projectId String?  @map("project_id")
+  userId    String?  @map("user_id")
+  agentId   String?  @map("agent_id")
+  data      Json?    // Event-specific data
+  timestamp DateTime @default(now())
+
+  @@map("telemetry_events")
+}
