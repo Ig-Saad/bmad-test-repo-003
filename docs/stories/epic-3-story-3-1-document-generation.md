@@ -1,15 +1,15 @@
 # Story 3.1: BMad v6 Template-Based Document Generation
 
 ## Story Classification
-- **Epic:** Epic 3 - Document Generation & BMad v6 Template Integration  
+- **Epic:** Epic 3 - Document Generation & BMad v6 Template Integration
 - **Priority:** P0 (Critical - Core document generation capability)
 - **Complexity:** High (6-8 days)
-- **Dependencies:** Story 1.4 (BMad v6 Framework Integration), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 1.4 (BMad v6 Framework Integration), Story 2.1 (MCP Server Implementation)
 
 ## User Story
 
-**As a** business user, product manager, or project stakeholder,  
-**I want to** generate comprehensive project artifacts using BMad v6 templates through AI assistance,  
+**As a** business user, product manager, or project stakeholder,
+**I want to** generate comprehensive project artifacts using BMad v6 templates through AI assistance,
 **So that** I can create high-quality specifications that follow proven methodology standards without technical expertise, ensuring consistency and completeness across all project documentation.
 
 ## Story Context & Business Value
@@ -145,14 +145,17 @@
 
 ### API Endpoints Required
 ```typescript
+// Document generation endpoints (integrated with MCP server for repository operations)
 GET    /api/v1/templates                      // Get available BMad v6 templates
 GET    /api/v1/templates/{id}                 // Get specific template details
 POST   /api/v1/templates/recommend            // Get template recommendations
 POST   /api/v1/documents/generate             // Generate document from template
 GET    /api/v1/documents/{id}/progress        // Get generation progress
-PUT    /api/v1/documents/{id}/content         // Update document content
+PUT    /api/v1/documents/{id}/content         // Update document content via MCP server
 POST   /api/v1/documents/{id}/validate        // Validate document structure/content
 GET    /api/v1/documents/{id}/quality         // Get document quality assessment
+POST   /api/v1/documents/{id}/save            // Save document to working branch via MCP server
+POST   /api/v1/documents/{id}/publish         // Publish document to main branch via MCP server
 POST   /api/v1/documents/{id}/export          // Export document in specified format
 ```
 

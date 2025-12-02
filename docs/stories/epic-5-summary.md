@@ -10,12 +10,13 @@
 - **File:** `epic-5-story-5-1-telemetry-integration.md`
 - **Priority:** P0 (Critical - Ecosystem connectivity and analytics)
 - **Complexity:** High (6-8 days)
-- **Dependencies:** Story 1.3 (External Service Configuration), All previous epics for telemetry data sources
+- **Dependencies:** Story 1.3 (External Service Configuration), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure), All previous epics for telemetry data sources
 
 **Summary:** Implements comprehensive telemetry capture and real-time transmission to Ignis Platform with user behavior analytics, workflow performance monitoring, and system diagnostics for ecosystem connectivity validation.
 
 **Key Deliverables:**
 - Comprehensive telemetry capture using OpenTelemetry Protocol (OTLP) including user interactions, workflow progression, and agent utilization
+- MCP server operation metrics and performance tracking integrated with telemetry pipeline
 - Real-time data transmission to Ignis Platform with configurable OTLP destinations and secure authentication
 - Performance monitoring with response times, token consumption tracking, and resource utilization via OTLP metrics
 - User behavior analytics with workflow completion rates and engagement metrics using structured telemetry
@@ -25,12 +26,13 @@
 - **File:** `epic-5-story-5-2-performance-optimization.md`
 - **Priority:** P0 (Critical - Performance and scalability validation)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 2.1 (Agent Selection Engine), Story 5.1 (Telemetry Integration)
+- **Dependencies:** Story 2.1 (MCP Server Implementation), Story 5.1 (Telemetry Integration), Story 1.5 (Container Infrastructure)
 
 **Summary:** Delivers significant performance improvements through selective agent loading, achieving 60-70% token consumption reduction with sub-3-second response times and concurrent user scalability validation.
 
 **Key Deliverables:**
 - Selective agent loading with context-aware agent definition loading based on project requirements using Redis caching
+- MCP server performance optimization with GitHub operation caching and connection pooling
 - Token consumption optimization achieving 60-70% reduction compared to loading all agents with OTLP validation
 - Response time optimization with sub-3-second agent loading and workflow execution via Fastify parallel processing
 - Intelligent Redis caching strategy with background refresh capabilities and proactive cache management
@@ -46,8 +48,10 @@
 
 ### Internal Integration Points
 - **Telemetry Sources:** All previous epics provide data sources for comprehensive OTLP telemetry capture
-- **Agent Optimization:** Story 2.1 agent selection engine provides foundation for performance optimization
+- **MCP Server Integration:** Story 2.1 MCP server provides GitHub operation metrics and performance data
+- **Container Architecture:** Story 1.5 provides containerized deployment foundation for telemetry services
 - **Configuration Integration:** Story 1.3 provides Ignis Platform OTLP connection and optimization settings
+- **Performance Foundation:** BMad v6 web bundle integration from Story 2.1 provides agent optimization baseline
 - **Performance Validation:** Integration with Fastify backend for parallel request processing optimization
 - **Performance Validation:** Telemetry integration enables performance optimization measurement and validation
 

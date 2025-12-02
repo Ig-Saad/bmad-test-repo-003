@@ -1,15 +1,15 @@
 # Story 2.3: Ideation Phase with AI-Assisted Workflows
 
 ## Story Classification
-- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow  
+- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow
 - **Priority:** P0 (Critical - Second workflow phase)
 - **Complexity:** High (6-8 days)
-- **Dependencies:** Story 2.2 (Configuration Phase), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 2.2 (Configuration Phase), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure)
 
 ## User Story
 
-**As a** business analyst or product manager,  
-**I want to** conduct AI-assisted brainstorming, market research, and competitive analysis through web interface,  
+**As a** business analyst or product manager,
+**I want to** conduct AI-assisted brainstorming, market research, and competitive analysis through web interface,
 **So that** I can leverage BMad v6's proven methodology for comprehensive project ideation and research, generating high-quality foundation artifacts for product definition.
 
 ## Story Context & Business Value
@@ -143,15 +143,17 @@
 
 ### API Endpoints Required
 ```python
-# FastAPI endpoint definitions
+# FastAPI endpoint definitions (integrated with MCP server for repository operations)
 GET    /api/v1/projects/{project_id}/ideation         # Get ideation phase data
 POST   /api/v1/projects/{project_id}/ideation/brainstorm # Start brainstorming session
 POST   /api/v1/projects/{project_id}/ideation/research   # Conduct market research
 POST   /api/v1/projects/{project_id}/ideation/competitive # Perform competitive analysis
 POST   /api/v1/projects/{project_id}/ideation/collaborate # Collaborative ideation session
 GET    /api/v1/projects/{project_id}/ideation/artifacts  # Get generated artifacts
-POST   /api/v1/projects/{project_id}/ideation/generate   # Generate ideation documents
+POST   /api/v1/projects/{project_id}/ideation/generate   # Generate ideation documents via MCP server
 PUT    /api/v1/projects/{project_id}/ideation/progress   # Update phase progress
+POST   /api/v1/projects/{project_id}/ideation/save       # Save artifacts to working branch via MCP server
+POST   /api/v1/projects/{project_id}/ideation/publish    # Publish artifacts to main branch via MCP server
 POST   /api/v1/projects/{project_id}/ideation/complete   # Complete ideation phase
 ```
 

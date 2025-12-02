@@ -1,15 +1,15 @@
 # Story 3.2: In-Platform Document Viewing & Editing
 
 ## Story Classification
-- **Epic:** Epic 3 - Document Generation & BMad v6 Template Integration  
+- **Epic:** Epic 3 - Document Generation & BMad v6 Template Integration
 - **Priority:** P0 (Critical - Document management capability)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 3.1 (Document Generation), Story 1.2 (MSAL Authentication)
+- **Dependencies:** Story 3.1 (Document Generation), Story 1.2 (MSAL Authentication), Story 2.1 (MCP Server Implementation)
 
 ## User Story
 
-**As a** project stakeholder, product manager, or team collaborator,  
-**I want to** view and edit generated documents within the web platform with comprehensive formatting support,  
+**As a** project stakeholder, product manager, or team collaborator,
+**I want to** view and edit generated documents within the web platform with comprehensive formatting support,
 **So that** I can review, modify, and collaborate on specifications without external tools or format conversion, maintaining workflow continuity and document integrity.
 
 ## Story Context & Business Value
@@ -29,12 +29,12 @@
 
 ### 📖 Rich Document Viewing & Display
 
-**AC1: Rich Document Viewer with BMad v6 Markdown Support**
-- **GIVEN** a user wants to view a generated BMad v6 document
+**AC1: BMad v6 Markdown Document Rendering**
+- **GIVEN** a user wants to view a BMad v6-generated artifact in `.md` format
 - **WHEN** they open the document in the platform
-- **THEN** the system displays the document with rich formatting and proper BMad v6 structure
-- **AND** document viewer supports markdown rendering with tables, lists, code blocks, and embedded media
-- **AND** BMad v6 structure is preserved with proper section hierarchy, formatting, and content organization
+- **THEN** the system first renders the complete markdown document with rich formatting and proper BMad v6 structure
+- **AND** markdown rendering supports all standard elements: headers, tables, lists, code blocks, links, images, and text formatting
+- **AND** BMad v6 document structure is preserved with proper section hierarchy, methodology compliance, and content organization
 - **AND** document display maintains readability and professional appearance across different screen sizes
 
 **AC2: Proper Formatting Display with Structure Preservation**
@@ -45,15 +45,36 @@
 - **AND** structure preservation maintains document hierarchy, section organization, and content relationships
 - **AND** display quality matches or exceeds external document viewers and editors
 
+**AC2A: Mermaid Script-to-Diagram Rendering within Markdown**
+- **GIVEN** a rendered BMad v6 markdown document contains Mermaid script code blocks (```mermaid)
+- **WHEN** the document viewer processes the rendered markdown
+- **THEN** the system automatically detects all Mermaid script blocks and converts them to visual diagrams in-place
+- **AND** supported Mermaid diagram types include flowcharts, sequence diagrams, class diagrams, state diagrams, entity relationship diagrams, user journey maps, Gantt charts, pie charts, requirement diagrams, and C4 component diagrams
+- **AND** Mermaid script-to-diagram conversion achieves sub-2-second rendering performance for standard BMad v6 artifacts
+- **AND** rendered diagrams display with proper scaling, responsive layout, and high-resolution clarity within the markdown flow
+- **AND** interactive diagram features include zoom, pan, and click-to-expand for complex diagrams
+- **AND** diagram rendering maintains consistency with BMad v6 methodology standards and visual identity
+- **AND** original Mermaid script remains accessible for editing while displaying rendered diagram for viewing
+
 ### ✏️ In-Platform Editing Capabilities
 
-**AC3: In-Platform Editing with Real-Time Preview**
-- **GIVEN** a user wants to edit a document within the platform
+**AC3: Monaco Editor Integration with Mermaid Script Support**
+- **GIVEN** a user wants to edit a BMad v6 markdown document containing Mermaid scripts
 - **WHEN** they enter edit mode
-- **THEN** the system provides comprehensive editing capabilities with real-time preview
-- **AND** editing interface supports rich text editing, markdown editing, and hybrid editing modes
-- **AND** real-time preview shows formatting changes immediately without requiring save or refresh
+- **THEN** the system provides Monaco Editor with full markdown and Mermaid script syntax highlighting
+- **AND** Monaco Editor supports intelligent code completion for Mermaid diagram syntax
+- **AND** editing interface provides split-pane view: Monaco Editor (left) with live Mermaid diagram preview (right)
+- **AND** real-time preview shows both markdown formatting and rendered Mermaid diagrams immediately as user types
+- **AND** Mermaid script editing includes syntax validation and error highlighting for diagram code blocks
 - **AND** editing capabilities maintain BMad v6 template structure and methodology compliance
+
+**AC4: Real-Time Mermaid Diagram Preview During Editing**
+- **GIVEN** a user is editing Mermaid script blocks within markdown
+- **WHEN** they modify Mermaid diagram code
+- **THEN** the preview pane updates the rendered diagram in real-time without requiring save or refresh
+- **AND** invalid Mermaid syntax shows clear error messages and suggestions for correction
+- **AND** diagram preview maintains proper scaling and layout within the document context
+- **AND** users can toggle between script view and diagram view for each Mermaid block
 
 **AC4: Formatting Preservation During Editing**
 - **GIVEN** a user is editing a document with complex formatting
@@ -135,27 +156,53 @@
 - **AND** template requirements checking ensures all mandatory sections and content areas are maintained
 - **AND** standards compliance provides feedback and guidance for maintaining framework integrity
 
+### 📄 Document Export & PDF Generation
+
+**AC15: PDF Export with Complete Mermaid Script-to-Diagram Conversion**
+- **GIVEN** a user wants to export a BMad v6 markdown document containing Mermaid scripts as PDF
+- **WHEN** they trigger PDF export functionality
+- **THEN** the system follows the complete 3-stage rendering process:
+  1. **Stage 1:** Render the complete BMad v6 `.md` document with proper markdown formatting
+  2. **Stage 2:** Convert all Mermaid script blocks (````mermaid`) to fully rendered visual diagrams
+  3. **Stage 3:** Generate high-quality PDF preserving both markdown formatting AND rendered Mermaid diagrams
+- **AND** PDF export maintains visual clarity and professional presentation for all diagram types (flowcharts, sequence, class, ER, etc.)
+- **AND** generated PDF includes BMad v6 branding, proper document structure, and methodology compliance
+- **AND** PDF generation completes within 5 seconds for typical document sizes
+- **AND** export functionality is available from both document viewer and editing interface
+- **AND** PDF export achieves 100% successful generation rate with complete Mermaid diagram inclusion (no script blocks visible in final PDF)
+
 ## 🛠️ Technical Implementation Details
 
 ### Technology Stack
-- **Frontend:** React 18+ with rich text editor (Monaco, Quill, or similar)
+- **Code Editor:** Monaco Editor for markdown and Mermaid script editing with syntax highlighting and IntelliSense
+- **Markdown Rendering:** React-Markdown or similar for Stage 1 (`.md` to HTML conversion)
+- **Mermaid Integration:** Mermaid.js for Stage 2 (script-to-diagram rendering) with React-Mermaid components
+- **PDF Generation:** Puppeteer or Playwright for Stage 3 (server-side PDF generation preserving rendered diagrams)
+- **Real-time Preview:** Split-pane editor with live Mermaid diagram rendering
 - **Real-time Collaboration:** WebSocket for live editing, operational transformation
 - **Backend:** Python FastAPI with async/await, document management services
 - **Database:** PostgreSQL 15 with SQLAlchemy for document storage, Redis 7 for real-time collaboration
 
 ### API Endpoints Required
 ```typescript
+// Document editing endpoints (integrated with MCP server for repository operations)
 GET    /api/v1/documents/{id}                 // Get document content
-PUT    /api/v1/documents/{id}                 // Update document content
+PUT    /api/v1/documents/{id}                 // Update document content via MCP server
 GET    /api/v1/documents/{id}/versions        // Get document version history
-POST   /api/v1/documents/{id}/versions        // Create new document version
-PUT    /api/v1/documents/{id}/rollback        // Rollback to previous version
+POST   /api/v1/documents/{id}/versions        // Create new document version via MCP server
+PUT    /api/v1/documents/{id}/rollback        // Rollback to previous version via MCP server
 GET    /api/v1/documents/{id}/comments        // Get document comments
 POST   /api/v1/documents/{id}/comments        // Add document comment
 PUT    /api/v1/documents/{id}/comments/{commentId} // Update comment
 POST   /api/v1/documents/{id}/validate        // Validate document compliance
 GET    /api/v1/documents/{id}/collaborators   // Get active collaborators
 POST   /api/v1/documents/{id}/collaborate     // Join collaborative editing session
+POST   /api/v1/documents/{id}/save            // Save document to working branch via MCP server
+POST   /api/v1/documents/{id}/publish         // Publish document to main branch via MCP server
+POST   /api/v1/documents/{id}/mermaid/parse   // Parse and extract Mermaid scripts from markdown
+POST   /api/v1/documents/{id}/mermaid/render  // Convert Mermaid script to diagram
+POST   /api/v1/documents/{id}/mermaid/validate // Validate Mermaid script syntax
+POST   /api/v1/documents/{id}/export/pdf      // Export document with rendered Mermaid diagrams as PDF
 ```
 
 ### Database Schema Requirements

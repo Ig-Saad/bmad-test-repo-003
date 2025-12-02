@@ -1,15 +1,15 @@
 # Story 2.5: Planning Phase with Epic & Story Generation
 
 ## Story Classification
-- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow  
+- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow
 - **Priority:** P0 (Critical - Fourth workflow phase)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 2.4 (Product Definition Phase), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 2.4 (Product Definition Phase), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure)
 
 ## User Story
 
-**As a** project manager or agile practitioner,  
-**I want to** generate epics, features, and user stories with story point estimation through AI assistance,  
+**As a** project manager or agile practitioner,
+**I want to** generate epics, features, and user stories with story point estimation through AI assistance,
 **So that** I can create comprehensive project planning artifacts using BMad v6's proven planning methodology, enabling seamless handoff to development teams.
 
 ## Story Context & Business Value
@@ -145,17 +145,19 @@
 
 ### API Endpoints Required
 ```python
-# FastAPI endpoint definitions
+# FastAPI endpoint definitions (integrated with MCP server for repository operations)
 GET    /api/v1/projects/{project_id}/planning           # Get planning phase data
-POST   /api/v1/projects/{project_id}/epics/create       # Create epic
-PUT    /api/v1/projects/{project_id}/epics/{epic_id}     # Update epic
-POST   /api/v1/projects/{project_id}/stories/generate   # Generate user stories
-PUT    /api/v1/projects/{project_id}/stories/{story_id}  # Update user story
+POST   /api/v1/projects/{project_id}/epics/create       # Create epic via MCP server
+PUT    /api/v1/projects/{project_id}/epics/{epic_id}     # Update epic via MCP server
+POST   /api/v1/projects/{project_id}/stories/generate   # Generate user stories via MCP server
+PUT    /api/v1/projects/{project_id}/stories/{story_id}  # Update user story via MCP server
 POST   /api/v1/projects/{project_id}/stories/estimate   # Estimate story points
 GET    /api/v1/projects/{project_id}/planning/artifacts # Get planning artifacts
-POST   /api/v1/projects/{project_id}/planning/timeline  # Generate timeline
+POST   /api/v1/projects/{project_id}/planning/timeline  # Generate timeline via MCP server
+POST   /api/v1/projects/{project_id}/planning/save      # Save artifacts to working branch via MCP server
+POST   /api/v1/projects/{project_id}/planning/publish   # Publish artifacts to main branch via MCP server
 POST   /api/v1/projects/{project_id}/planning/complete  # Complete planning phase
-POST   /api/v1/projects/{project_id}/handoff/prepare    # Prepare development handoff
+POST   /api/v1/projects/{project_id}/handoff/prepare    # Prepare development handoff via MCP server
 ```
 
 ### Database Schema Requirements

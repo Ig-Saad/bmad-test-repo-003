@@ -2,32 +2,32 @@
 
 ## Epic Overview
 
-**Epic Goal:** Implement BMad v6's intelligent agent orchestration system with context-aware agent selection and complete 4-phase methodology demonstration for **upstream SDLC activities** (configuration, ideation, planning, solutioning). This epic validates the core value proposition by proving that non-technical stakeholders can effectively leverage BMad v6's scale-adaptive intelligence and specialized agent expertise through intuitive web interfaces with **dynamic file-level agent loading** (60-70% token reduction), demonstrating the complete workflow from workspace creation through planning phases with clear handoff to BMad v6 IDE for downstream development.
+**Epic Goal:** Implement BMad v6's intelligent agent orchestration system with context-aware agent selection, containerized MCP server for GitHub operations, and complete 4-phase methodology demonstration for **upstream SDLC activities** (configuration, ideation, planning, solutioning). This epic validates the core value proposition by proving that non-technical stakeholders can effectively leverage BMad v6's scale-adaptive intelligence and specialized agent expertise through intuitive web interfaces with **dynamic file-level agent loading** (60-70% token reduction) and secure repository management, demonstrating the complete workflow from workspace creation through planning phases with clear handoff to BMad v6 IDE for downstream development.
 
 ## Story Breakdown
 
-### Story 2.1: Context-Aware Agent Selection Engine with Dynamic File-Level Loading
-- **File:** `epic-2-story-2-1-agent-selection.md`
-- **Priority:** P0 (Critical - Core value proposition)
-- **Complexity:** High (5-7 days)
-- **Dependencies:** Story 1.4 (BMad v6 Framework Integration Foundation)
+### Story 2.1: MCP Server Implementation & GitHub Integration
+- **File:** `epic-2-story-2-1-mcp-server.md`
+- **Priority:** P0 (Critical - Repository operations foundation)
+- **Complexity:** High (6-8 days)
+- **Dependencies:** Story 1.5 (Container Infrastructure), Story 1.6 (Database Foundation)
 
-**Summary:** Implements intelligent agent orchestration with context-aware selection from BMad v6's 12-agent ecosystem, providing 2-3 relevant agents initially with progressive engagement capabilities. Implements **dynamic file-level loading** of specific workflows, tasks, and agent definitions through MCP tool calling or function calling, achieving 60-70% token consumption reduction compared to loading complete agent bundles.
+**Summary:** Implements dedicated Model Context Protocol (MCP) server to handle all GitHub repository operations securely and efficiently, including repository creation, BMad framework installation, file operations, and bidirectional synchronization with proper security and performance in containerized environment. This story also incorporates intelligent agent orchestration capabilities through BMad v6 web bundle integration with context-aware filtering.
 
 **Key Deliverables:**
-- Context analysis and intelligent agent recommendation engine
-- Dynamic file-level agent loading (specific workflows, tasks, definitions instead of complete bundles)
-- MCP tool calling or function calling implementation for file operations
-- File-level component caching for loaded workflows and tasks
-- Progressive agent engagement with complexity-based scaling
-- Agent role switching with context preservation
-- Performance optimization with token consumption tracking (60-70% reduction target)
+- Containerized MCP server with secure GitHub API integration and Personal Access Token (PAT) management
+- Repository creation capabilities for Greenfield projects with proper README initialization and BMad framework structure
+- Repository connection and configuration for Brownfield projects with existing codebase integration
+- File operation tools (createFile, editFile, createDirectory, diff generation) equivalent to desktop IDE capabilities
+- Branch management with working branch creation, commit operations, and merge workflows for dual-action synchronization
+- Secure credential storage and validation with encrypted GitHub PAT handling and proper access controls
+- BMad v6 web bundle loading with intelligent agent filtering based on project context and phase requirements
 
 ### Story 2.2: Configuration Phase with Workspace Creation Workflows
 - **File:** `epic-2-story-2-2-configuration-phase.md`
 - **Priority:** P0 (Critical - First workflow phase)
 - **Complexity:** Medium (4-5 days)
-- **Dependencies:** Story 1.3 (External Service Configuration), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 1.3 (External Service Configuration), Story 2.1 (MCP Server Implementation)
 
 **Summary:** Implements the first phase of BMad v6's 4-phase methodology with guided workspace setup (project = workspace), **Greenfield and Brownfield workflow support**, integration configuration, and automatic phase progression detection.
 
@@ -44,7 +44,7 @@
 - **File:** `epic-2-story-2-3-ideation-phase.md`
 - **Priority:** P0 (Critical - Second workflow phase)
 - **Complexity:** High (6-8 days)
-- **Dependencies:** Story 2.2 (Configuration Phase), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 2.2 (Configuration Phase), Story 2.1 (MCP Server Implementation)
 
 **Summary:** Enables AI-assisted brainstorming, market research, and competitive analysis through collaborative web interfaces, generating comprehensive ideation artifacts following BMad v6 methodology.
 
@@ -58,7 +58,7 @@
 - **File:** `epic-2-story-2-4-product-definition.md`
 - **Priority:** P0 (Critical - Third workflow phase)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 2.3 (Ideation Phase), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 2.3 (Ideation Phase), Story 2.1 (MCP Server Implementation)
 
 **Summary:** Creates comprehensive PRD and technical architecture documentation through AI guidance, with structured requirements elicitation and stakeholder review workflows.
 
@@ -72,7 +72,7 @@
 - **File:** `epic-2-story-2-5-planning-phase.md`
 - **Priority:** P0 (Critical - Fourth workflow phase)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 2.4 (Product Definition Phase), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 2.4 (Product Definition Phase), Story 2.1 (MCP Server Implementation)
 
 **Summary:** Generates comprehensive project planning artifacts including epics, features, and user stories with AI-assisted estimation, culminating in seamless handoff to BMad v6 IDE workflows.
 

@@ -1,15 +1,15 @@
-# Story 4.2: SharePoint Document Management Integration
+# Story 4.1: SharePoint Document Management Integration
 
 ## Story Classification
-- **Epic:** Epic 4 - Strategic Integration Validation  
+- **Epic:** Epic 4 - Strategic Integration Validation
 - **Priority:** P0 (Critical - Enterprise workflow integration)
 - **Complexity:** High (8-10 days)
-- **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation)
+- **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure)
 
 ## User Story
 
-**As an** enterprise user, business stakeholder, or document manager,  
-**I want to** publish and manage documents in SharePoint with proper metadata and version control,  
+**As an** enterprise user, business stakeholder, or document manager,
+**I want to** publish and manage documents in SharePoint with proper metadata and version control,
 **So that** I can integrate with existing enterprise document workflows and governance processes while maintaining compliance and audit requirements.
 
 ## Story Context & Business Value
@@ -145,16 +145,17 @@
 
 ### API Endpoints Required
 ```typescript
-POST   /api/v1/sharepoint/publish/{projectId}    // Publish documents to SharePoint
+// SharePoint integration endpoints (via Model Context Protocol for Microsoft Graph API)
+POST   /api/v1/sharepoint/publish/{projectId}    // Publish documents to SharePoint via MCP
 GET    /api/v1/sharepoint/status/{projectId}     // Get publishing status
 PUT    /api/v1/sharepoint/config/{projectId}     // Update SharePoint configuration
-GET    /api/v1/sharepoint/libraries              // Get available document libraries
-POST   /api/v1/sharepoint/libraries/validate     // Validate library access
-GET    /api/v1/sharepoint/metadata/{documentId}  // Get document metadata
-PUT    /api/v1/sharepoint/metadata/{documentId}  // Update document metadata
+GET    /api/v1/sharepoint/libraries              // Get available document libraries via MCP
+POST   /api/v1/sharepoint/libraries/validate     // Validate library access via MCP
+GET    /api/v1/sharepoint/metadata/{documentId}  // Get document metadata via MCP
+PUT    /api/v1/sharepoint/metadata/{documentId}  // Update document metadata via MCP
 POST   /api/v1/sharepoint/approve/{documentId}   // Approve document for publishing
 GET    /api/v1/sharepoint/audit/{projectId}      // Get audit trail
-POST   /api/v1/sharepoint/sync/{projectId}       // Sync with SharePoint changes
+POST   /api/v1/sharepoint/sync/{projectId}       // Sync with SharePoint changes via MCP
 ```
 
 ### Database Schema Requirements

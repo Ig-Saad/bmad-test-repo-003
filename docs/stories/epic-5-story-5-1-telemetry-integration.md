@@ -1,15 +1,15 @@
 # Story 5.1: Comprehensive Telemetry Integration
 
 ## Story Classification
-- **Epic:** Epic 5 - Ignis Platform Telemetry & Performance Optimization  
+- **Epic:** Epic 5 - Ignis Platform Telemetry & Performance Optimization
 - **Priority:** P0 (Critical - Ecosystem connectivity and analytics)
 - **Complexity:** High (6-8 days)
-- **Dependencies:** Story 1.3 (External Service Configuration), All previous epics for telemetry data sources
+- **Dependencies:** Story 1.3 (External Service Configuration), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure), All previous epics for telemetry data sources
 
 ## User Story
 
-**As a** platform administrator, product manager, or system analyst,  
-**I want** comprehensive telemetry data captured and transmitted to Ignis Platform in real-time,  
+**As a** platform administrator, product manager, or system analyst,
+**I want** comprehensive telemetry data captured and transmitted to Ignis Platform in real-time,
 **So that** I can monitor user behavior, workflow performance, and platform optimization opportunities while contributing to the broader Ignis Platform ecosystem analytics.
 
 ## Story Context & Business Value
@@ -145,10 +145,12 @@
 
 ### API Endpoints Required
 ```typescript
+// Telemetry endpoints (integrated with MCP server for GitHub operation metrics)
 POST   /api/v1/telemetry/events                // Capture telemetry events
 POST   /api/v1/telemetry/user-interactions     // Track user interactions
 POST   /api/v1/telemetry/workflow-progress     // Monitor workflow progression
 POST   /api/v1/telemetry/agent-utilization     // Track agent usage
+POST   /api/v1/telemetry/mcp-operations        // Track MCP server operation metrics
 GET    /api/v1/telemetry/performance           // Get performance metrics
 POST   /api/v1/telemetry/errors                // Report errors and issues
 GET    /api/v1/telemetry/transmission-status   // Check transmission status

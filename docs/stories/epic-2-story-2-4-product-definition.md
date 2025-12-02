@@ -1,15 +1,15 @@
 # Story 2.4: Product Definition Phase with PRD & Architecture Generation
 
 ## Story Classification
-- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow  
+- **Epic:** Epic 2 - Intelligent Agent Orchestration & 4-Phase Workflow
 - **Priority:** P0 (Critical - Third workflow phase)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 2.3 (Ideation Phase), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 2.3 (Ideation Phase), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure)
 
 ## User Story
 
-**As a** product manager or technical stakeholder,  
-**I want to** create comprehensive PRD and technical architecture documentation through AI guidance,  
+**As a** product manager or technical stakeholder,
+**I want to** create comprehensive PRD and technical architecture documentation through AI guidance,
 **So that** I can generate complete product specifications using BMad v6's proven templates and methodology, establishing clear requirements and technical foundation for development.
 
 ## Story Context & Business Value
@@ -145,15 +145,17 @@
 
 ### API Endpoints Required
 ```python
-# FastAPI endpoint definitions
+# FastAPI endpoint definitions (integrated with MCP server for repository operations)
 GET    /api/v1/projects/{project_id}/product-definition    # Get product definition data
-POST   /api/v1/projects/{project_id}/prd/create           # Create PRD document
-PUT    /api/v1/projects/{project_id}/prd/update           # Update PRD content
-POST   /api/v1/projects/{project_id}/architecture/create  # Create architecture document
-PUT    /api/v1/projects/{project_id}/architecture/update  # Update architecture content
+POST   /api/v1/projects/{project_id}/prd/create           # Create PRD document via MCP server
+PUT    /api/v1/projects/{project_id}/prd/update           # Update PRD content via MCP server
+POST   /api/v1/projects/{project_id}/architecture/create  # Create architecture document via MCP server
+PUT    /api/v1/projects/{project_id}/architecture/update  # Update architecture content via MCP server
 POST   /api/v1/projects/{project_id}/requirements/elicit  # Elicit requirements
 GET    /api/v1/projects/{project_id}/documents/review      # Get review status
 POST   /api/v1/projects/{project_id}/documents/approve     # Approve documents
+POST   /api/v1/projects/{project_id}/product-definition/save    # Save artifacts to working branch via MCP server
+POST   /api/v1/projects/{project_id}/product-definition/publish # Publish artifacts to main branch via MCP server
 POST   /api/v1/projects/{project_id}/product-definition/complete # Complete phase
 ```
 

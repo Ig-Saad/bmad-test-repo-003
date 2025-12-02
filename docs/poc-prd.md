@@ -76,6 +76,14 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
    - **Version History:** Complete version history preservation for all bidirectional sync operations with rollback capabilities and change tracking
    - **Future Enhancement:** Real-time monitoring via polling and webhook integration planned for post-POC development phases
 
+**FR15:** The system shall implement comprehensive contextual history and chat preservation capabilities:
+   - **Chat History Management:** Complete preservation of all user conversations with BMad v6 agents including message content, agent selections, timestamps, and workflow context across all sessions
+   - **Artifact Context Linking:** Automatic linking and cross-referencing between chat conversations and generated artifacts, maintaining traceability from initial discussions to final documents
+   - **Session Continuity:** Seamless restoration of chat history, agent context, and artifact states when users return to workspace, enabling iterative refinement and building upon previous work
+   - **Contextual Agent Memory:** Agents shall have access to relevant previous conversations and artifacts when engaged, ensuring continuity in recommendations and avoiding repetitive discussions
+   - **Workspace-Level History:** Complete conversation and artifact history preserved at workspace level with proper organization by phase, agent, and artifact type
+   - **Future Enhancement:** Advanced search capabilities across chat history and export functionality for audit trails planned for post-POC development phases
+
 ### Non Functional
 
 **NFR1:** BMad v6 web bundle loading shall achieve sub-3-second response times with efficient agent orchestration through intelligent agent filtering based on project requirements.
@@ -107,6 +115,8 @@ The POC validates the core hypothesis that non-technical stakeholders (product m
 **NFR14:** PDF export functionality shall achieve 100% successful generation rate with proper formatting, diagram inclusion, and BMad v6 branding, with generation completing within 5 seconds for typical document sizes.
 
 **NFR15:** Save and Publish workflows via MCP server shall maintain 100% data integrity with Save operations completing within 3 seconds and Publish operations (including diff generation) completing within 5 seconds.
+
+**NFR16:** Contextual history and chat preservation shall achieve 100% data persistence with chat history loading completing within 2 seconds for standard workspace sessions (up to 100 conversations), ensuring seamless workflow continuity and context restoration (advanced search and export features planned for post-POC phases).
 
 ## User Interface Design Goals
 
@@ -220,7 +230,7 @@ Integrate comprehensive telemetry capture with real-time Ignis Platform transmis
 
 ## Epic 1: POC Foundation & Authentication
 
-**Epic Goal:** Establish the foundational POC infrastructure with secure GitHub OAuth authentication, basic project workspace creation, and BMad v6 framework integration. This epic delivers the essential platform foundation that enables users to securely access the system, configure codebase connections, and begin leveraging BMad v6 methodology through web interfaces, providing immediate validation of the core "SDLC IDE over Web" concept.
+**Epic Goal:** Establish the foundational POC infrastructure with proper workspace structure, EntraID/Azure AD authentication with JWT session-less architecture, external service configuration, and BMad v6 framework integration. This epic delivers the essential platform foundation for the Upstream SDLC Orchestration Platform using Node.js Fastify backend and React frontend with EntraID SSO, enabling users to securely access the system using organizational credentials and begin leveraging BMad v6 methodology for upstream activities through web interfaces.
 
 ### Story 1.1: EntraID/Azure AD SSO Authentication & JWT Architecture
 
@@ -266,7 +276,7 @@ so that the web platform can access proven methodology templates and agent orche
 
 ## Epic 2: Intelligent Agent Orchestration & 4-Phase Workflow
 
-**Epic Goal:** Implement BMad v6's intelligent agent orchestration system with context-aware agent selection and complete 4-phase methodology demonstration. This epic validates the core value proposition by proving that non-technical stakeholders can effectively leverage BMad v6's scale-adaptive intelligence and specialized agent expertise through intuitive web interfaces, demonstrating the complete workflow from project ideation through planning phases.
+**Epic Goal:** Implement BMad v6's intelligent agent orchestration system with context-aware agent selection and complete 4-phase methodology demonstration for upstream SDLC activities. This epic validates the core value proposition by proving that non-technical stakeholders can effectively leverage BMad v6's scale-adaptive intelligence and specialized agent expertise through intuitive web interfaces, demonstrating complete upstream workflow execution from project ideation through planning phases with seamless handoff to BMad v6 IDE workflows.
 
 ### Story 2.1: Context-Aware Agent Selection Engine
 
@@ -411,6 +421,21 @@ so that I can share specifications with external parties and maintain offline co
 4. Download controls accessible from both chat interface and document viewer with format selection
 5. Document packaging with table of contents, version information, and creation timestamps
 6. Generation performance completing within 5 seconds for typical BMad v6 artifact sizes with quality optimization
+
+### Story 3.6: Contextual History and Chat Preservation
+
+As a product manager, solution architect, or UI expert,
+I want complete preservation of my conversations with BMad v6 agents and generated artifacts across all sessions,
+so that I can build upon previous work, reference earlier discussions, and maintain workflow continuity without losing context or repeating conversations.
+
+#### Acceptance Criteria
+1. Complete chat history preservation including all user conversations with BMad v6 agents, message content, agent selections, timestamps, and workflow context across sessions
+2. Automatic artifact context linking and cross-referencing between chat conversations and generated documents, maintaining traceability from initial discussions to final artifacts
+3. Seamless session continuity with restoration of chat history, agent context, and artifact states when users return to workspace, enabling iterative refinement and building upon previous work
+4. Contextual agent memory providing agents access to relevant previous conversations and artifacts when engaged, ensuring continuity in recommendations and avoiding repetitive discussions
+5. Workspace-level history organization with complete conversation and artifact history preserved at workspace level, properly organized by phase, agent, and artifact type
+6. Basic navigation through chat history with chronological ordering and phase-based organization for workflow continuity validation
+7. Integration validation ensuring chat history persistence across browser sessions and workspace reconnections with 100% data integrity
 
 ## Epic 4: Strategic Integration Validation
 

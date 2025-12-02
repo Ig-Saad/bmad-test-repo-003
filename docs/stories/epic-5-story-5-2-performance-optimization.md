@@ -1,15 +1,15 @@
 # Story 5.2: Agent Loading Performance Optimization
 
 ## Story Classification
-- **Epic:** Epic 5 - Ignis Platform Telemetry & Performance Optimization  
+- **Epic:** Epic 5 - Ignis Platform Telemetry & Performance Optimization
 - **Priority:** P0 (Critical - Performance and scalability validation)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 2.1 (Agent Selection Engine), Story 5.1 (Telemetry Integration)
+- **Dependencies:** Story 2.1 (MCP Server Implementation), Story 5.1 (Telemetry Integration), Story 1.5 (Container Infrastructure)
 
 ## User Story
 
-**As a** system user, developer, or platform stakeholder,  
-**I want** optimized agent loading with reduced token consumption and fast response times,  
+**As a** system user, developer, or platform stakeholder,
+**I want** optimized agent loading with reduced token consumption and fast response times,
 **So that** I can experience efficient workflow execution without performance degradation or excessive resource usage while validating platform scalability.
 
 ## Story Context & Business Value
@@ -145,13 +145,15 @@
 
 ### API Endpoints Required
 ```typescript
-GET    /api/v1/performance/metrics             // Get performance metrics
+// Performance optimization endpoints (integrated with MCP server performance metrics)
+GET    /api/v1/performance/metrics             // Get performance metrics including MCP server
 POST   /api/v1/performance/benchmark           // Run performance benchmarks
 GET    /api/v1/agents/optimized-loading        // Get optimized agent loading status
-POST   /api/v1/agents/preload                  // Preload agents based on context
+POST   /api/v1/agents/preload                  // Preload agents based on context via MCP server
 GET    /api/v1/cache/status                    // Get cache status and statistics
 POST   /api/v1/cache/refresh                   // Trigger cache refresh
 GET    /api/v1/performance/token-usage         // Get token consumption metrics
+GET    /api/v1/performance/mcp-server          // Get MCP server performance metrics
 POST   /api/v1/performance/optimize            // Trigger performance optimization
 GET    /api/v1/performance/scalability         // Get scalability test results
 POST   /api/v1/performance/load-test           // Run load testing scenarios

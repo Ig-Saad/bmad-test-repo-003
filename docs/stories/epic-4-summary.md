@@ -2,80 +2,64 @@
 
 ## Epic Overview
 
-**Epic Goal:** Implement **dual-action GitHub synchronization** (Save to working branch, Publish with merge to main) and SharePoint integrations with bidirectional synchronization to prove platform extensibility and enterprise workflow capabilities for the **Upstream SDLC Orchestration Platform**. This epic validates the critical integration requirements that enable seamless handoff to development teams for downstream activities in BMad v6 IDE and enterprise document management, demonstrating the platform's ability to bridge business and technical workflows across upstream (ideation, planning, solutioning) and downstream (implementation) phases.
+**Epic Goal:** Implement enterprise SharePoint integration and validate platform extensibility for enterprise workflow capabilities in the **Upstream SDLC Orchestration Platform**. This epic validates critical enterprise integration requirements that enable comprehensive document management and governance compliance, demonstrating the platform's ability to integrate with existing enterprise infrastructure while maintaining BMad v6 methodology standards and workflow continuity.
+
+**Note:** GitHub dual-action synchronization (Save/Publish workflows) is implemented in **Story 2.1 (MCP Server Implementation)** as part of the core repository operations architecture. This epic focuses on enterprise document management integrations beyond GitHub.
 
 ## Story Breakdown
 
-### Story 4.1: Dual-Action GitHub Synchronization (Save & Publish Workflows)
-- **File:** `epic-4-story-4-1-github-sync.md`
-- **Priority:** P0 (Critical - Development workflow integration)
-- **Complexity:** High (7-9 days)
-- **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation)
-
-**Summary:** Implements **dual-action GitHub synchronization** with distinct Save and Publish workflows, intelligent merge conflict resolution, and seamless BMad v6 IDE workflow integration for development team handoff to downstream activities.
-
-**Key Deliverables:**
-- **Save Action:** Persist changes to working branch (<5 second SLA) for iterative work
-- **Publish Action:** Persist to working branch + merge to main branch with diff visualization (<15 second SLA)
-- Diff visualization showing files added/modified/deleted (future: accept/reject individual diffs)
-- Working branch management and tracking (separate from main branch)
-- Workspace terminology throughout (project = workspace)
-- Repository structure management following BMad v6 methodology standards
-- Intelligent merge conflict resolution with development workflow support
-- Comprehensive synchronization monitoring with real-time status tracking via OTLP telemetry
-- Handoff validation for downstream development in BMad v6 IDE
-
-### Story 4.2: SharePoint Document Management Integration
-- **File:** `epic-4-story-4-2-sharepoint-integration.md`
+### Story 4.1: SharePoint Document Management Integration
+- **File:** `epic-4-story-4-1-sharepoint-integration.md`
 - **Priority:** P0 (Critical - Enterprise workflow integration)
 - **Complexity:** High (8-10 days)
-- **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation)
+- **Dependencies:** Story 1.3 (External Service Configuration), Story 3.1 (Document Generation), Story 2.1 (MCP Server Implementation), Story 1.5 (Container Infrastructure)
 
-**Summary:** Provides enterprise-grade SharePoint integration with document publishing, metadata management, approval workflows, and comprehensive audit trails for governance compliance.
+**Summary:** Provides enterprise-grade SharePoint integration with document publishing, metadata management, approval workflows, and comprehensive audit trails for governance compliance, integrated with containerized MCP server architecture.
 
 **Key Deliverables:**
 - SharePoint document publishing via Model Context Protocol (MCP) with folder management and enterprise taxonomy
 - Version control integration with SharePoint native versioning and approval workflows
 - Comprehensive metadata management with automatic tagging and content type support
 - Access control synchronization with EntraID enterprise security requirements
-- Audit trail generation for compliance and governance requirements with OTLP integration
+- Audit trail generation for compliance and governance requirements
+- Containerized deployment with MCP server integration for secure Microsoft Graph API operations
 
 ## Epic Dependencies & Integration
 
 ### External Dependencies
-- **GitHub API:** Token-based repository access, commit operations, webhook handling, merge capabilities
 - **Microsoft Graph API:** SharePoint access via Model Context Protocol (MCP), document management, metadata operations
 - **EntraID/Azure AD:** Enterprise authentication and authorization for SharePoint integration
-- **BMad v6 IDE:** Workflow compatibility and document format requirements
+- **BMad v6 IDE:** Workflow compatibility and document format requirements (for future phases)
 
 ### Internal Integration Points
-- **Configuration Foundation:** Both stories require external service configuration from Story 1.3
-- **Document Source:** Both stories depend on document generation from Story 3.1
-- **Authentication Integration:** GitHub token-based access and EntraID SSO for secure integration
-- **Telemetry Integration:** OTLP monitoring for synchronization status and performance tracking
-- **Workflow Continuity:** Integration enables complete business-to-technical workflow handoff
+- **Configuration Foundation:** SharePoint integration requires external service configuration from Story 1.3
+- **Document Source:** SharePoint publishing depends on document generation from Story 3.1
+- **MCP Server Integration:** All SharePoint operations route through MCP server from Story 2.1
+- **Container Architecture:** Deployment integrated with containerized infrastructure from Story 1.5
+- **Authentication Integration:** EntraID SSO for secure SharePoint integration
+- **Enterprise Workflow:** Integration enables comprehensive document governance and compliance
 
 ## Epic Success Criteria
 
 ### POC Validation Goals
-- **100% sync reliability:** All document changes synchronize successfully without data loss
-- **100% workflow continuity:** Development teams can proceed with BMad v6 IDE workflows seamlessly
 - **100% enterprise compliance:** SharePoint integration meets governance and audit requirements
-- **95% conflict resolution:** Merge conflicts are resolved without document corruption
+- **100% document publishing reliability:** All documents publish to SharePoint successfully without data loss
+- **95% metadata accuracy:** Document metadata and taxonomy mapping maintains accuracy
+- **90% approval workflow efficiency:** Document approval processes complete within expected timeframes
 
 ### Technical Requirements
-- **Sub-30-second GitHub sync:** Document synchronization completes within acceptable timeframes
 - **Sub-60-second SharePoint publishing:** Enterprise document publishing performs efficiently
-- **Real-time status monitoring:** Integration status updates provide immediate feedback
-- **Comprehensive audit trails:** All operations maintain complete compliance records
+- **Real-time status monitoring:** SharePoint integration status updates provide immediate feedback
+- **Comprehensive audit trails:** All SharePoint operations maintain complete compliance records
+- **Container integration:** SharePoint MCP server operates reliably within containerized environment
 
 ## Risk Assessment
 
 ### High-Risk Areas
-1. **Data Loss During Sync:** Synchronization failures could result in document loss or corruption
+1. **Data Loss During SharePoint Sync:** Publishing failures could result in document loss or corruption
 2. **Enterprise Compliance Complexity:** Complex governance requirements could be difficult to implement
-3. **Merge Conflict Resolution:** Complex conflicts could be challenging to resolve automatically
-4. **Integration Performance:** Complex operations could impact user experience and workflow efficiency
+3. **Microsoft Graph API Limitations:** API rate limits and permissions could impact functionality
+4. **Integration Performance:** Complex SharePoint operations could impact user experience and workflow efficiency
 
 ### Mitigation Strategies
 - Comprehensive backup and rollback capabilities for all synchronization operations

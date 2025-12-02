@@ -2,7 +2,7 @@
 
 ## Epic Overview
 
-**Epic Goal:** Enable comprehensive AI-powered document generation following BMad v6 templates with in-platform viewing, editing, and version control capabilities. This epic validates the platform's ability to maintain BMad v6 methodology integrity while providing familiar document management experiences, ensuring generated artifacts meet framework standards and support seamless collaboration workflows.
+**Epic Goal:** Enable comprehensive AI-powered document generation following BMad v6 templates with in-platform viewing, editing, version control, and complete contextual history preservation capabilities. This epic validates the platform's ability to maintain BMad v6 methodology integrity while providing familiar document management experiences and complete workflow continuity, ensuring generated artifacts meet framework standards and support seamless collaboration workflows with full conversation context preservation.
 
 ## Story Breakdown
 
@@ -10,7 +10,7 @@
 - **File:** `epic-3-story-3-1-document-generation.md`
 - **Priority:** P0 (Critical - Core document generation capability)
 - **Complexity:** High (6-8 days)
-- **Dependencies:** Story 1.4 (BMad v6 Framework Integration), Story 2.1 (Agent Selection Engine)
+- **Dependencies:** Story 1.4 (BMad v6 Framework Integration), Story 2.1 (MCP Server Implementation)
 
 **Summary:** Implements comprehensive AI-powered document generation using BMad v6 template library with intelligent content creation, context-aware template recommendations, and methodology compliance validation.
 
@@ -20,21 +20,41 @@
 - Template selection interface with context-aware recommendations
 - Document quality validation with BMad v6 methodology compliance
 - Multi-format export capabilities with structure preservation
+- Dual-action Save/Publish workflows via MCP server for GitHub synchronization
 
 ### Story 3.2: In-Platform Document Viewing & Editing
 - **File:** `epic-3-story-3-2-document-editing.md`
 - **Priority:** P0 (Critical - Document management capability)
 - **Complexity:** High (7-9 days)
-- **Dependencies:** Story 3.1 (Document Generation), Story 1.2 (MSAL Authentication)
+- **Dependencies:** Story 3.1 (Document Generation), Story 1.2 (MSAL Authentication), Story 2.1 (MCP Server Implementation)
 
 **Summary:** Provides comprehensive in-platform document management with rich viewing, collaborative editing, version control, and real-time validation capabilities, eliminating need for external document tools.
 
 **Key Deliverables:**
 - Rich document viewer with BMad v6 markdown support and formatting preservation
+- Comprehensive Mermaid diagram rendering supporting flowcharts, architecture diagrams, component diagrams, user journey maps, and entity relationship diagrams
 - In-platform editing with real-time preview and collaborative features
-- Version control with change tracking, revision history, and rollback capabilities
+- Version control with change tracking, revision history, and rollback capabilities via MCP server
 - Comment integration with review workflows and stakeholder feedback
 - Real-time document validation with BMad v6 template compliance
+- PDF export with Mermaid diagram integration and BMad v6 branding
+- Dual-action Save/Publish workflows via MCP server for repository synchronization
+
+### Story 3.3: Contextual History & Chat Preservation
+- **File:** `epic-3-story-3-3-contextual-history.md`
+- **Priority:** P0 (Critical - FR15 requirement)
+- **Complexity:** High (5-7 days)
+- **Dependencies:** Story 3.1 (Document Generation), Story 3.2 (Document Editing), Story 1.6 (Basic Database Schema)
+
+**Summary:** Implements comprehensive contextual history and chat preservation capabilities (FR15) to maintain complete workflow continuity, enabling users to return to previous conversations, reference past artifacts, and build upon earlier work without losing context.
+
+**Key Deliverables:**
+- Complete chat history preservation with agent conversations and artifact linking
+- Session continuity with seamless restoration of chat history and agent context
+- Artifact context linking and cross-referencing between conversations and documents
+- Contextual agent memory enabling continuity in recommendations and workflow
+- Basic navigation through chat history with phase-based organization
+- Workspace-level history organization for complete conversation and artifact management
 
 ## Epic Dependencies & Integration
 
@@ -45,9 +65,12 @@
 - **Real-time Services:** WebSocket or similar for collaborative editing synchronization
 
 ### Internal Integration Points
+- **Document Generation Flow:** Story 3.1 → Story 3.2 → Story 3.3
 - **Template Foundation:** Story 3.1 provides documents for Story 3.2 viewing and editing
-- **BMad v6 Framework:** Both stories require framework integration for template access and validation
-- **User Authentication:** Collaborative features require user management and access control
+- **Contextual Preservation:** Story 3.3 preserves complete conversation context from Stories 3.1 and 3.2
+- **Database Foundation:** Story 3.3 extends Epic 1 Story 1.6 database schema with chat history tables
+- **BMad v6 Framework:** All stories require framework integration for template access and validation
+- **User Authentication:** Collaborative features and chat preservation require user management and access control
 - **Project Context:** Document generation integrates with Epic 2 workflow artifacts
 
 ## Epic Success Criteria
